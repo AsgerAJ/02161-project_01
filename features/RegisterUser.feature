@@ -3,6 +3,6 @@ Feature: Register a user
   Actor: User
 
   Scenario: Successfully register a user
+    Given no user with id "Huba" exists
     When a user registers with user id "Huba"
-    And no user with id "Huba" exists
     Then a user is registered with id "Huba"
