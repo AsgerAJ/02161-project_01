@@ -1,6 +1,8 @@
 package domain;
 
 import java.util.ArrayList;
+import java.time.*;
+import java.util.Calendar;
 
 public class Project {
     private String name;
@@ -12,6 +14,10 @@ public class Project {
 
     public Project(String name){
         this.name = name;
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR);
+        String yearInString = String.valueOf(year);
+        this.projectID = yearInString.substring(3,5);
     }
 
     public void assignUser(User user){
