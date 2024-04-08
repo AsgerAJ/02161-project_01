@@ -1,6 +1,7 @@
 package domain;
 
 import app.UserIdAlreadyInUseExeption;
+import app.UserIdDoesNotExistExeption;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -45,8 +46,38 @@ public class App { // Implementer javafx senere, hvis nødvendig
         }
     }
 
+    public  User getUserFromId(String id){
+        for (User u : userList){
+            if(u.getUserId().equals(id)){
+                return u;
+            }
+        }
+        return null;
+    }
+
     public void removeUserWithId(String id){
         userList.removeIf(u -> u.getUserId().equals(id));
+    }
+
+    public boolean loggedInStatus(){
+        return this.currentUser != null;
+    }
+
+    public void logInUser(String id) throws UserIdDoesNotExistExeption {
+        User temp = getUserFromId(id);
+        if(temp != null){
+            currentUser = temp;
+        }else{
+            throw new UserIdDoesNotExistExeption("No user with UserId exists");
+        }
+    }
+
+    public String getCurrentUserId(){
+        return this.currentUser.getUserId();
+    }
+
+    public void logOut(){
+        this.currentUser = null;
     }
 
     public ArrayList<User> getUsers() {

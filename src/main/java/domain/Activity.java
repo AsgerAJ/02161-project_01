@@ -32,7 +32,5 @@ public class Activity {
         return false;
     }
 
-    public void logTime(User user, float timeSpent){
-        this.timeMap.get(user.getUserID()) += timeSpent;
-    }
+
 }

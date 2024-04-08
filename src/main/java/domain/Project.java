@@ -2,8 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 
-import io.cucumber.java.bs.A;
-
 public class Project {
     private String name;
     private String projectID;
@@ -33,7 +31,7 @@ public class Project {
     }
 
     public void createNewActivity(String name, Date startDate, Date deadline, float budgetTime){
-        this.activityList.add(new Activity(name, startDate, deadline, budgetTime))
+        this.activityList.add(new Activity(name, startDate, deadline, budgetTime));
     }
 
     
