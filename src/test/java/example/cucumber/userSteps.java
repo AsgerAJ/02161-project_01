@@ -2,13 +2,10 @@ package example.cucumber;
 
 import app.UserIdAlreadyInUseExeption;
 import domain.App;
-import domain.User;
-import io.cucumber.java.en.And;
+import example.cucumber.ErrorMessageHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import javax.print.attribute.standard.RequestingUserName;
 
 import static org.junit.Assert.*;
 

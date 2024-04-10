@@ -11,8 +11,9 @@ public class App { // Implementer javafx senere, hvis nødvendig
     ArrayList<User> userList = new ArrayList<User>();
     private User currentUser;
     private Scanner inputscanner = new Scanner(System.in);
-
-    public App(){
+    private DateServer dateServer;
+    public App(DateServer dateServer){
+        this.dateServer=dateServer;
     }
 
     public void registerUser() throws UserIdAlreadyInUseExeption {
@@ -83,4 +84,10 @@ public class App { // Implementer javafx senere, hvis nødvendig
     public ArrayList<User> getUsers() {
         return userList;
     }
+
+    public void setDateServer(DateServer d) {
+        this.dateServer=d;
+    }
+
+
 }

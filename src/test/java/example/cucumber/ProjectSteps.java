@@ -1,18 +1,21 @@
 package example.cucumber;
 
 import domain.App;
-import domain.Project;
-import io.cucumber.java.en.Given;
+import domain.DateServer;
+import example.cucumber.ErrorMessageHolder;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.mockito.Mock;
 
 public class ProjectSteps {
     private App app;
     private ErrorMessageHolder errorMessage;
+    private MockDateHolder dateHolder;
 
-    public ProjectSteps(App app, ErrorMessageHolder errorMessage){
+    public ProjectSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder){
         this.app = app;
         this.errorMessage = errorMessage;
+        this.dateHolder=dateHolder;
     }
 
     @When("the user creates a project with title {string}")

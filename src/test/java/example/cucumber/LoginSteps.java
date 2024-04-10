@@ -3,6 +3,7 @@ package example.cucumber;
 import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
 import domain.App;
+import example.cucumber.ErrorMessageHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
