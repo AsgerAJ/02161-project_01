@@ -12,16 +12,27 @@ public class Project {
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
 
-    public Project(String name){
+    public Project(String name,Calendar creationDate,int projectAmount){
         this.name = name;
-        Calendar now = Calendar.getInstance();
-        int year = now.get(Calendar.YEAR);
-        String yearInString = String.valueOf(year);
-        this.projectID = yearInString.substring(3,5);
+
+        //generate project ID
+
+        String idExtension = "";
+        if (projectAmount >= 1000) {
+            idExtension += projectAmount;
+        } else if (projectAmount >= 100) {
+            idExtension += "0" + projectAmount;
+        } else if (projectAmount >= 10) {
+            idExtension += "00" + projectAmount;
+        } else {
+            idExtension += "000" + projectAmount;
+        }
+        this.projectID = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2,4)+idExtension;
     }
 
     public void assignUser(User user){
         this.participanList.add(user);
+        user.assignProject(this);
     }
 
     public boolean hasProjectLeader(){
@@ -39,6 +50,14 @@ public class Project {
     public void createNewActivity(String name, Date startDate, Date deadline, float budgetTime){
         this.activityList.add(new Activity(name, startDate, deadline, budgetTime));
     }
+    public String getTitle() {
+        return this.name;
+    }
+    public String getProjectID() {
+        return this.projectID;
+    }
 
-    
+    public ArrayList<User> getParticipanList() {
+        return this.participanList;
+    }
 }

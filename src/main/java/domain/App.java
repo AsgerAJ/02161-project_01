@@ -12,6 +12,10 @@ public class App { // Implementer javafx senere, hvis nødvendig
     private User currentUser;
     private Scanner inputscanner = new Scanner(System.in);
     private DateServer dateServer = new DateServer();
+
+    private ArrayList<Project> projectRepository = new ArrayList<>();
+
+    private int projectAmount = 1;
     public App(){
 
     }
@@ -90,4 +94,28 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
 
+    public Project createProject(String projectName) {
+        Project p = new Project(projectName,this.dateServer.getDate(),this.projectAmount);
+
+
+        if (currentUser != null) {
+            p.assignUser(this.currentUser);
+        }
+        //else must have signed in user(?)
+        this.projectRepository.add(p);
+        projectAmount++;
+        return p;
+    }
+    public boolean hasProjectWithTitle(String t) {
+        for (Project p : projectRepository) {
+            if (p.getTitle().equals(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
 }

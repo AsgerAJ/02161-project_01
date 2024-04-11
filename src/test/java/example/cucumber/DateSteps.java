@@ -13,15 +13,15 @@ public class DateSteps {
     MockDateHolder dateHolder;
     public DateSteps(MockDateHolder dateHolder) {this.dateHolder = dateHolder;}
 
-    @Given("the date is {string},{string},{string}")
-    public void theDateIs(String day, String month, String year) {
+    @Given("the date is {int},{int},{int}")
+    public void theDateIs(Integer day, Integer month, Integer year) {
         Calendar date = new GregorianCalendar();
-        date.set(Integer.parseInt(year),Integer.parseInt(month),Integer.parseInt(day));
+        date.set(year,month,day);
 
     }
-
-    @Given("a year passes")
-    public void aYearPasses() {
-        dateHolder.advanceDateByDays(365);
+    @Given("{int} year\\(s) pass\\(es)")
+    public void yearSPassEs(Integer years) {
+        dateHolder.advanceDateByDays(years*365);
     }
+
 }
