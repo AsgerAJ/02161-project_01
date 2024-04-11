@@ -26,4 +26,13 @@ public class User {
     public int isAvailable(Activity activity){
         return 0;
     }
+
+    public boolean hasProjectWithID(String projectID) {
+        for (Project p : assignedProjects) {
+            if (p.getProjectID().equals(projectID)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
