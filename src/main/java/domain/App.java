@@ -40,15 +40,17 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return false;
     }
 
-    public void registerUser(String userId) throws UserIdAlreadyInUseExeption {
+    public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
         String edited = userId.substring(0,1).toUpperCase() + userId.substring(1,4);
+        User u = new User(edited);
         if(!hasUserWithID(edited)){
-            this.userList.add(new User(edited));
+            this.userList.add(u);
             System.out.print(userList);
         } else {
 
             throw new UserIdAlreadyInUseExeption("UserId already in use");
         }
+        return u;
     }
 
     public  User getUserFromId(String id){

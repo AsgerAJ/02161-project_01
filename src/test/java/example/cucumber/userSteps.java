@@ -12,10 +12,13 @@ import static org.junit.Assert.*;
 public class userSteps {
     private App app;
     private ErrorMessageHolder errorMessage;
-
-    public userSteps(App app, ErrorMessageHolder errorMessage){
+    private UserHelper userHelper;
+    private ProjectHelper projecthelper;
+    public userSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p){
         this.app = app;
         this.errorMessage = errorMessage;
+        this.userHelper = userHelper;
+        this.projecthelper=p;
     }
 
     @Given("no user with id {string} exists")
@@ -26,7 +29,7 @@ public class userSteps {
     @When("a user registers with user id {string}")
     public void a_user_registers_with_user_id(String string) throws Exception {
         try {
-            app.registerUser(string);
+            this.userHelper.setUser(this.app.registerUser(string));
             assertTrue(app.hasUserWithID(string));
         }catch (UserIdAlreadyInUseExeption e){
             errorMessage.setErrorMessage(e.getMessage());
@@ -41,7 +44,7 @@ public class userSteps {
 
     @Given("a user with id {string} exists")
     public void a_user_with_id_exists(String string) throws Exception{
-        app.registerUser(string);
+        this.userHelper.setUser(this.app.registerUser(string));
         assertTrue(app.hasUserWithID(string));
     }
     @Then("the errormessage {string} is given")

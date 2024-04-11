@@ -3,6 +3,8 @@ package example.cucumber;
 import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
 import domain.App;
+import domain.Project;
+import domain.User;
 import example.cucumber.ErrorMessageHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -14,10 +16,13 @@ public class LoginSteps {
 
     private App app;
     private ErrorMessageHolder errorMessage;
-
-    public LoginSteps(App app, ErrorMessageHolder errorMessage){
+    private UserHelper userHelper;
+    private ProjectHelper projectHelper;
+    public LoginSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p){
         this.app = app;
         this.errorMessage = errorMessage;
+        this.userHelper = userHelper;
+        this.projectHelper=p;
     }
     @Given("no user is logged in")
     public void noUserIsLoggedIn() {

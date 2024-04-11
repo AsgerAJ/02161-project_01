@@ -2,11 +2,8 @@ package example.cucumber;
 
 import io.cucumber.java.en.Given;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import static java.util.Calendar.*;
 
 public class DateSteps {
  //Made by: Niklas
