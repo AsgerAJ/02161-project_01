@@ -22,7 +22,7 @@ public class Activity {
         this.budgetTime = budgetTime;
     }
 
-
+    public String getName(){return this.name;}
     public void setStatus(boolean status){
         this.isComplete = status;
     }

@@ -50,6 +50,16 @@ public class Project {
     public void createNewActivity(String name, Date startDate, Date deadline, float budgetTime){
         this.activityList.add(new Activity(name, startDate, deadline, budgetTime));
     }
+
+    public void createNewActivity(Activity activity){
+        this.activityList.add(activity);
+    }
+
+    public ArrayList<Activity> getActivityList(){
+        return this.activityList;
+    }
+
+
     public String getTitle() {
         return this.name;
     }
@@ -60,4 +70,6 @@ public class Project {
     public ArrayList<User> getParticipanList() {
         return this.participanList;
     }
+
+    public void setProjectLeader(User user){this.projectLeader = user;}
 }

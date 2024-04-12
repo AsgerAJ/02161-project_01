@@ -1,8 +1,8 @@
 package domain;
 
 public class Date {
-    private int day;
-    public Date(int day){
+    private double day;
+    public Date(double day){
         this.day = day;
     }
 }

@@ -48,6 +48,7 @@ public class LoginSteps {
     public void aUserWithIdIsLoggedIn(String string) throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption {
         if (!app.hasUserWithID(string)) {
             app.registerUser(string);
+            this.userHelper.setUser(new User(string));
         }
         try {
             app.logInUser(string);

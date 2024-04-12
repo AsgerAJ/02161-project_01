@@ -2,8 +2,10 @@ package example.cucumber;
 
 import domain.App;
 import domain.Project;
+import domain.User;
 import example.cucumber.ErrorMessageHolder;
 import example.cucumber.MockDateHolder;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
@@ -14,7 +16,6 @@ public class ProjectSteps {
     private App app;
     private ErrorMessageHolder errorMessage;
     private MockDateHolder dateHolder;
-
 
     private UserHelper userHelper;
     private ProjectHelper projectHelper;
@@ -46,6 +47,12 @@ public class ProjectSteps {
     @Then("the user is added to the project participant list")
     public void theUserIsAddedToTheProjectParticipantList() {
         assertTrue(this.projectHelper.getProject().getParticipanList().contains(this.app.getCurrentUser()));
+    }
+
+    @Given("the user with id {string} is project leader")
+    public void theUserIsProjectLeader(String string) {
+        this.projectHelper.getProject().setProjectLeader(userHelper.getUser());
+        assertTrue(this.projectHelper.getProject().isProjectLeader(userHelper.getUser()));
     }
 
 }

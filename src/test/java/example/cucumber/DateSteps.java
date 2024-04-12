@@ -14,7 +14,6 @@ public class DateSteps {
     public void theDateIs(Integer day, Integer month, Integer year) {
         Calendar date = new GregorianCalendar();
         date.set(year,month,day);
-
     }
     @Given("{int} year\\(s) pass\\(es)")
     public void yearSPassEs(Integer years) {
