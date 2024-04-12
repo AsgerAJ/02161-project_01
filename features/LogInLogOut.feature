@@ -13,6 +13,12 @@ Feature: Log in, Log out
       And no user with id "Huba" exists
       When logging in with id "Huba"
       Then the errormessage "No user with UserId exists" is given
+      
+    Scenario: Log in attempt with already logged in user
+        Given a user with id "Huba" is logged in
+        And a user with id "Test" exists
+        When logging in with id "Test"
+        Then the errormessage "A user is already logged in" is given
 
     Scenario: Log out user
       Given a user with id "Huba" is logged in

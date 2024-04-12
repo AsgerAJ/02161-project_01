@@ -1,5 +1,6 @@
 package domain;
 
+import app.AUserIsAlreadyLoggedInException;
 import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
 
@@ -70,7 +71,11 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return this.currentUser != null;
     }
 
-    public void logInUser(String id) throws UserIdDoesNotExistExeption {
+    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
+
+        if (this.currentUser!=null) {
+            throw new AUserIsAlreadyLoggedInException("A user is already logged in");
+        }
         User temp = getUserFromId(id);
         if(temp != null){
             currentUser = temp;

@@ -1,5 +1,6 @@
 package example.cucumber;
 
+import app.AUserIsAlreadyLoggedInException;
 import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
 import domain.App;
@@ -30,11 +31,11 @@ public class LoginSteps {
         assertFalse(app.loggedInStatus());
     }
     @When("logging in with id {string}")
-    public void loggingInWithId(String string) throws UserIdDoesNotExistExeption {
+    public void loggingInWithId(String string) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
         try {
             app.logInUser(string);
             assertTrue(app.loggedInStatus());
-        } catch (UserIdDoesNotExistExeption e) {
+        } catch (UserIdDoesNotExistExeption | AUserIsAlreadyLoggedInException e) {
             errorMessage.setErrorMessage(e.getMessage());
         }
     }
@@ -48,9 +49,13 @@ public class LoginSteps {
         if (!app.hasUserWithID(string)) {
             app.registerUser(string);
         }
-        app.logInUser(string);
-        assertTrue(app.loggedInStatus());
-        assertEquals(string,app.getCurrentUserId());
+        try {
+            app.logInUser(string);
+            assertTrue(app.loggedInStatus());
+            assertEquals(string, app.getCurrentUserId());
+        } catch (AUserIsAlreadyLoggedInException e) {
+            this.errorMessage.setErrorMessage(e.getMessage());
+        }
     }
     @When("logging out")
     public void loggingOut() {
