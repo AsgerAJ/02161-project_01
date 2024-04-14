@@ -9,6 +9,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.GregorianCalendar;
+
+import static java.util.Calendar.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -53,6 +56,18 @@ public class ProjectSteps {
     public void theUserIsProjectLeader(String string) {
         this.projectHelper.getProject().setProjectLeader(userHelper.getUser());
         assertTrue(this.projectHelper.getProject().isProjectLeader(userHelper.getUser()));
+    }
+
+    @When("sets the deadline of the project to {int},{int},{int}")
+    public void setsTheDeadlineOfTheProjectTo(Integer day, Integer month, Integer year) {
+        this.projectHelper.getProject().setDeadline(new GregorianCalendar(year,month,day));
+
+    }
+    @Then("the project has the deadline {int},{int},{int}")
+    public void theProjectHasTheDeadline(Integer day, Integer month, Integer year) {
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(MONTH), (int) month); //check same month
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
     }
 
 }

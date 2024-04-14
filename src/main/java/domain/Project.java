@@ -8,6 +8,7 @@ public class Project {
     private String name;
     private String projectID;
     private User projectLeader;
+    private Calendar deadline;
     private ArrayList<User> participanList = new ArrayList<User>();
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
@@ -72,4 +73,11 @@ public class Project {
     }
 
     public void setProjectLeader(User user){this.projectLeader = user;}
+
+    public void setDeadline (Calendar date) {
+        this.deadline=date;
+    }
+    public Calendar getDeadline() {
+        return this.deadline;
+    }
 }
