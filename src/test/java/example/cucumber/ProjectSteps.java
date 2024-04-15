@@ -28,6 +28,7 @@ public class ProjectSteps {
         this.dateHolder=dateHolder;
         this.userHelper=userHelper;
         this.projectHelper=p;
+
     }
 
     @When("the user creates a project with title {string}")
@@ -68,6 +69,18 @@ public class ProjectSteps {
         assertEquals((int) this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
         assertEquals((int) this.projectHelper.getProject().getDeadline().get(MONTH), (int) month); //check same month
         assertEquals((int) this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
+    }
+    @Given("the project has been given the deadline {int},{int},{int}")
+    public void theProjectHasBeenGivenTheDeadline(Integer day,Integer month,Integer year) {
+        this.projectHelper.getProject().setDeadline(new GregorianCalendar(year,month,day));
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(MONTH), (int) month); //check same month
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
+
+    }
+    @Then("the project is overdue")
+    public void theProjectIsOverdue() {
+        assertTrue(this.projectHelper.getProject().isOverdue(this.dateHolder.getDate()));
     }
 
 }

@@ -30,4 +30,8 @@ public class MockDateHolder {
         setDate(nextDate);
     }
 
+    public Calendar getDate() {
+        return this.dateServer.getDate();
+    }
+
 }
