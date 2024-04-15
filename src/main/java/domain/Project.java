@@ -3,6 +3,7 @@ package domain;
 import java.util.ArrayList;
 import java.time.*;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class Project {
     private String name;
@@ -67,6 +68,17 @@ public class Project {
     public String getProjectID() {
         return this.projectID;
     }
+
+    public Activity getActivityFromName(String name){
+        for (Activity activity : this.activityList) {
+            if ((activity.getName().toLowerCase().equals(name.toLowerCase()))) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+
 
     public ArrayList<User> getParticipantList() {
         return this.participanList;

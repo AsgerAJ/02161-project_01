@@ -49,6 +49,19 @@ public class ActivitySteps {
         assertTrue(this.projectHelper.getProject().getParticipantList().contains(this.userHelper.getUser()));
     }
 
-
+    @Given("the project has an activity with name {string}")
+    public void theProjectHasAnActivity(String string) {
+        this.activityHelper.setActivity(new Activity(string, 1));
+        this.projectHelper.getProject().createNewActivity(this.activityHelper.getActivity());
+        assertTrue(this.projectHelper.getProject().getActivityList().contains(this.activityHelper.getActivity()));
+    }
+    @When("user marks activity {string} as complete")
+    public void userMarksActivityAsComplete(String string) {
+        this.projectHelper.getProject().getActivityFromName(string).setStatus(true);
+    }
+    @Then("the activity with name {string} is marked as completed")
+    public void theActivityIsMarkedAsCompleted(String string) {
+        assertTrue(this.projectHelper.getProject().getActivityFromName(string).getStatus());
+    }
 
 }

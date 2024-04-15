@@ -28,6 +28,8 @@ public class Activity {
         this.isComplete = status;
     }
 
+    public boolean getStatus(){return this.isComplete;}
+
     public boolean isOverdue(){
         return false;
     }
