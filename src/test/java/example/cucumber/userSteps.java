@@ -30,7 +30,6 @@ public class userSteps {
     public void a_user_registers_with_user_id(String string) throws Exception {
         try {
             this.userHelper.setUser(this.app.registerUser(string));
-            assertTrue(app.hasUserWithID(string));
         }catch (UserIdAlreadyInUseExeption e){
             errorMessage.setErrorMessage(e.getMessage());
         }

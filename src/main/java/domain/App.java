@@ -42,6 +42,9 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
     public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
+        while (userId.length()<4) {
+            userId += "x";
+        }
         String edited = userId.substring(0,1).toUpperCase() + userId.substring(1,4);
         User u = new User(edited);
         if(!hasUserWithID(edited)){
