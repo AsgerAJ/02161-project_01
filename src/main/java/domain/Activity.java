@@ -1,12 +1,13 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class Activity {
     private String name;
-    private Date startDate;
-    private Date deadline;
+    private Calendar startDate;
+    private Calendar deadline;
     private float budgetTime;
     private boolean isComplete = false;
     private HashMap<String, Float> timeMap = new HashMap<String, Float>();
@@ -15,10 +16,10 @@ public class Activity {
     private ArrayList<User> participanList = new ArrayList<User>();
 
 
-    public Activity(String name, Date startDate, Date deadline, float budgetTime){
+    public Activity(String name, float budgetTime){
         this.name = name;
-        this.startDate = startDate;
-        this.deadline = deadline;
+        this.startDate = null;
+        this.deadline = null;
         this.budgetTime = budgetTime;
     }
 
@@ -27,10 +28,11 @@ public class Activity {
         this.isComplete = status;
     }
 
-
     public boolean isOverdue(){
         return false;
     }
 
+    public void setStartDate(Calendar cal){this.startDate = cal;}
 
+    public void setDeadline(Calendar cal){this.deadline = cal;}
 }

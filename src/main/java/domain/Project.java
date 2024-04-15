@@ -49,7 +49,7 @@ public class Project {
     }
 
     public void createNewActivity(String name, Date startDate, Date deadline, float budgetTime){
-        this.activityList.add(new Activity(name, startDate, deadline, budgetTime));
+        this.activityList.add(new Activity(name, budgetTime));
     }
 
     public void createNewActivity(Activity activity){
@@ -68,7 +68,7 @@ public class Project {
         return this.projectID;
     }
 
-    public ArrayList<User> getParticipanList() {
+    public ArrayList<User> getParticipantList() {
         return this.participanList;
     }
 

@@ -49,7 +49,7 @@ public class ProjectSteps {
     }
     @Then("the user is added to the project participant list")
     public void theUserIsAddedToTheProjectParticipantList() {
-        assertTrue(this.projectHelper.getProject().getParticipanList().contains(this.app.getCurrentUser()));
+        assertTrue(this.projectHelper.getProject().getParticipantList().contains(this.app.getCurrentUser()));
     }
 
     @Given("the user with id {string} is project leader")
