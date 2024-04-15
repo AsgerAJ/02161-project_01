@@ -20,15 +20,23 @@ public class Project {
         //generate project ID
 
         String idExtension = "";
-        if (projectAmount >= 1000) {
-            idExtension += projectAmount;
-        } else if (projectAmount >= 100) {
-            idExtension += "0" + projectAmount;
-        } else if (projectAmount >= 10) {
-            idExtension += "00" + projectAmount;
-        } else {
-            idExtension += "000" + projectAmount;
+
+        switch (String.valueOf(projectAmount).length()) {
+            case 1:
+                idExtension += "000" + projectAmount;
+                break;
+            case 2:
+                idExtension += "00" + projectAmount;
+                break;
+            case 3:
+                idExtension += "0" + projectAmount;
+                break;
+            default:
+                idExtension += projectAmount%10000; //modulo to reset when crossing limit
+                break;
+
         }
+
         this.projectID = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2,4)+idExtension;
     }
 
