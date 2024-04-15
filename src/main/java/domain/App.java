@@ -118,4 +118,8 @@ public class App { // Implementer javafx senere, hvis nødvendig
     public User getCurrentUser() {
         return this.currentUser;
     }
+
+    public ArrayList<Project> getProjectRepository() {
+        return projectRepository;
+    }
 }
