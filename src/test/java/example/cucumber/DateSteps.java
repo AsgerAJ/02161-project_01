@@ -13,7 +13,8 @@ public class DateSteps {
     @Given("the date is {int},{int},{int}")
     public void theDateIs(Integer day, Integer month, Integer year) {
         Calendar date = new GregorianCalendar();
-        date.set(year,month,day);
+        date.set(year,month-1,day); //january is month 0
+        dateHolder.setDate(date);
     }
     @Given("{int} year\\(s) pass\\(es)")
     public void yearSPassEs(Integer years) {

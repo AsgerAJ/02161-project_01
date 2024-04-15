@@ -100,4 +100,19 @@ public class Project {
     public Calendar getDeadline() {
         return this.deadline;
     }
+
+    public boolean isOverdue(Calendar date) {
+        System.out.println("date_year: " + date.get(Calendar.YEAR));
+        System.out.println("date_month:" + date.get(Calendar.MONTH));
+        System.out.println("deadline: "+this.deadline.get(Calendar.YEAR));
+        if (this.deadline==null) {
+            return false;
+        }
+        if (date==null) {
+            throw new NullPointerException("date is null");
+        }
+
+        return date.after(this.deadline);
+
+    }
 }
