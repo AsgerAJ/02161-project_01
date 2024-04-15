@@ -11,7 +11,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     ArrayList<User> userList = new ArrayList<User>();
     private User currentUser;
-    private Scanner inputscanner = new Scanner(System.in);
+
     private DateServer dateServer = new DateServer();
 
     private ArrayList<Project> projectRepository = new ArrayList<>();
@@ -19,17 +19,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
     private int projectAmount = 1;
     public App(){
 
-    }
-
-    public void registerUser() throws UserIdAlreadyInUseExeption {
-        System.out.println("Enter Userid");
-        String unedited = inputscanner.next();
-        String edited = unedited.substring(0,0).toUpperCase() + unedited.substring(1,3);
-        if(!hasUserWithID(edited)){
-            this.userList.add(new User(edited));
-        } else {
-            throw new UserIdAlreadyInUseExeption("UserId already in use");
-        }
     }
 
     public boolean hasUserWithID(String id) {
@@ -49,7 +38,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         User u = new User(edited);
         if(!hasUserWithID(edited)){
             this.userList.add(u);
-            System.out.print(userList);
+            System.out.println("Your user id is " + edited);
         } else {
 
             throw new UserIdAlreadyInUseExeption("UserId already in use");
@@ -82,6 +71,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         User temp = getUserFromId(id);
         if(temp != null){
             currentUser = temp;
+
         }else{
             throw new UserIdDoesNotExistExeption("No user with UserId exists");
         }
