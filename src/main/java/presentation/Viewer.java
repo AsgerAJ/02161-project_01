@@ -3,6 +3,7 @@ package presentation;
 import app.AUserIsAlreadyLoggedInException;
 import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
+import domain.Activity;
 import domain.App;
 import domain.Project;
 
@@ -34,7 +35,6 @@ public class Viewer { // Author Asger
                 startvalue = -1;
             }
         }
-        loginScanner.close();
 
         // Project overview and create project slice
         startvalue = 0;
@@ -42,22 +42,49 @@ public class Viewer { // Author Asger
         while((app.getCurrentUser() != null)){
             if (startvalue > 0){
                 Project currentproject = app.getProjectRepository().get(startvalue-1);
+                enterProject(currentproject);
             }else if(startvalue == 0){
-                projectOverview(app);
+                mainMenuOverview(app);
             }
-            programScanner.nextLine();
+
             String input = programScanner.nextLine();
+
             try {
                 if (input.equalsIgnoreCase("NEW")){
                     newProject(app);
+                }else if(input.equalsIgnoreCase("Exit")){
+                    programScanner.close();
+                    break;
                 }
                 startvalue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 startvalue = 0;
             }
         }
+    }
 
+    private static void enterProject(Project project) {
+        Scanner projectScanner = new Scanner(System.in);
+        int enterProjectValue = 0;
+        while(true){
+            if(enterProjectValue > 0){
+                Activity currentActivity = project.getActivityList().get(enterProjectValue-1);
 
+            }else if(enterProjectValue == 0){
+                inProjectMenu(project);
+            }
+            String input = projectScanner.nextLine();
+            try {
+                if (input.equalsIgnoreCase("NEW")){
+
+                }else if(input.equalsIgnoreCase("Exit")){
+                    break;
+                }
+                enterProjectValue = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                enterProjectValue = 0;
+            }
+        }
     }
 
     private static void newProject(App app) {
@@ -65,11 +92,31 @@ public class Viewer { // Author Asger
         System.out.println("Enter Name of project");
         String name = newProjectScanner.nextLine();
         app.createProject(name);
-        newProjectScanner.close();
     }
 
-    private static void projectOverview(App app){
-        System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
+    private static void newActivityInProject(Project project){
+        Scanner newActivityScanner = new Scanner(System.in);
+        System.out.print("Enter activity name");
+        String newActivityName = newActivityScanner.nextLine();
+        int numberIn = 0;
+        while (true) {
+            if (numberIn > 0) {
+                break;
+            }else{
+                System.out.print("Enter amount of budgeted hours: ");
+            }
+            String numberInput = newActivityScanner.nextLine();
+            try {
+                numberIn = Integer.parseInt(numberInput);
+            } catch (NumberFormatException e) {
+                numberIn = 0;
+            }
+        }
+        project.createNewActivity(new Activity(newActivityName, numberIn));
+    }
+
+    private static void mainMenuOverview(App app){
+        System.out.println("\f Logged in with user Id: "+ app.getCurrentUserId());
         System.out.println("List of projects:");
         int i = 1;
         for(Project project : app.getProjectRepository()){
@@ -77,5 +124,15 @@ public class Viewer { // Author Asger
             i++;
         }
         System.out.println("Enter the number for the project, \"NEW\" to make a new project, or \"Exit\" to exit app");
+    }
+
+    private static void inProjectMenu(Project project){
+        System.out.println("\f List of projects:");
+        int i = 1;
+        for(Activity activity : project.getActivityList()){
+            System.out.println(i + ": " +activity.getName() + " Status: " + activity.getStatus());
+            i++;
+        }
+        System.out.println("Enter the number for the activity, \"NEW\" to make a new activity, or \n \"Exit\" to go to main menu");
     }
 }

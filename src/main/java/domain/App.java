@@ -33,7 +33,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         while (userId.length()<4) {
             userId += "x";
         }
-        String edited = userId.substring(0,1).toUpperCase() + userId.substring(1,4);
+        String edited = (userId.substring(0,1).toUpperCase() + userId.substring(1,4).toUpperCase());
         User u = new User(edited);
         if(!hasUserWithID(edited)){
             this.userList.add(u);
