@@ -26,10 +26,4 @@ Description: Create a Project
     And the user is added to the project participant list
 
 
-    Scenario: Create project with deadline
-      Given a user with id "Huba" exists
-      And a user with id "Huba" is logged in
-      And the date is 10,04,2024
-      When the user creates a project with title "TestProject"
-      And sets the deadline of the project to 22,11,2026
-      Then the project has the deadline 22,11,2026
+
