@@ -1,5 +1,7 @@
 package domain;
 
+import app.InvalidDateException;
+
 import java.util.ArrayList;
 import java.time.*;
 import java.util.Calendar;
@@ -10,6 +12,7 @@ public class Project {
     private String projectID;
     private User projectLeader;
     private Calendar deadline;
+    private Calendar startDate;
     private ArrayList<User> participanList = new ArrayList<User>();
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
@@ -94,25 +97,37 @@ public class Project {
 
     public void setProjectLeader(User user){this.projectLeader = user;}
 
-    public void setDeadline (Calendar date) {
-        this.deadline=date;
+    public void setDeadline (Calendar date) throws InvalidDateException {
+
+        if (this.startDate == null || date.after(this.startDate)) {
+            this.deadline=date;
+        } else {
+            throw new InvalidDateException("deadline before start date");
+        }
     }
     public Calendar getDeadline() {
         return this.deadline;
     }
 
     public boolean isOverdue(Calendar date) {
-        System.out.println("date_year: " + date.get(Calendar.YEAR));
-        System.out.println("date_month:" + date.get(Calendar.MONTH));
-        System.out.println("deadline: "+this.deadline.get(Calendar.YEAR));
+
         if (this.deadline==null) {
             return false;
         }
-        if (date==null) {
-            throw new NullPointerException("date is null");
-        }
+
 
         return date.after(this.deadline);
 
+    }
+    public void setStartDate(Calendar date) throws InvalidDateException {
+        if (this.deadline ==null || date.before(this.deadline)) {
+            this.startDate=date;
+        } else {
+            throw new InvalidDateException("Startdate after deadline");
+        }
+    }
+
+    public Calendar getStartDate() {
+        return this.startDate;
     }
 }
