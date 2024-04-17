@@ -34,7 +34,11 @@ public class StartDate_DeadlineSteps {
 
     @When("sets the deadline of the project to {int},{int},{int}")
     public void setsTheDeadlineOfTheProjectTo(Integer day, Integer month, Integer year) throws InvalidDateException {
-        this.projectHelper.getProject().setDeadline(new GregorianCalendar(year, month-1, day));
+       try {
+           this.projectHelper.getProject().setDeadline(new GregorianCalendar(year, month-1, day));
+       } catch (InvalidDateException e) {
+           this.errorMessage.setErrorMessage(e.getMessage());
+       }
 
     }
 
@@ -61,7 +65,11 @@ public class StartDate_DeadlineSteps {
 
     @When("sets the startdate of the project to {int},{int},{int}")
     public void setsTheStartdateOfTheProjectTo(Integer day, Integer month, Integer year) throws InvalidDateException {
-        this.projectHelper.getProject().setStartDate(new GregorianCalendar(year, month - 1, day));
+        try {
+            this.projectHelper.getProject().setStartDate(new GregorianCalendar(year, month - 1, day));
+        } catch (InvalidDateException e) {
+            this.errorMessage.setErrorMessage(e.getMessage());
+        }
     }
 
     @Then("the project has the startdate {int},{int},{int}")

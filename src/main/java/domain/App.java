@@ -47,7 +47,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     public  User getUserFromId(String id){
         for (User u : userList){
-            if(u.getUserId().equals(id)){
+            if(u.getUserId().equals(id.toUpperCase())){
                 return u;
             }
         }
@@ -55,7 +55,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
     public void removeUserWithId(String id){
-        userList.removeIf(u -> u.getUserId().equals(id));
+        userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
     }
 
     public boolean loggedInStatus(){

@@ -41,7 +41,7 @@ public class LoginSteps {
     }
     @Then("the current user has id {string}")
     public void theCurrentUserHasId(String string) {
-        assertEquals(app.getCurrentUserId(), string);
+        assertEquals(app.getCurrentUserId(), string.toUpperCase());
     }
 
     @Given("a user with id {string} is logged in")
@@ -53,7 +53,7 @@ public class LoginSteps {
         try {
             app.logInUser(string);
             assertTrue(app.loggedInStatus());
-            assertEquals(string, app.getCurrentUserId());
+            assertEquals(string.toUpperCase(), app.getCurrentUserId());
         } catch (AUserIsAlreadyLoggedInException e) {
             this.errorMessage.setErrorMessage(e.getMessage());
         }
