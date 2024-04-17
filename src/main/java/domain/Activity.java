@@ -37,4 +37,8 @@ public class Activity {
     public void setStartDate(Calendar cal){this.startDate = cal;}
 
     public void setDeadline(Calendar cal){this.deadline = cal;}
+
+    public ArrayList<User> getParticipanList() {return this.participanList;}
+
+
 }
