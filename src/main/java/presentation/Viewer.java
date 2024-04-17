@@ -7,6 +7,7 @@ import domain.Activity;
 import domain.App;
 import domain.Project;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Viewer { // Author Asger
@@ -22,8 +23,10 @@ public class Viewer { // Author Asger
             if (startvalue == 1){
                 System.out.println("Enter User id");
                 try {
-                    app.logInUser(loginScanner.next().substring(0,4).toUpperCase());
+                    app.logInUser(loginScanner.next().substring(0, 4).toUpperCase());
                     showMainMenu();
+                }catch (StringIndexOutOfBoundsException e){
+                    System.out.println("User Id has 4 characters");
                 } catch (UserIdDoesNotExistExeption e){
                     System.out.println("User id does not exist");
                 }
@@ -130,14 +133,14 @@ public class Viewer { // Author Asger
 
     private static void newProject() {
         Scanner newProjectScanner = new Scanner(System.in);
-        System.out.println("Enter Name of project");
+        System.out.println("Enter Name of project: ");
         String name = newProjectScanner.nextLine();
         app.createProject(name);
     }
 
     private static void newActivityInProject(Project project){
         Scanner newActivityScanner = new Scanner(System.in);
-        System.out.print("Enter activity name" );
+        System.out.print("Enter activity name: " );
         String newActivityName = newActivityScanner.nextLine();
         int numberIn = 0;
         while (true) {
@@ -169,19 +172,22 @@ public class Viewer { // Author Asger
 
     private static void inProjectMenu(Project project){
         System.out.println("Project: "+project.getTitle());
+        if(project.getActivityList()!=null){
+            System.out.println(project.completionPercentage());
+        }
         System.out.println("List of Activities:");
         int i = 1;
         for(Activity activity : project.getActivityList()){
             System.out.println(i + ": " +activity.getName() + " Status: " + activity.getStatus());
             i++;
         }
-        System.out.println("Enter the number for the activity, \"NEW\" to make a new activity, or \n \"Exit\" to go to main menu");
+        System.out.println("Enter the number for the activity, \"NEW\" to make a new activity, or \"Exit\" to go to main menu");
     }
 
     private static void inActivityMenu(Activity activity) {
         System.out.println("Activity name: " + activity.getName());
         System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + activity.getParticipanList());
-        System.out.println("Enter \"Complete\" to complete activity, or \n \"Exit\" to go to main menu");
+        System.out.println("Enter \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 }

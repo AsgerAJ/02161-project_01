@@ -115,4 +115,27 @@ public class Project {
         return date.after(this.deadline);
 
     }
+
+    public String completionPercentage(){
+        double completionPercentage = 0;
+        for(int i = 0; i < this.getActivityList().size(); i++){
+            if(this.getActivityList().get(i).getStatus()){
+                completionPercentage += 100.0/this.activityList.size();
+            }
+        }
+        completionPercentage = completionPercentage/100;
+        int totalBlocks = 20;
+        int completedBlocks = (int) (completionPercentage * totalBlocks);
+
+        StringBuilder progressBarBuilder = new StringBuilder();
+        for (int i = 0; i < totalBlocks; i++) {
+            if (i < completedBlocks) {
+                progressBarBuilder.append("■"); // Filled block
+            } else {
+                progressBarBuilder.append("□"); // Empty block
+            }
+        }
+
+        return progressBarBuilder.toString();
+    }
 }
