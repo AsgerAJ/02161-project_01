@@ -38,7 +38,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
         User u = new User(edited);
         if(!hasUserWithID(edited)){
             this.userList.add(u);
-            System.out.println("Your user id is " + edited);
         } else {
 
             throw new UserIdAlreadyInUseExeption("UserId already in use");

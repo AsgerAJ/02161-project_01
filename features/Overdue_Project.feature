@@ -3,8 +3,8 @@ Feature: overdue projects
 
 
   Scenario: Non-overdue project
-    Given a user with id "Huba" exists
-    And a user with id "Huba" is logged in
+    Given a user with id "HUBA" exists
+    And a user with id "HUBA" is logged in
     And a project exists with title "test Project"
     And the user is part of the project
     And the project has been given the deadline 15,4,2024
