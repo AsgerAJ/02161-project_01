@@ -35,4 +35,8 @@ public class User {
         }
         return false;
     }
+
+    public ArrayList<Project> getAssignedProjects() {
+        return assignedProjects;
+    }
 }
