@@ -37,7 +37,10 @@ public class App { // Implementer javafx senere, hvis nødvendig
         User u = new User(edited);
         if(!hasUserWithID(edited)){
             this.userList.add(u);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7f69ee6bfa41f599844f58fbe529693b8eff6ff7
         } else {
 
             throw new UserIdAlreadyInUseExeption("UserId already in use");
