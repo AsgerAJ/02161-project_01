@@ -4,9 +4,13 @@ import domain.AUserIsAlreadyLoggedInException;
 import app.App;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
+import io.cucumber.messages.types.Exception;
 import domain.*;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
+
 
 public class Viewer { // Author Asger
     public static final App app = new App();
@@ -133,7 +137,17 @@ public class Viewer { // Author Asger
             }
             String input = activityScanner.nextLine();
             try {
-                if (input.equalsIgnoreCase("Complete")){
+                if (input.equalsIgnoreCase("Log")) {
+                    System.out.println("Enter hours worked today:");
+                    String workedTimeString = activityScanner.nextLine();
+                    try {
+                        float workedTime = Float.parseFloat(workedTimeString);
+                        activity.logTime(workedTime, app.getCurrentUser());
+                    }catch (java.lang.Exception e){
+                        System.out.println("Invalid time input");
+                    }
+                }
+                else if (input.equalsIgnoreCase("Complete")){
                     activity.setStatus(true);
                 }else if(input.equalsIgnoreCase("Exit")){
                     inProjectMenu(currentProject);
@@ -211,12 +225,48 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + activity.getName());
         System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + activity.getParticipanList());
-        System.out.println("Enter \"Complete\" to complete activity, or \"Exit\" to go to main menu");
+        System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 
-    private static void clearScreen(){
-        for(int i = 0; i < 20; i++){
-            System.out.println();
+
+    private static Calendar stringToDate(String input) throws InvalidDateFormatException {
+        // format input to dates
+        if (!input.contains("/")) {
+            throw new InvalidDateFormatException("doesnt contain");
         }
+        String[] dmy = input.split("/");
+
+        int day;
+        int month;
+        int year;
+        try {
+            day = Integer.parseInt(dmy[0]);
+            month = Integer.parseInt(dmy[1]) - 1;
+            year = Integer.parseInt(dmy[2]);
+        } catch (java.lang.Exception e) {
+            throw new InvalidDateFormatException("invalid date format. Please use dd/mm/yyyy");
+        }
+        if (day < 1) {
+            throw new InvalidDateFormatException("Invalid day");
+        }
+        if (month > 11 || month < 0) {
+            throw new InvalidDateFormatException("Month must be a number between 1 and 12");
+        }
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        if (month == 1) { // february for leap year
+            if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+                if (day > 29) {
+                    throw new InvalidDateFormatException("Invalid day of month");
+                } else if (day > 28) {
+                    throw new InvalidDateFormatException("Invalid day of month");
+                }
+            }
+        } else {
+            if (day > daysInMonth[month]) {
+                throw new InvalidDateFormatException("Invalid day of month");
+            }
+        }
+        return new GregorianCalendar(year, month, day);
     }
+
 }

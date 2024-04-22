@@ -6,20 +6,18 @@ import java.util.HashMap;
 
 public class Activity {
     private String name;
-    private Calendar startDate;
-    private Calendar deadline;
+    private Calendar startDate = null;
+    private Calendar deadline = null;
     private float budgetTime;
     private boolean isComplete = false;
     private HashMap<String, Float> timeMap = new HashMap<String, Float>();
-    private float totalHours;
+    private float totalHours = 0;
     private int weight;
     private ArrayList<User> participanList = new ArrayList<User>();
 
 
     public Activity(String name, float budgetTime){
         this.name = name;
-        this.startDate = null;
-        this.deadline = null;
         this.budgetTime = budgetTime;
     }
 
@@ -33,6 +31,8 @@ public class Activity {
     public boolean isOverdue(Calendar today){
         return today.after(this.deadline);
     }
+
+    public boolean isOverBudget(){return this.totalHours > this.budgetTime;}
 
     public void setStartDate(Calendar cal){this.startDate = cal;}
 
