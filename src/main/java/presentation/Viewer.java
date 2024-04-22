@@ -3,9 +3,7 @@ package presentation;
 import app.AUserIsAlreadyLoggedInException;
 import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
-import domain.Activity;
-import domain.App;
-import domain.Project;
+import domain.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,7 +32,8 @@ public class Viewer { // Author Asger
             }else if (startvalue == 2){
                 System.out.println("Enter name to create user id");
                 try {
-                    app.registerUser(loginScanner.next());
+                    User outuser = app.registerUser(loginScanner.next());
+                    System.out.println("Your user id is: "+ outuser.getUserId());
                 } catch (UserIdAlreadyInUseExeption e){
                     System.out.println("User id already exists");
                 }
@@ -210,5 +209,11 @@ public class Viewer { // Author Asger
         System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + activity.getParticipanList());
         System.out.println("Enter \"Complete\" to complete activity, or \"Exit\" to go to main menu");
+    }
+
+    private static void clearScreen(){
+        for(int i = 0; i < 20; i++){
+            System.out.println("");
+        }
     }
 }
