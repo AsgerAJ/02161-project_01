@@ -1,8 +1,7 @@
 package example.cucumber;
 
-import app.UserIdAlreadyInUseExeption;
-import domain.App;
-import example.cucumber.ErrorMessageHolder;
+import domain.UserIdAlreadyInUseExeption;
+import app.App;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

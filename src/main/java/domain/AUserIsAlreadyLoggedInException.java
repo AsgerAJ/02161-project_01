@@ -1,4 +1,4 @@
-package app;
+package domain;
 
 public class AUserIsAlreadyLoggedInException extends Exception {
 

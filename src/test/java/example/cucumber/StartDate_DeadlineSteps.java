@@ -1,7 +1,7 @@
 package example.cucumber;
 
-import app.InvalidDateException;
-import domain.App;
+import domain.InvalidDateException;
+import app.App;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

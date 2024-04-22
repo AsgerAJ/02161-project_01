@@ -1,18 +1,10 @@
 package example.cucumber;
 
-import app.InvalidDateException;
-import domain.App;
-import domain.Project;
-import domain.User;
-import example.cucumber.ErrorMessageHolder;
-import example.cucumber.MockDateHolder;
+import app.App;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import java.util.GregorianCalendar;
-
-import static java.util.Calendar.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

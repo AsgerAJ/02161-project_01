@@ -1,6 +1,6 @@
 package example.cucumber;
 
-import domain.App;
+import app.App;
 import domain.DateServer;
 
 import java.util.Calendar;

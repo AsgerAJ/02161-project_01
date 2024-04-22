@@ -1,12 +1,8 @@
 package domain;
 
-import app.InvalidDateException;
-
 import java.util.ArrayList;
-import java.time.*;
 import java.util.Calendar;
-import java.util.Objects;
-import app.InvalidDateException;
+
 public class Project {
     private String name;
     private String projectID;

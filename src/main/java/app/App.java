@@ -1,12 +1,14 @@
-package domain;
+package app;
 
-import app.AUserIsAlreadyLoggedInException;
-import app.UserIdAlreadyInUseExeption;
-import app.UserIdDoesNotExistExeption;
+import domain.AUserIsAlreadyLoggedInException;
+import domain.UserIdAlreadyInUseExeption;
+import domain.UserIdDoesNotExistExeption;
+import domain.DateServer;
+import domain.Project;
+import domain.User;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class App { // Implementer javafx senere, hvis nødvendig
 

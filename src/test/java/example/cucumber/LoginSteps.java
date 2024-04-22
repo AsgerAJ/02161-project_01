@@ -1,12 +1,10 @@
 package example.cucumber;
 
-import app.AUserIsAlreadyLoggedInException;
-import app.UserIdAlreadyInUseExeption;
-import app.UserIdDoesNotExistExeption;
-import domain.App;
-import domain.Project;
+import domain.AUserIsAlreadyLoggedInException;
+import domain.UserIdAlreadyInUseExeption;
+import domain.UserIdDoesNotExistExeption;
+import app.App;
 import domain.User;
-import example.cucumber.ErrorMessageHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

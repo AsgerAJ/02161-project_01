@@ -1,11 +1,11 @@
 package presentation;
 
-import app.AUserIsAlreadyLoggedInException;
-import app.UserIdAlreadyInUseExeption;
-import app.UserIdDoesNotExistExeption;
+import domain.AUserIsAlreadyLoggedInException;
+import app.App;
+import domain.UserIdAlreadyInUseExeption;
+import domain.UserIdDoesNotExistExeption;
 import domain.*;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Viewer { // Author Asger

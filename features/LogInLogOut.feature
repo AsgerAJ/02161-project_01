@@ -11,21 +11,15 @@ Feature: Log in, Log out
     Scenario: Log in user unsuccessfully
       Given no user is logged in
       And no user with id "HUBA" exists
-<<<<<<< HEAD
       When logging in with id "HUBA"
-=======
       When logging in with id "Huba"
->>>>>>> 7f69ee6bfa41f599844f58fbe529693b8eff6ff7
       Then the errormessage "No user with UserId exists" is given
       
     Scenario: Log in attempt with already logged in user
         Given a user with id "HUBA" is logged in
         And a user with id "TEST" exists
-<<<<<<< HEAD
         When logging in with id "Test"
-=======
         When logging in with id "TEST"
->>>>>>> 7f69ee6bfa41f599844f58fbe529693b8eff6ff7
         Then the errormessage "A user is already logged in" is given
 
     Scenario: Log out user
