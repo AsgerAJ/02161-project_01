@@ -201,7 +201,7 @@ public class Viewer { // Author Asger
             System.out.println(i + ": " +activity.getName() + " Status: " + activity.getStatus());
             i++;
         }
-        System.out.println("Enter the number for the activity, \"NEW\" to make a new activity, or \"Exit\" to go to main menu");
+        System.out.println("Enter the number for the activity,\"ADD\" to add member to project \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
     }
 
     private static void inActivityMenu(Activity activity) {
