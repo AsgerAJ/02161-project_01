@@ -105,6 +105,14 @@ public class Viewer { // Author Asger
                     newActivityInProject(project);
                 }else if(input.equalsIgnoreCase("Exit")){
                     break;
+                }else if(input.equalsIgnoreCase("Add")){
+                    System.out.println("Enter user id of user to be added to project");
+                    String addName = projectScanner.nextLine();
+                    try {
+                        project.assignUser(app.getUserFromId(addName));
+                    }catch (UserIdDoesNotExistExeption e){
+                        System.out.println("User not found");
+                    }
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -112,6 +120,8 @@ public class Viewer { // Author Asger
             }
         }
     }
+
+
 
     private static void enterActicvity(Activity activity) {
         Scanner activityScanner = new Scanner(System.in);
@@ -180,6 +190,12 @@ public class Viewer { // Author Asger
         if(project.getActivityList()!=null){
             System.out.println(project.completionPercentage());
         }
+        StringBuilder nameString = new StringBuilder();
+        for(int i = 0; i < project.getParticipantList().size(); i++){
+            nameString.append(project.getParticipantList().get(i).getUserId()).append(", ");
+        }
+        System.out.println("Assigned users: " + nameString);
+
         System.out.println("List of Activities:");
         int i = 1;
         for(Activity activity : project.getActivityList()){

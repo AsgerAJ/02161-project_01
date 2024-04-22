@@ -122,8 +122,6 @@ public class Project {
 
     }
 
-<<<<<<< HEAD
-=======
     public String completionPercentage(){
         double completionPercentage = 0;
         for(int i = 0; i < this.getActivityList().size(); i++){
@@ -146,7 +144,6 @@ public class Project {
 
         return progressBarBuilder.toString();
     }
->>>>>>> 7f69ee6bfa41f599844f58fbe529693b8eff6ff7
     public void setStartDate(Calendar date) throws InvalidDateException {
         if (this.deadline ==null || date.before(this.deadline)) {
             this.startDate=date;

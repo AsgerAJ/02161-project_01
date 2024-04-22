@@ -5,6 +5,7 @@ import app.UserIdAlreadyInUseExeption;
 import app.UserIdDoesNotExistExeption;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class App { // Implementer javafx senere, hvis nødvendig
@@ -37,10 +38,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
         User u = new User(edited);
         if(!hasUserWithID(edited)){
             this.userList.add(u);
-<<<<<<< HEAD
-
-=======
->>>>>>> 7f69ee6bfa41f599844f58fbe529693b8eff6ff7
         } else {
 
             throw new UserIdAlreadyInUseExeption("UserId already in use");
@@ -48,13 +45,13 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return u;
     }
 
-    public  User getUserFromId(String id){
+    public  User getUserFromId(String id) throws UserIdDoesNotExistExeption{
         for (User u : userList){
             if(u.getUserId().equals(id.toUpperCase())){
                 return u;
             }
         }
-        return null;
+        throw new UserIdDoesNotExistExeption("No user with UserId exists");
     }
 
     public void removeUserWithId(String id){
@@ -95,6 +92,14 @@ public class App { // Implementer javafx senere, hvis nødvendig
         this.dateServer=d;
     }
 
+    public Project getProjectFromName(String name){
+        for (Project project : this.projectRepository) {
+            if (Objects.equals(project.getTitle(), name)) {
+                return project;
+            }
+        }
+        return null;
+    }
 
     public Project createProject(String projectName) {
         Project p = new Project(projectName,this.dateServer.getDate(),this.projectAmount);
