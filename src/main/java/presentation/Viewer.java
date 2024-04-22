@@ -7,6 +7,8 @@ import domain.UserIdDoesNotExistExeption;
 import io.cucumber.messages.types.Exception;
 import domain.*;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class Viewer { // Author Asger
@@ -230,4 +232,45 @@ public class Viewer { // Author Asger
             System.out.println("");
         }
     }
+
+    private static Calendar stringToDate(String input) throws InvalidDateFormatException {
+        // format input to dates
+        if (!input.contains("/")) {
+            throw new InvalidDateFormatException("doesnt contain");
+        }
+        String[] dmy = input.split("/");
+
+        int day;
+        int month;
+        int year;
+        try {
+            day = Integer.parseInt(dmy[0]);
+            month = Integer.parseInt(dmy[1]) - 1;
+            year = Integer.parseInt(dmy[2]);
+        } catch (Exception e) {
+            throw new InvalidDateFormatException("invalid date format. Please use dd/mm/yyyy");
+        }
+        if (day < 1) {
+            throw new InvalidDateFormatException("Invalid day");
+        }
+        if (month > 11 || month < 0) {
+            throw new InvalidDateFormatException("Month must be a number between 1 and 12");
+        }
+        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        if (month == 1) { // february for leap year
+            if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+                if (day > 29) {
+                    throw new InvalidDateFormatException("Invalid day of month");
+                } else if (day > 28) {
+                    throw new InvalidDateFormatException("Invalid day of month");
+                }
+            }
+        } else {
+            if (day > daysInMonth[month]) {
+                throw new InvalidDateFormatException("Invalid day of month");
+            }
+        }
+        return new GregorianCalendar(year, month, day);
+    }
+
 }
