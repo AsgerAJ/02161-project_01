@@ -16,9 +16,9 @@ public class Viewer { // Author Asger
         Scanner loginScanner = new Scanner(System.in);
 
         // Login & Register user Slice
-        int startvalue = -1;
+        int loginValue = -1;
         while(true){
-            if (startvalue == 1){
+            if (loginValue == 1){
                 System.out.println("Enter User id");
                 try {
                     app.logInUser(loginScanner.next().substring(0, 4).toUpperCase());
@@ -29,7 +29,7 @@ public class Viewer { // Author Asger
                     System.out.println("User id does not exist");
                 }
 
-            }else if (startvalue == 2){
+            }else if (loginValue == 2){
                 System.out.println("Enter name to create user id");
                 try {
                     User outuser = app.registerUser(loginScanner.next());
@@ -43,9 +43,9 @@ public class Viewer { // Author Asger
             }
             String input = loginScanner.nextLine();
             try {
-                startvalue = Integer.parseInt(input);
+                loginValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                startvalue = -1;
+                loginValue = -1;
             }
         }
     }
@@ -55,7 +55,8 @@ public class Viewer { // Author Asger
         int startvalue = 0;
         Scanner programScanner = new Scanner(System.in);
         while((app.getCurrentUser() != null)){
-            if (startvalue > 0){                try{
+            if (startvalue > 0){
+                try{
                 Project currentproject = app.getCurrentUser().getAssignedProjects().get(startvalue-1);
                 enterProject(currentproject, currentproject);
             }catch (IndexOutOfBoundsException e){
