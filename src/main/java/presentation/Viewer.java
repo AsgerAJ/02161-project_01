@@ -33,7 +33,12 @@ public class Viewer { // Author Asger
 
             }else if (startvalue == 2){
                 System.out.println("Enter name to create user id");
-                app.registerUser(loginScanner.next());
+                try {
+                    app.registerUser(loginScanner.next());
+                } catch (UserIdAlreadyInUseExeption e){
+                    System.out.println("User id already exists");
+                }
+
             }else{
                 System.out.println("Enter '1' to log in, or '2' to register a new user ");
             }
