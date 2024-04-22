@@ -141,7 +141,7 @@ public class Viewer { // Author Asger
                             success=true;
                         } catch (InvalidDateException e) {
                             System.out.print(e.getMessage());
-                            System.out.println("please try again;");
+                            System.out.println(". Please try again;");
                         }
                     }
                 }
