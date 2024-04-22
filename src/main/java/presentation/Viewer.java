@@ -4,6 +4,7 @@ import domain.AUserIsAlreadyLoggedInException;
 import app.App;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
+import io.cucumber.messages.types.Exception;
 import domain.*;
 
 import java.util.Scanner;
@@ -133,7 +134,17 @@ public class Viewer { // Author Asger
             }
             String input = activityScanner.nextLine();
             try {
-                if (input.equalsIgnoreCase("Complete")){
+                if (input.equalsIgnoreCase("Log")) {
+                    System.out.println("Enter hours worked today:");
+                    String workedTimeString = activityScanner.nextLine();
+                    try {
+                        float workedTime = Float.parseFloat(workedTimeString);
+                        activity.logTime(workedTime, app.getCurrentUser());
+                    }catch (Exception e){
+                        System.out.println("Invalid time input");
+                    }
+                }
+                else if (input.equalsIgnoreCase("Complete")){
                     activity.setStatus(true);
                 }else if(input.equalsIgnoreCase("Exit")){
                     inProjectMenu(currentProject);
@@ -211,7 +222,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + activity.getName());
         System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + activity.getParticipanList());
-        System.out.println("Enter \"Complete\" to complete activity, or \"Exit\" to go to main menu");
+        System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 
     private static void clearScreen(){
