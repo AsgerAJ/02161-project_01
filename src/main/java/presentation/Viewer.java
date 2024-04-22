@@ -142,7 +142,7 @@ public class Viewer { // Author Asger
                     try {
                         float workedTime = Float.parseFloat(workedTimeString);
                         activity.logTime(workedTime, app.getCurrentUser());
-                    }catch (Exception e){
+                    }catch (java.lang.Exception e){
                         System.out.println("Invalid time input");
                     }
                 }
@@ -247,7 +247,7 @@ public class Viewer { // Author Asger
             day = Integer.parseInt(dmy[0]);
             month = Integer.parseInt(dmy[1]) - 1;
             year = Integer.parseInt(dmy[2]);
-        } catch (Exception e) {
+        } catch (java.lang.Exception e) {
             throw new InvalidDateFormatException("invalid date format. Please use dd/mm/yyyy");
         }
         if (day < 1) {

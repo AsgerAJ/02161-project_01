@@ -1,6 +1,7 @@
 module hellofx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires io.cucumber.messages;
 
     opens domain to javafx.fxml; // Gives access to fxml files
     exports domain;
