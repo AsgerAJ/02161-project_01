@@ -11,9 +11,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import java.io.IOException;
+
 public class Viewer { // Author Asger
     public static final App app = new App();
-    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
+    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption, IOException, InterruptedException {
         // App setup
 
         Scanner loginScanner = new Scanner(System.in);
@@ -42,6 +44,7 @@ public class Viewer { // Author Asger
                 }
 
             }else{
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                 System.out.println("Enter '1' to log in, or '2' to register a new user ");
             }
             String input = loginScanner.nextLine();
@@ -227,11 +230,6 @@ public class Viewer { // Author Asger
         System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 
-    private static void clearScreen(){
-        for(int i = 0; i < 20; i++){
-            System.out.println("");
-        }
-    }
 
     private static Calendar stringToDate(String input) throws InvalidDateFormatException {
         // format input to dates
