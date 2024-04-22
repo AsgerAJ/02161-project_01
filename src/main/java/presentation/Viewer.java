@@ -57,7 +57,7 @@ public class Viewer { // Author Asger
         while((app.getCurrentUser() != null)){
             if (startvalue > 0){                try{
                 Project currentproject = app.getCurrentUser().getAssignedProjects().get(startvalue-1);
-                enterProject(currentproject);
+                enterProject(currentproject, currentproject);
             }catch (IndexOutOfBoundsException e){
                 System.out.println("Project not found");
             }
@@ -82,14 +82,14 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void enterProject(Project project) {
+    private static void enterProject(Project project, Project currentProject) {
         Scanner projectScanner = new Scanner(System.in);
         int enterProjectValue = 0;
         while(true){
             if(enterProjectValue > 0){
                 try{
                     Activity currentActivity = project.getActivityList().get(enterProjectValue-1);
-                    enterActicvity(currentActivity);
+                    enterActicvity(currentActivity, currentProject);
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
                 }
@@ -103,6 +103,7 @@ public class Viewer { // Author Asger
                 if (input.equalsIgnoreCase("NEW")){
                     newActivityInProject(project);
                 }else if(input.equalsIgnoreCase("Exit")){
+                    mainMenuOverview();
                     break;
                 }else if(input.equalsIgnoreCase("Add")){
                     System.out.println("Enter user id of user to be added to project");
@@ -122,7 +123,7 @@ public class Viewer { // Author Asger
 
 
 
-    private static void enterActicvity(Activity activity) {
+    private static void enterActicvity(Activity activity, Project currentProject) {
         Scanner activityScanner = new Scanner(System.in);
         int enterProjectValue = 0;
         while(true){
@@ -134,6 +135,7 @@ public class Viewer { // Author Asger
                 if (input.equalsIgnoreCase("Complete")){
                     activity.setStatus(true);
                 }else if(input.equalsIgnoreCase("Exit")){
+                    inProjectMenu(currentProject);
                     break;
                 }
                 enterProjectValue = Integer.parseInt(input);
