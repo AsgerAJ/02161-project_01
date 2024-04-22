@@ -30,15 +30,33 @@ public class Activity {
 
     public boolean getStatus(){return this.isComplete;}
 
-    public boolean isOverdue(){
-        return false;
+    public boolean isOverdue(Calendar today){
+        return today.after(this.deadline);
     }
 
     public void setStartDate(Calendar cal){this.startDate = cal;}
 
     public void setDeadline(Calendar cal){this.deadline = cal;}
 
+    public Calendar getStartDate(){
+        return this.startDate;
+    }
+    public Calendar getDeadLine(){
+        return this.deadline;
+    }
+
     public ArrayList<User> getParticipanList() {return this.participanList;}
+
+    public void logTime(float workedTime, User user){
+        String userId = user.getUserId();
+        timeMap.put(userId, timeMap.get(userId) + workedTime);
+        this.totalHours += workedTime;
+    }
+
+    public float getTotalHours(){
+        return this.totalHours;
+    }
+
 
 
 }
