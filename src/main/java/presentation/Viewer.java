@@ -14,7 +14,7 @@ import java.util.Scanner;
 
 public class Viewer { // Author Asger
     public static final App app = new App();
-    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption, IOException, InterruptedException {
+    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
         // App setup
 
         Scanner loginScanner = new Scanner(System.in);
