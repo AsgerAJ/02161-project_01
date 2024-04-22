@@ -11,7 +11,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import java.io.IOException;
 
 public class Viewer { // Author Asger
     public static final App app = new App();
@@ -44,7 +43,6 @@ public class Viewer { // Author Asger
                 }
 
             }else{
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
                 System.out.println("Enter '1' to log in, or '2' to register a new user ");
             }
             String input = loginScanner.nextLine();
