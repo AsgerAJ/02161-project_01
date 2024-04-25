@@ -1,10 +1,13 @@
 package example.cucumber;
 
+import domain.User;
 import domain.UserIdAlreadyInUseExeption;
 import app.App;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -49,5 +52,19 @@ public class userSteps {
     public void the_errormessage_is_given(String string) {
         assertEquals(string,errorMessage.getErrorMessage());
     }
+
+
+    @Given("{int} users are part of the project")
+    public void users_are_part_of_the_project(Integer int1) throws UserIdAlreadyInUseExeption {
+        ArrayList<User> exampleUsers =this.userHelper.getExampleUsers(int1);
+
+        for (User u : exampleUsers) {
+            this.app.registerUser(u.getUserId());
+            this.projecthelper.getProject().assignUser(u);
+        }
+
+    }
+
+
 
 }

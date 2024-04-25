@@ -2,8 +2,11 @@ package example.cucumber;
 
 import domain.User;
 
+import java.util.ArrayList;
+
 public class UserHelper {
     private User user;
+    private ArrayList<User> exampleUserList = new ArrayList<>();
 
     public UserHelper(){}
 
@@ -12,5 +15,21 @@ public class UserHelper {
     }
     public User getUser() {
         return this.user;
+    }
+
+
+    public ArrayList<User> getExampleUsers(int amount) {
+
+
+        for (int i = 1; i<=amount;i++) {
+
+            this.exampleUserList.add(new User("U"+i));
+
+        }
+        return this.exampleUserList;
+    }
+
+    public ArrayList<User> getExampleUsers() {
+        return this.exampleUserList;
     }
 }
