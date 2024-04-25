@@ -255,7 +255,7 @@ public class Viewer { // Author Asger
     private static void inActivityMenu(Activity activity) {
         System.out.println("Activity name: " + activity.getName());
         System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
-        System.out.println("Activity Members: " + activity.getParticipanList());
+        System.out.println("Activity Members: " + activity.getParticipantList());
         System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 
