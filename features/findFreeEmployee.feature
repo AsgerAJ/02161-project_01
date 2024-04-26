@@ -3,7 +3,7 @@ Feature: Find free employee
   Actor: project leader
 
   Scenario: All project members available
-      Given a user is registered with id "HUBA"
+      Given a user with id "HUBA" exists
       And a user with id "HUBA" is logged in
       And a project exists with title "Test"
       And 10 users are part of the project
