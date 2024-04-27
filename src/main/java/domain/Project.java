@@ -154,4 +154,21 @@ public class Project {
     public Calendar getStartDate() {
         return this.startDate;
     }
+
+
+
+    public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
+        //assert activity!=null
+        ArrayList<UserCount> returnList = new ArrayList<>();
+        for (User user : this.participanList) {
+            SuccessAmount result = user.isAvailable(activity);
+            if (result.isTrue()) {
+                UserCount data = new DataPackage();
+                data.setUser(user);
+                data.setCount(result.amount());
+            }
+
+        }
+        return returnList;
+    }
 }

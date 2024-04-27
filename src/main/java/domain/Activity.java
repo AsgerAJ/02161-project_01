@@ -69,13 +69,11 @@ public class Activity extends PeriodEvent{
                 || this.deadline.after(event.getStartdate()) && this.startDate.before(event.getDeadline());
     }
 
-    @Override
-    public boolean timeLockdown() {
-        return false;
-    }
-
     public double getBudgetTime() {
         return this.budgetTime;
     }
-
+    public void assignUser(User u ) {
+        this.participantList.add(u);
+        u.assignActivity(this);
+    }
 }

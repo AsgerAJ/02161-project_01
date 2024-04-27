@@ -6,6 +6,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+
+
 import static org.junit.Assert.*;
 
 public class ActivitySteps {
@@ -66,4 +68,15 @@ public class ActivitySteps {
     public void theActivityWithNameHasBudget(String string, Double dob1) {
         assertTrue(dob1==this.activityHelper.getActivity().getBudgetTime());
     }
+    @When("the user is added to the activity")
+    public void theUserIsAddedToTheActivity() {
+        this.activityHelper.getActivity().assignUser(this.userHelper.getUser());
+    }
+    @Then("the user is part of the activity")
+    public void theUserIsPartOfTheActivity() {
+        assertTrue(this.activityHelper.getActivity().getParticipantList().contains(this.userHelper.getUser()));
+    }
+
+
+
 }

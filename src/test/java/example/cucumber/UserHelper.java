@@ -1,12 +1,14 @@
 package example.cucumber;
 
 import domain.User;
+import domain.UserCount;
 
 import java.util.ArrayList;
 
 public class UserHelper {
     private User user;
     private ArrayList<User> exampleUserList = new ArrayList<>();
+    private ArrayList<UserCount> availableUserList;
 
     public UserHelper(){}
 
@@ -29,7 +31,10 @@ public class UserHelper {
         return this.exampleUserList;
     }
 
-    public ArrayList<User> getExampleUsers() {
+    public ArrayList<User> getExampleUsersList() {
         return this.exampleUserList;
     }
+
+    public void setAvailableUserList(ArrayList<UserCount> availableUserList) {this.availableUserList=availableUserList;}
+    public ArrayList<UserCount> getAvailableUserList() {return this.availableUserList;}
 }

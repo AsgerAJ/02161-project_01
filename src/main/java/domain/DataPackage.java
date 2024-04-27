@@ -1,9 +1,10 @@
 package domain;
 
-public class DataPackage implements SuccessAmount {
+public class DataPackage implements SuccessAmount,UserCount {
     private boolean truthValue =false;
     private int amount = 0;
-
+    private User user;
+    private int count;
     public DataPackage() {}
 
 
@@ -35,4 +36,25 @@ public class DataPackage implements SuccessAmount {
     public void setTruthValue(boolean v) {
         this.truthValue=v;
     }
+
+    @Override
+    public User getUser() {
+        return this.user;
+    }
+
+    @Override
+    public int getCount() {
+        return this.count;
+    }
+
+    @Override
+    public void setUser(User u) {
+        this.user=u;
+    }
+
+    @Override
+    public void setCount(int count) {
+        this.count=count;
+    }
+
 }
