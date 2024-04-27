@@ -162,13 +162,16 @@ public class Project {
         ArrayList<UserCount> returnList = new ArrayList<>();
         for (User user : this.participanList) {
             SuccessAmount result = user.isAvailable(activity);
+
             if (result.isTrue()) {
                 UserCount data = new DataPackage();
                 data.setUser(user);
                 data.setCount(result.amount());
+                returnList.add(data);
             }
 
         }
-        return returnList;
+
+        return UserCountSorter.sortUsers(returnList);
     }
 }

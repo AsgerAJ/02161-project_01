@@ -63,11 +63,8 @@ public class Activity extends PeriodEvent{
         return this.startDate;
     }
 
-    @Override
-    public boolean timeOverlap(PeriodEvent event) {
-        return (event.getDeadline().after(this.startDate) && event.getStartdate().before(this.deadline))
-                || this.deadline.after(event.getStartdate()) && this.startDate.before(event.getDeadline());
-    }
+
+
 
     public double getBudgetTime() {
         return this.budgetTime;

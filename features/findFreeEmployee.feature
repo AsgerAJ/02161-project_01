@@ -12,8 +12,8 @@ Feature: Find free employee
       And all the activities have deadline 30,05,2023
       And the users have different amounts of activities
       And user creates an activity with name "Yoga" with time budget 1
-      And the activity has start date 20,04,2023
-      And the activity has deadline 30,04,2023
+      And the activity has start date 20,04,2024
+      And the activity has deadline 30,04,2024
       When the user searches for free employee
       Then all users are returned
       And the returned users are sorted by amount of activities overlapping

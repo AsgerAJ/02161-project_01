@@ -3,11 +3,14 @@ package example.cucumber;
 import app.App;
 import domain.Activity;
 import domain.User;
+import domain.UserCount;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertTrue;
 
 public class FindFreeEmployeeSteps {
 
@@ -31,8 +34,9 @@ public class FindFreeEmployeeSteps {
     public void theUsersHaveDifferentAmountsOfActivities() {
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
         ArrayList<User> userList=this.userHelper.getExampleUsersList();
+
         for (int actIndex = 0; actIndex<actList.size(); actIndex++) { //activity 1 to 1 users, activity 2 to 2 users...
-            for (int userIndex=0; userIndex<actIndex; userIndex++) {
+            for (int userIndex=0; userIndex<=actIndex+1; userIndex++) {
                 if (userIndex<userList.size()) {
                     actList.get(actIndex).assignUser(userList.get(userIndex));
                 }
@@ -47,12 +51,33 @@ public class FindFreeEmployeeSteps {
     }
     @Then("all users are returned")
     public void allUsersAreReturned() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        ArrayList<User> userList = this.userHelper.getExampleUsersList();
+        ArrayList<User> returnedUsers = new ArrayList<>();
+        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
+        for (UserCount uc : results) {
+            returnedUsers.add(uc.getUser());
+
+        }
+        for (User u : userList) {
+
+            assertTrue(returnedUsers.contains(u));
+        }
+
+            //assertTrue(returnedUsers.containsAll(userList));
+
+
+
     }
     @Then("the returned users are sorted by amount of activities overlapping")
     public void theReturnedUsersAreSortedByAmountOfActivitiesOverlapping() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
+
+        int[] counts =  new int[results.size()];
+        for (int i = 0; i<results.size(); i++) {
+            counts[i] = results.get(i).getCount();
+        }
+        for (int i = 1; i<counts.length;i++) {
+            assertTrue(counts[i]>=counts[i-1]);
+        }
     }
 }
