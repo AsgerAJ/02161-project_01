@@ -28,11 +28,11 @@ public abstract class UserCountSorter {
 
     private static int partition(UserCount[] ucArr, int begin, int end) {
         int leqIndex = begin-1; //correctPlace of pivot in list.
-        int pivotValue=ucArr[end].getCount();
+        int pivotValue=ucArr[end].getCount(); //store value to compare to
 
         for (int check = begin;check<end;check++) {
             if (ucArr[check].getCount()<=pivotValue) {
-                leqIndex++;
+                leqIndex++; //move rightmost smallest value index
                 swap(ucArr,leqIndex,check); // swap checkValue into rightMost position of smaller than section
             }
         }
