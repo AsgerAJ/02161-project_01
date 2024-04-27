@@ -88,7 +88,12 @@ public class Project {
         return null;
     }
 
-
+    public User[] findAvailableUsers(Calendar startDate, Calendar endDate){
+        for (User user : participanList) {
+            
+        }
+        return new User[0];
+    }
 
     public ArrayList<User> getParticipantList() {
         return this.participanList;
