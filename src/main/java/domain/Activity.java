@@ -11,7 +11,7 @@ public class Activity extends PeriodEvent{
     private double budgetTime;
     private boolean isComplete = false;
     private HashMap<String, Double> timeMap = new HashMap<String, Double>();
-    private float totalHours = 0;
+    private double totalHours = 0;
     private int weight;
     private ArrayList<User> participantList = new ArrayList<User>();
 
@@ -44,11 +44,17 @@ public class Activity extends PeriodEvent{
 
     public void logTime(double workedTime, User user){
         String userId = user.getUserId();
-        timeMap.put(userId, timeMap.get(userId) + workedTime);
+        if (timeMap.containsKey(userId)) {
+            timeMap.put(userId, timeMap.get(userId) + workedTime);
+        } else {
+            timeMap.put(userId, + workedTime);
+        }
+
+
         this.totalHours += workedTime;
     }
 
-    public float getTotalHours(){
+    public double getTotalHours(){
         return this.totalHours;
     }
 
