@@ -8,15 +8,15 @@ public class Activity extends PeriodEvent{
     private String name;
     private Calendar startDate = null;
     private Calendar deadline = null;
-    private float budgetTime;
+    private double budgetTime;
     private boolean isComplete = false;
-    private HashMap<String, Float> timeMap = new HashMap<String, Float>();
+    private HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private float totalHours = 0;
     private int weight;
     private ArrayList<User> participantList = new ArrayList<User>();
 
 
-    public Activity(String name, float budgetTime){
+    public Activity(String name, double budgetTime){
         super(name);
         this.budgetTime = budgetTime;
     }
@@ -42,7 +42,7 @@ public class Activity extends PeriodEvent{
 
     public ArrayList<User> getParticipantList() {return this.participantList;}
 
-    public void logTime(float workedTime, User user){
+    public void logTime(double workedTime, User user){
         String userId = user.getUserId();
         timeMap.put(userId, timeMap.get(userId) + workedTime);
         this.totalHours += workedTime;
@@ -63,14 +63,14 @@ public class Activity extends PeriodEvent{
         return this.startDate;
     }
 
-    @Override
-    public boolean timeOverlap(PeriodEvent event) {
-        return (event.getDeadline().after(this.startDate) && event.getStartdate().before(this.deadline))
-                || this.deadline.after(event.getStartdate()) && this.startDate.before(event.getDeadline());
-    }
 
-    @Override
-    public boolean timeLockdown() {
-        return false;
+
+
+    public double getBudgetTime() {
+        return this.budgetTime;
+    }
+    public void assignUser(User u ) {
+        this.participantList.add(u);
+        u.assignActivity(this);
     }
 }

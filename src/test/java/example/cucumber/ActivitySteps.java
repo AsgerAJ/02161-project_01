@@ -6,6 +6,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+
+
 import static org.junit.Assert.*;
 
 public class ActivitySteps {
@@ -31,9 +33,9 @@ public class ActivitySteps {
         this.projectHelper.setProject(this.app.createProject(string));
         assertNotNull(this.projectHelper.getProject());
     }
-    @When("user creates an activity with name {string} with time budget {int}")
-    public void userCreatesAnActivityWithNameWithTimeBudget(String string, Integer int1) {
-        this.activityHelper.setActivity(new Activity(string, int1));
+    @When("user creates an activity with name {string} with time budget {double}")
+    public void userCreatesAnActivityWithNameWithTimeBudget(String string, Double dob1) {
+        this.activityHelper.setActivity(new Activity(string, dob1));
         this.projectHelper.getProject().createNewActivity(this.activityHelper.getActivity());
     }
 
@@ -62,5 +64,19 @@ public class ActivitySteps {
     public void theActivityIsMarkedAsCompleted(String string) {
         assertTrue(this.projectHelper.getProject().getActivityFromName(string).getStatus());
     }
+    @Then("the activity with name {string} has budget {double}")
+    public void theActivityWithNameHasBudget(String string, Double dob1) {
+        assertTrue(dob1==this.activityHelper.getActivity().getBudgetTime());
+    }
+    @When("the user is added to the activity")
+    public void theUserIsAddedToTheActivity() {
+        this.activityHelper.getActivity().assignUser(this.userHelper.getUser());
+    }
+    @Then("the user is part of the activity")
+    public void theUserIsPartOfTheActivity() {
+        assertTrue(this.activityHelper.getActivity().getParticipantList().contains(this.userHelper.getUser()));
+    }
+
+
 
 }

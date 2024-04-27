@@ -42,25 +42,26 @@ public class User {
 
     public SuccessAmount isAvailable(PeriodEvent event) {
         SuccessAmount result = new DataPackage();
-
-
-        result.setTruthValue(assignedActivities.stream().filter(p->p.timeOverlap(event)).noneMatch(p-> p.timeLockdown()));
-        if (result.isTrue()) {
-            result.setAmount((int) (assignedActivities.stream().filter(p->p.timeOverlap(event)&&!p.timeLockdown()).count()));
-        }
-        return result;
-
-        //for (PeriodEvent p : assignedActivities) {
-        //    if (p.timeOverlap(event)) {
-        //        if (p.timeLockdown()) {
-        //            result.setTruthValue(false);
-        //            break;
-        //        }
-//
-//
-        //    }
+        result.setTruthValue(true);
+        //result.setTruthValue(assignedActivities.stream().filter(p->p.timeOverlap(event)).noneMatch(p-> p.timeLockdown()));
+        //if (result.isTrue()) {
+        //    result.setAmount((int) (assignedActivities.stream().filter(p->p.timeOverlap(event)&&!p.timeLockdown()).count()));
         //}
         //return result;
+
+        for (PeriodEvent p : assignedActivities) {
+            if (p.timeOverlap(event)) {
+                if (p.timeLockdown()) {
+                    result.setTruthValue(false);
+                    break;
+                } else {
+                    result.increaseAmount(1);
+                }
+
+
+            }
+        }
+        return result;
 
 
     }

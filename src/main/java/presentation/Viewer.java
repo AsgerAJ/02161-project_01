@@ -6,6 +6,7 @@ import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
 import io.cucumber.messages.types.Exception;
 import domain.*;
+import javafx.geometry.Dimension2D;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -167,7 +168,7 @@ public class Viewer { // Author Asger
                     System.out.println("Enter hours worked today:");
                     String workedTimeString = activityScanner.nextLine();
                     try {
-                        float workedTime = Float.parseFloat(workedTimeString);
+                        double workedTime = Double.parseDouble(workedTimeString);
                         activity.logTime(workedTime, app.getCurrentUser());
                     }catch (java.lang.Exception e){
                         System.out.println("Invalid time input");
@@ -199,7 +200,7 @@ public class Viewer { // Author Asger
         Scanner newActivityScanner = new Scanner(System.in);
         System.out.print("Enter activity name: " );
         String newActivityName = newActivityScanner.nextLine();
-        int numberIn = 0;
+        double numberIn = 0;
         while (true) {
             if (numberIn > 0) {
                 break;
@@ -208,7 +209,7 @@ public class Viewer { // Author Asger
             }
             String numberInput = newActivityScanner.nextLine();
             try {
-                numberIn = Integer.parseInt(numberInput);
+                numberIn = Double.parseDouble(numberInput);
             } catch (NumberFormatException e) {
                 numberIn = 0;
             }

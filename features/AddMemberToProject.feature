@@ -20,3 +20,11 @@ Feature: Add a member to project
     And user "HUBA" is part of the project
     When user "HUBA" add's user "HOBO" to the project
     Then the errormessage "No user with UserId exists" is given
+
+  Scenario: User added twice
+    Given a user with id "HUBA" exists
+    And a user with id "HUBA" is logged in
+    And a project exists with title "test"
+    And user "HUBA" is part of the project
+    When user "HUBA" add's user "HUBA" to the project
+    Then the participant list contains 1 user with userID "HUBA"

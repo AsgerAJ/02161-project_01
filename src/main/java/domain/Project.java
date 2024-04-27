@@ -40,8 +40,11 @@ public class Project {
     }
 
     public void assignUser(User user){
-        this.participanList.add(user);
-        user.assignProject(this);
+        if (!this.participanList.contains(user)){
+            this.participanList.add(user);
+            user.assignProject(this);
+        }
+
     }
 
     public boolean hasProjectLeader(){
@@ -155,5 +158,25 @@ public class Project {
 
     public Calendar getStartDate() {
         return this.startDate;
+    }
+
+
+
+    public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
+        //assert activity!=null
+        ArrayList<UserCount> returnList = new ArrayList<>();
+        for (User user : this.participanList) {
+            SuccessAmount result = user.isAvailable(activity);
+
+            if (result.isTrue()) {
+                UserCount data = new DataPackage();
+                data.setUser(user);
+                data.setCount(result.amount());
+                returnList.add(data);
+            }
+
+        }
+
+        return UserCountSorter.sortUsers(returnList);
     }
 }
