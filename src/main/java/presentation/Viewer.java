@@ -118,6 +118,32 @@ public class Viewer { // Author Asger
                     }catch (UserIdDoesNotExistExeption e){
                         System.out.println("User not found");
                     }
+                } else if (input.equalsIgnoreCase("set start date")) {
+                    boolean success = false;
+                    while (!success) {
+                        try {
+                            Calendar c = getWeekOfYearFromUser(projectScanner);
+                            currentProject.setStartDate(c);
+                            success=true;
+                        } catch (InvalidDateException e) {
+                            System.out.print(e.getMessage());
+                            System.out.println("please try again;");
+                        }
+                    }
+
+                } else if (input.equalsIgnoreCase("set deadline")) {
+                    boolean success = false;
+                    while (!success) {
+                        try {
+                            Calendar c = getWeekOfYearFromUser(projectScanner);
+                            c.set(Calendar.DAY_OF_WEEK,8); //sunday. Java.Calendar has weird day of week format.
+                            currentProject.setDeadline(c);
+                            success=true;
+                        } catch (InvalidDateException e) {
+                            System.out.print(e.getMessage());
+                            System.out.println(". Please try again;");
+                        }
+                    }
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -218,13 +244,18 @@ public class Viewer { // Author Asger
             System.out.println(i + ": " +activity.getName() + " Status: " + activity.getStatus());
             i++;
         }
+
+        System.out.println("Startdate: " + dateToString(project.getStartDate()));
+        System.out.println("Deadline: " + dateToString(project.getDeadline()));
         System.out.println("Enter the number for the activity,\"ADD\" to add member to project \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
+        System.out.println("Enter \"Set start date\" to set start date of project:");
+        System.out.println("Enter \"Set deadline\" to set deadline of project:");
     }
 
     private static void inActivityMenu(Activity activity) {
         System.out.println("Activity name: " + activity.getName());
         System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
-        System.out.println("Activity Members: " + activity.getParticipanList());
+        System.out.println("Activity Members: " + activity.getParticipantList());
         System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 
@@ -268,5 +299,49 @@ public class Viewer { // Author Asger
         }
         return new GregorianCalendar(year, month, day);
     }
+    private static Calendar getWeekOfYearFromUser (Scanner input) {
+        System.out.println("What year? (format: yyyy)");
+        boolean successfullYear = false;
+        int year=1;
+        Calendar c= Calendar.getInstance();
+        c.clear();
+        c.set(Calendar.YEAR,year);
+        while (!successfullYear) {
+            try {
+                year = Integer.parseInt(input.nextLine());
+                successfullYear=true;
 
+            } catch (java.lang.Exception e){
+                System.out.println("Invalid year. Please try again");
+            }
+        }
+        c.set(Calendar.YEAR,year);
+        System.out.println("What week? (format: ww)");
+        boolean successfullWeek=false;
+        int week=1;
+        while (!successfullWeek) {
+            try {
+                week= Integer.parseInt(input.nextLine());
+                if (week >c.getActualMaximum(Calendar.WEEK_OF_YEAR) || week <1) {
+                    throw new InvalidDateException("");
+                }
+                successfullWeek=true;
+
+            } catch (java.lang.Exception e){
+                System.out.println("Invalid week. Please try again.");
+            }
+        }
+
+        c.set(Calendar.WEEK_OF_YEAR,week);
+
+        return c;
+
+    }
+    private static String dateToString(Calendar d) {
+        if (d==null) {
+            return "Date not Set";
+        } else {
+            return d.get(Calendar.DAY_OF_MONTH)+"/"+(d.get(Calendar.MONTH)+1)+"/"+d.get(Calendar.YEAR) +"(Week: "+d.get(Calendar.WEEK_OF_YEAR)+")";
+        }
+    }
 }

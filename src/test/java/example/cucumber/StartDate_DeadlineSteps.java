@@ -10,8 +10,7 @@ import java.util.GregorianCalendar;
 
 import static java.util.Calendar.*;
 import static java.util.Calendar.YEAR;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class StartDate_DeadlineSteps {
     private App app;
@@ -61,6 +60,10 @@ public class StartDate_DeadlineSteps {
     @Then("the project is overdue")
     public void theProjectIsOverdue() {
         assertTrue(this.projectHelper.getProject().isOverdue(this.dateHolder.getDate()));
+    }
+    @Then("the project is not overdue")
+    public void the_project_is_not_overdue() {
+        assertFalse(this.projectHelper.getProject().isOverdue(this.dateHolder.getDate()));
     }
 
     @When("sets the startdate of the project to {int},{int},{int}")

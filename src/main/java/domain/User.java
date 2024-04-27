@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class User {
     private String userId;
     private ArrayList<Project> assignedProjects = new ArrayList<Project>();
-    private ArrayList<Activity> assignedActivities = new ArrayList<Activity>();
+    private ArrayList<PeriodEvent> assignedActivities = new ArrayList<PeriodEvent>();
 
     public User(String userId){
         this.userId = userId;
@@ -19,7 +19,7 @@ public class User {
         this.assignedProjects.add(project);
     }
 
-    public void assignActivity(Activity activity){
+    public void assignActivity(PeriodEvent activity){
         this.assignedActivities.add(activity);
     }
 
@@ -39,4 +39,31 @@ public class User {
     public ArrayList<Project> getAssignedProjects() {
         return assignedProjects;
     }
+
+    public SuccessAmount isAvailable(PeriodEvent event) {
+        SuccessAmount result = new DataPackage();
+
+
+        result.setTruthValue(assignedActivities.stream().filter(p->p.timeOverlap(event)).noneMatch(p-> p.timeLockdown()));
+        if (result.isTrue()) {
+            result.setAmount((int) (assignedActivities.stream().filter(p->p.timeOverlap(event)&&!p.timeLockdown()).count()));
+        }
+        return result;
+
+        //for (PeriodEvent p : assignedActivities) {
+        //    if (p.timeOverlap(event)) {
+        //        if (p.timeLockdown()) {
+        //            result.setTruthValue(false);
+        //            break;
+        //        }
+//
+//
+        //    }
+        //}
+        //return result;
+
+
+    }
+
+
 }
