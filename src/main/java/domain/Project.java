@@ -40,8 +40,11 @@ public class Project {
     }
 
     public void assignUser(User user){
-        this.participanList.add(user);
-        user.assignProject(this);
+        if (!this.participanList.contains(user)){
+            this.participanList.add(user);
+            user.assignProject(this);
+        }
+
     }
 
     public boolean hasProjectLeader(){

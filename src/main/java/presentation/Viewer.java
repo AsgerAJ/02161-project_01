@@ -167,7 +167,7 @@ public class Viewer { // Author Asger
                     System.out.println("Enter hours worked today:");
                     String workedTimeString = activityScanner.nextLine();
                     try {
-                        float workedTime = Float.parseFloat(workedTimeString);
+                        double workedTime = Double.parseDouble(workedTimeString);
                         activity.logTime(workedTime, app.getCurrentUser());
                     }catch (java.lang.Exception e){
                         System.out.println("Invalid time input");

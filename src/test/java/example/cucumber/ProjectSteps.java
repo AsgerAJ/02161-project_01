@@ -91,6 +91,17 @@ public class ProjectSteps {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
+    @Then("the participant list contains {int} user with userID {string}")
+    public void theParticipantListContainsUserWithUserID(Integer int1, String string) {
+        ArrayList<User> participantList = this.projectHelper.getProject().getParticipantList();
+        int count = 0;
+        for (User u : participantList) {
+            if (u.getUserId().equalsIgnoreCase(string)) {
+                count++;
+            }
+        }
+        assertTrue(int1==count);
 
+    }
 
 }

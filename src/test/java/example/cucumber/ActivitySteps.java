@@ -31,9 +31,9 @@ public class ActivitySteps {
         this.projectHelper.setProject(this.app.createProject(string));
         assertNotNull(this.projectHelper.getProject());
     }
-    @When("user creates an activity with name {string} with time budget {int}")
-    public void userCreatesAnActivityWithNameWithTimeBudget(String string, Integer int1) {
-        this.activityHelper.setActivity(new Activity(string, int1));
+    @When("user creates an activity with name {string} with time budget {double}")
+    public void userCreatesAnActivityWithNameWithTimeBudget(String string, Double dob1) {
+        this.activityHelper.setActivity(new Activity(string, dob1));
         this.projectHelper.getProject().createNewActivity(this.activityHelper.getActivity());
     }
 
@@ -62,5 +62,8 @@ public class ActivitySteps {
     public void theActivityIsMarkedAsCompleted(String string) {
         assertTrue(this.projectHelper.getProject().getActivityFromName(string).getStatus());
     }
-
+    @Then("the activity with name {string} has budget {double}")
+    public void theActivityWithNameHasBudget(String string, Double dob1) {
+        assertTrue(dob1==this.activityHelper.getActivity().getBudgetTime());
+    }
 }
