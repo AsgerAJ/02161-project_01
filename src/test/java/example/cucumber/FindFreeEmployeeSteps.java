@@ -58,12 +58,7 @@ public class FindFreeEmployeeSteps {
             returnedUsers.add(uc.getUser());
 
         }
-        for (User u : userList) {
-
-            assertTrue(returnedUsers.contains(u));
-        }
-
-            //assertTrue(returnedUsers.containsAll(userList));
+        assertTrue(returnedUsers.containsAll(userList));
 
 
 
