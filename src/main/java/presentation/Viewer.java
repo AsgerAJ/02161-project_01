@@ -269,6 +269,7 @@ public class Viewer { // Author Asger
         String[] dmy = input.split("/");
 
         int day;
+
         int month;
         int year;
         try {
