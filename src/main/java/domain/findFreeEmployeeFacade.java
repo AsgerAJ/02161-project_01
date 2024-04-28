@@ -9,7 +9,7 @@ public abstract class findFreeEmployeeFacade {
         //assert activity!=null
         ArrayList<UserCount> returnList = new ArrayList<>();
         for (User user : userList) {
-            SuccessAmount result = user.isAvailable(activity);
+            SuccessAmount result = user.isAvailable(a);
 
             if (result.isTrue()) {
                 UserCount data = new DataPackage();
