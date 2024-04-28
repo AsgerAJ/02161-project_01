@@ -163,20 +163,6 @@ public class Project {
 
 
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
-        //assert activity!=null
-        ArrayList<UserCount> returnList = new ArrayList<>();
-        for (User user : this.participanList) {
-            SuccessAmount result = user.isAvailable(activity);
-
-            if (result.isTrue()) {
-                UserCount data = new DataPackage();
-                data.setUser(user);
-                data.setCount(result.amount());
-                returnList.add(data);
-            }
-
-        }
-
-        return UserCountSorter.sortUsers(returnList);
+       return findFreeEmployeeFacade.findFreeEmployees(this.participanList,activity);
     }
 }
