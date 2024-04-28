@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class App { // Implementer javafx senere, hvis nødvendig
+    private static App instance =new App();
+
+    private App() {};
+    public static App getInstance() {
+        return instance;
+    }
 
     ArrayList<User> userList = new ArrayList<User>();
     private User currentUser;
@@ -20,8 +26,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
     private ArrayList<Project> projectRepository = new ArrayList<>();
 
     private int projectAmount = 1;
-    public App(){
-    }
+
 
     public boolean hasUserWithID(String id) {
         for (User u : userList){
