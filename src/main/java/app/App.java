@@ -12,7 +12,7 @@ import java.util.Objects;
 
 public class App { // Implementer javafx senere, hvis nødvendig
 
-    public ArrayList<User> userList = new ArrayList<User>();
+    private ArrayList<User> userList = new ArrayList<User>();
     private User currentUser;
 
     private DateServer dateServer = new DateServer();
@@ -130,5 +130,9 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     public ArrayList<Project> getProjectRepository() {
         return projectRepository;
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
     }
 }
