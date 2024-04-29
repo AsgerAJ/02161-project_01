@@ -1,5 +1,8 @@
 package presentation;
 
+import app.ActivityInfo;
+import app.ProjectInfo;
+import app.UserInfo;
 import domain.AUserIsAlreadyLoggedInException;
 import app.App;
 import domain.UserIdAlreadyInUseExeption;
@@ -15,6 +18,12 @@ import java.util.Scanner;
 
 public class Viewer { // Author Asger
     public static final App app = new App();
+
+    private static UserInfo currentuser = new UserInfo();
+
+    private static ActivityInfo currentActivity = new ActivityInfo();
+
+    private static ProjectInfo currentProject = new ProjectInfo();
     public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
         // App setup
 
@@ -26,7 +35,9 @@ public class Viewer { // Author Asger
             if (loginValue == 1){
                 System.out.println("Enter User id");
                 try {
-                    app.logInUser(loginScanner.next().substring(0, 4).toUpperCase());
+                    String loginString = loginScanner.next().substring(0, 4).toUpperCase();
+                    app.logInUser(loginString);
+                    currentuser.setId(loginString);
                     showMainMenu();
                 }catch (StringIndexOutOfBoundsException e){
                     System.out.println("User Id has 4 characters");
@@ -37,8 +48,9 @@ public class Viewer { // Author Asger
             }else if (loginValue == 2){
                 System.out.println("Enter name to create user id");
                 try {
-                    User outuser = app.registerUser(loginScanner.next());
-                    System.out.println("Your user id is: "+ outuser.getUserId());
+                    String userId = (loginScanner.next());
+                    app.registerUser(userId);
+                    System.out.println("Your user id is: "+ app.getActualId(userId));
                 } catch (UserIdAlreadyInUseExeption e){
                     System.out.println(e.getMessage());
                 }
@@ -49,11 +61,7 @@ public class Viewer { // Author Asger
             String input = loginScanner.nextLine();
             try {
                 if(input.equalsIgnoreCase("ids") && !app.getUserList().isEmpty()){
-                    String outputstring = app.getUserList().get(0).getUserId();
-                    for (int i = 1; i < app.getUserList().size(); i++){
-                        outputstring += ", " + app.getUserList().get(i).getUserId();
-                    }
-                    System.out.println(outputstring);
+                    System.out.println(app.getRegisteredUsers());
                 }
                 loginValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -66,11 +74,12 @@ public class Viewer { // Author Asger
         // Project overview and create project slice
         int startvalue = 0;
         Scanner programScanner = new Scanner(System.in);
-        while((app.getCurrentUser() != null)){
+        while((app.loggedInStatus())){
             if (startvalue > 0){
                 try{
-                Project currentproject = app.getCurrentUser().getAssignedProjects().get(startvalue-1);
-                enterProject(currentproject, currentproject);
+                    currentProject = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
+                    insideProjectMenu();
+
             }catch (IndexOutOfBoundsException e){
                 System.out.println("Project not found");
             }
@@ -95,43 +104,40 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void enterProject(Project project, Project currentProject) {
+    private static void insideProjectMenu() {
         Scanner projectScanner = new Scanner(System.in);
-        int enterProjectValue = 0;
+        int insideProjectValue = 0;
         while(true){
-            if(enterProjectValue > 0){
+            if(insideProjectValue > 0){
                 try{
-                    Activity currentActivity = project.getActivityList().get(enterProjectValue-1);
-                    enterActicvity(currentActivity, currentProject);
+                    currentActivity = new ActivityInfo(app.getActivityFromIndex(currentProject, insideProjectValue-1));
+                    currentActivity.setParentProjectID(currentProject.getProjectID());
+                    enterActicvity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
                 }
 
 
-            }else if(enterProjectValue == 0){
-                inProjectMenu(project);
+            }else if(insideProjectValue == 0){
+                inProjectMenu();
             }
             String input = projectScanner.nextLine();
             try {
                 if (input.equalsIgnoreCase("NEW")){
-                    newActivityInProject(project);
+                    newActivityInProject();
                 }else if(input.equalsIgnoreCase("Exit")){
                     mainMenuOverview();
                     break;
                 }else if(input.equalsIgnoreCase("Add")){
                     System.out.println("Enter user id of user to be added to project");
                     String addName = projectScanner.nextLine();
-                    try {
-                        project.assignUser(app.getUserFromId(addName));
-                    }catch (UserIdDoesNotExistExeption e){
-                        System.out.println("User not found");
-                    }
+                    app.assignUserToProject(addName, currentProject);
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success = false;
                     while (!success) {
                         try {
                             Calendar c = getWeekOfYearFromUser(projectScanner);
-                            currentProject.setStartDate(c);
+                            app.setProjectStartDate(c, currentProject);
                             success=true;
                         } catch (InvalidDateException e) {
                             System.out.print(e.getMessage());
@@ -142,32 +148,27 @@ public class Viewer { // Author Asger
                 } else if (input.equalsIgnoreCase("set deadline")) {
                     boolean success = false;
                     while (!success) {
-                        try {
-                            Calendar c = getWeekOfYearFromUser(projectScanner);
-                            c.set(Calendar.DAY_OF_WEEK,8); //sunday. Java.Calendar has weird day of week format.
-                            currentProject.setDeadline(c);
-                            success=true;
-                        } catch (InvalidDateException e) {
-                            System.out.print(e.getMessage());
-                            System.out.println(". Please try again;");
-                        }
+                        Calendar c = getWeekOfYearFromUser(projectScanner);
+                        c.set(Calendar.DAY_OF_WEEK,8); //sunday. Java.Calendar has weird day of week format.
+                        app.setProjectDeadline(c, currentProject);
+                        success=true;
                     }
                 }
-                enterProjectValue = Integer.parseInt(input);
+                insideProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                enterProjectValue = 0;
+                insideProjectValue = 0;
             }
         }
     }
 
 
 
-    private static void enterActicvity(Activity activity, Project currentProject) {
+    private static void enterActicvity() {
         Scanner activityScanner = new Scanner(System.in);
         int enterProjectValue = 0;
         while(true){
             if(enterProjectValue == 0){
-                inActivityMenu(activity);
+                inActivityMenu();
             }
             String input = activityScanner.nextLine();
             try {
@@ -176,15 +177,15 @@ public class Viewer { // Author Asger
                     String workedTimeString = activityScanner.nextLine();
                     try {
                         double workedTime = Double.parseDouble(workedTimeString);
-                        activity.logTime(workedTime, app.getCurrentUser());
+                        app.logTimeOnActivity(workedTime, app.getCurrentUser(), currentActivity);
                     }catch (java.lang.Exception e){
                         System.out.println("Invalid time input");
                     }
                 }
                 else if (input.equalsIgnoreCase("Complete")){
-                    activity.setStatus(true);
+                    app.ChangeCompletenessOfActivity(true, currentActivity);
                 }else if(input.equalsIgnoreCase("Exit")){
-                    inProjectMenu(currentProject);
+                    inProjectMenu();
                     break;
                 }
                 enterProjectValue = Integer.parseInt(input);
@@ -203,7 +204,7 @@ public class Viewer { // Author Asger
         app.createProject(name);
     }
 
-    private static void newActivityInProject(Project project){
+    private static void newActivityInProject(){
         Scanner newActivityScanner = new Scanner(System.in);
         System.out.print("Enter activity name: " );
         String newActivityName = newActivityScanner.nextLine();
@@ -221,49 +222,34 @@ public class Viewer { // Author Asger
                 numberIn = 0;
             }
         }
-        project.createNewActivity(new Activity(newActivityName, numberIn));
+        app.createNewActivity(newActivityName, numberIn, currentProject);
     }
 
     private static void mainMenuOverview(){
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
         System.out.println("List of projects:");
-        int i = 1;
-        for(Project project : app.getCurrentUser().getAssignedProjects()){
-            System.out.println(i + ": " +project.getProjectID() + " Name: " + project.getName());
-            i++;
-        }
+        System.out.println(app.getProjectListString());
         System.out.println("Enter the number for the project, \"NEW\" to make a new project, or \"Exit\" to exit app");
     }
 
-    private static void inProjectMenu(Project project){
-        System.out.println("Project: "+project.getName());
-        if(project.getActivityList()!=null){
-            System.out.println(project.completionPercentage());
-        }
-        StringBuilder nameString = new StringBuilder();
-        for(int i = 0; i < project.getParticipantList().size(); i++){
-            nameString.append(project.getParticipantList().get(i).getUserId()).append(", ");
-        }
-        System.out.println("Assigned users: " + nameString);
+    private static void inProjectMenu(){
+        System.out.println("Project: "+currentProject.getName());
+        System.out.println(app.getProjectCompletionString(currentProject));
 
         System.out.println("List of Activities:");
-        int i = 1;
-        for(Activity activity : project.getActivityList()){
-            System.out.println(i + ": " +activity.getName() + " Status: " + activity.getStatus());
-            i++;
-        }
+        System.out.println(app.getActivityListString(currentProject));
 
-        System.out.println("Startdate: " + dateToString(project.getStartDate()));
-        System.out.println("Deadline: " + dateToString(project.getDeadline()));
+        System.out.println("Startdate: " + dateToString(currentProject.getStartDate()));
+        System.out.println("Deadline: " + dateToString(currentProject.getDeadline()));
         System.out.println("Enter the number for the activity,\"ADD\" to add member to project \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
         System.out.println("Enter \"Set start date\" to set start date of project:");
         System.out.println("Enter \"Set deadline\" to set deadline of project:");
     }
 
-    private static void inActivityMenu(Activity activity) {
-        System.out.println("Activity name: " + activity.getName());
-        System.out.println("Activity status: " + (activity.getStatus()? "Complete" :"Incomplete"));
-        System.out.println("Activity Members: " + activity.getParticipantList());
+    private static void inActivityMenu() {
+        System.out.println("Activity name: " + currentActivity.getActivityName());
+        System.out.println("Activity status: " + (currentActivity.getIsComplete()? "Complete" :"Incomplete"));
+        System.out.println("Activity Members: " + currentActivity.getParticipantList());
         System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
     }
 

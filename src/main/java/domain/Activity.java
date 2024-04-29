@@ -1,5 +1,7 @@
 package domain;
 
+import app.ActivityInfo;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -53,4 +55,5 @@ public class Activity extends PeriodEvent {
         this.participantList.add(u);
         u.assignActivity(this);
     }
+
 }
