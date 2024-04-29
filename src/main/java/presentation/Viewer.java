@@ -32,32 +32,34 @@ public class Viewer { // Author Asger
         // Login & Register user Slice
         int loginValue = -1;
         while(true){
-            if (loginValue == 1){
-                System.out.println("Enter User id");
-                try {
-                    String loginString = loginScanner.next().substring(0, 4).toUpperCase();
-                    app.logInUser(loginString);
-                    currentuser = new UserInfo(app.getCurrentUser());
-                    showMainMenu();
-                }catch (StringIndexOutOfBoundsException e){
-                    System.out.println("User Id has 4 characters");
-                } catch (UserIdDoesNotExistExeption e){
-                    System.out.println(e.getMessage());
-                }
-
-            }else if (loginValue == 2){
-                System.out.println("Enter name to create user id");
-                try {
-                    String userId = (loginScanner.next());
-                    app.registerUser(userId);
-                    System.out.println("Your user id is: "+ app.getActualId(userId));
-                } catch (UserIdAlreadyInUseExeption e){
-                    System.out.println(e.getMessage());
-                }
-
-            }else{
-                System.out.println("Enter '1' to log in, or '2' to register a new user, or 'ids' to see all user ids");
+            switch (loginValue) {
+                case 1:
+                    System.out.println("Enter User id");
+                    try {
+                        String loginString = loginScanner.next().substring(0, 4).toUpperCase();
+                        app.logInUser(loginString);
+                        currentuser = new UserInfo(app.getCurrentUser());
+                        showMainMenu();
+                    }catch (StringIndexOutOfBoundsException e){
+                        System.out.println("User Id has 4 characters");
+                    } catch (UserIdDoesNotExistExeption e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 2:
+                    System.out.println("Enter name to create user id");
+                    try {
+                        String userId = (loginScanner.next());
+                        app.registerUser(userId);
+                        System.out.println("Your user id is: "+ app.getActualId(userId));
+                    } catch (UserIdAlreadyInUseExeption e){
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                default:
+                    System.out.println("Enter '1' to log in, or '2' to register a new user, or 'ids' to see all user ids");
             }
+
             String input = loginScanner.nextLine();
             try {
                 if(input.equalsIgnoreCase("ids") && !app.getUserList().isEmpty()){
@@ -75,15 +77,17 @@ public class Viewer { // Author Asger
         int startvalue = 0;
         Scanner programScanner = new Scanner(System.in);
         while((app.loggedInStatus())){
-            if (startvalue > 0 && startvalue <= currentuser.getAssignedProjects().size()){
+            if (startvalue > 0){
                 try{
                     currentProject = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
                     insideProjectMenu();
 
-                }catch (IndexOutOfBoundsException e){
+                }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
+                    startvalue = 0;
                 }
-            }else if(startvalue == 0){
+            }
+            if(startvalue == 0){
                 mainMenuOverview();
             }
 
