@@ -191,7 +191,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
             String outputstring = "";
             int index = 1;
             for(Project project : getCurrentUser().getAssignedProjects()){
-                outputstring += "\n" + index +" : " + "Project id: " + project.getProjectID() + " Project name: " + project.getTitle();
+                outputstring += "\n" + index +" : " + "Project id: " + project.getProjectID() + " Project name: " + project.getName();
                 index++;
             }
             return outputstring + "\n";

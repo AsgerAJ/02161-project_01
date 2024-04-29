@@ -20,7 +20,7 @@ public class ProjectInfo {
     public ProjectInfo(){}
 
     public ProjectInfo(Project project){
-        this.name = project.getTitle();
+        this.name = project.getName();
         this.projectID = project.getProjectID();
         this.projectLeader = project.getProjectLeader();
         this.deadline = project.getDeadline();
