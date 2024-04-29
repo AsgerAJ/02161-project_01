@@ -50,6 +50,10 @@ public class User {
         //return result;
 
         for (PeriodEvent p : assignedActivities) {
+            if (p.getStartdate() == null || p.getDeadline() == null){
+                continue;
+            } 
+            
             if (p.timeOverlap(event)) {
                 if (p.timeLockdown()) {
                     result.setTruthValue(false);
@@ -57,8 +61,6 @@ public class User {
                 } else {
                     result.increaseAmount(1);
                 }
-
-
             }
         }
         return result;

@@ -13,10 +13,6 @@ public class Leave extends PeriodEvent {
         this.deadline = endDate;
     }
 
-
-
-
-
     @Override
     public boolean timeLockdown() {
         return true;

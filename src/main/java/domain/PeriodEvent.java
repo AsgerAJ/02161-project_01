@@ -15,16 +15,8 @@ public abstract class PeriodEvent {
     public String getName() {return this.name;}
 
     public boolean timeOverlap(PeriodEvent event) {
-        if (event.getStartdate()!=null && event.getStartdate()!=null && this.deadline !=null && this.startDate!=null) {
-            return ((event.getDeadline().after(this.startDate) && event.getStartdate().before(this.deadline))
+        return ((event.getDeadline().after(this.startDate) && event.getStartdate().before(this.deadline))
                     || (this.deadline.after(event.getStartdate()) && this.startDate.before(event.getDeadline())));
-        } else {
-            return false;
-        }
-        //TODO: consider actions when date values arent set
-
-
-
     }
     public Calendar getDeadline() {
         return this.deadline;
