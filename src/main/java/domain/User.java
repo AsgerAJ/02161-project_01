@@ -69,4 +69,7 @@ public class User {
     }
 
 
+    public ArrayList<PeriodEvent> getAssignedActivities() {
+        return assignedActivities;
+    }
 }

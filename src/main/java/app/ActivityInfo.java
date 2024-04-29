@@ -15,7 +15,7 @@ public class ActivityInfo {
     private Calendar startDate = null;
     private Calendar deadline = null;
     private double budgetTime;
-    private boolean isComplete = false;
+    private boolean isComplete;
     private HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private double totalHours = 0;
     private ArrayList<User> participantList = new ArrayList<User>();
@@ -30,6 +30,7 @@ public class ActivityInfo {
         this.timeMap = activity.getTimeMap();
         this.totalHours = activity.getTotalHours();
         this.participantList = activity.getParticipantList();
+        this.isComplete = activity.getStatus();
     }
 
     public Calendar getStartDate() {return startDate;}

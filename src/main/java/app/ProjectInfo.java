@@ -52,4 +52,12 @@ public class ProjectInfo {
     public ArrayList<Activity> getActivityList() {
         return activityList;
     }
+
+    public String getParticipanList() {
+        String result = "";
+        for (User u : participanList) {
+            result += u.getUserId() + " ";
+        }
+        return result;
+    }
 }

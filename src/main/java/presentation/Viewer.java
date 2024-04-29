@@ -37,7 +37,7 @@ public class Viewer { // Author Asger
                 try {
                     String loginString = loginScanner.next().substring(0, 4).toUpperCase();
                     app.logInUser(loginString);
-                    currentuser.setId(loginString);
+                    currentuser = new UserInfo(app.getCurrentUser());
                     showMainMenu();
                 }catch (StringIndexOutOfBoundsException e){
                     System.out.println("User Id has 4 characters");
@@ -75,15 +75,14 @@ public class Viewer { // Author Asger
         int startvalue = 0;
         Scanner programScanner = new Scanner(System.in);
         while((app.loggedInStatus())){
-            if (startvalue > 0){
+            if (startvalue > 0 && startvalue <= currentuser.getAssignedProjects().size()){
                 try{
                     currentProject = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
                     insideProjectMenu();
 
-            }catch (IndexOutOfBoundsException e){
-                System.out.println("Project not found");
-            }
-
+                }catch (IndexOutOfBoundsException e){
+                    System.out.println("Project not found");
+                }
             }else if(startvalue == 0){
                 mainMenuOverview();
             }
@@ -184,9 +183,15 @@ public class Viewer { // Author Asger
                 }
                 else if (input.equalsIgnoreCase("Complete")){
                     app.ChangeCompletenessOfActivity(true, currentActivity);
+                    inProjectMenu();
+                    break;
                 }else if(input.equalsIgnoreCase("Exit")){
                     inProjectMenu();
                     break;
+                }else if(input.equalsIgnoreCase("Assign")){
+                    System.out.println("Enter user id of user to be added to activity");
+                    String addName = activityScanner.nextLine();
+                    app.assignUserToActivity(addName, currentActivity);
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -234,11 +239,11 @@ public class Viewer { // Author Asger
 
     private static void inProjectMenu(){
         System.out.println("Project: "+currentProject.getName());
+        System.out.println("Project Leader: "+currentProject.getProjectLeader());
+        System.out.println("Project Members: "+currentProject.getParticipanList());
         System.out.println(app.getProjectCompletionString(currentProject));
-
         System.out.println("List of Activities:");
         System.out.println(app.getActivityListString(currentProject));
-
         System.out.println("Startdate: " + dateToString(currentProject.getStartDate()));
         System.out.println("Deadline: " + dateToString(currentProject.getDeadline()));
         System.out.println("Enter the number for the activity,\"ADD\" to add member to project \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
@@ -250,7 +255,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + currentActivity.getActivityName());
         System.out.println("Activity status: " + (currentActivity.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivity.getParticipantList());
-        System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity, or \"Exit\" to go to main menu");
+        System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity,\n\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
     }
 
 
