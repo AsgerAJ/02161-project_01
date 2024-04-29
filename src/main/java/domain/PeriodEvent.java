@@ -26,6 +26,8 @@ public abstract class PeriodEvent {
     public Calendar getStartdate() {return this.startdate;}
 
     public boolean timeOverlap(PeriodEvent event) {
+        boolean first = (event.getDeadline().after(this.startdate) && event.getStartdate().before(this.deadline));
+        boolean other = (this.deadline.after(event.getStartdate()) && this.startdate.before(event.getDeadline()));
         return ((event.getDeadline().after(this.startdate) && event.getStartdate().before(this.deadline))
                 || (this.deadline.after(event.getStartdate()) && this.startdate.before(event.getDeadline())));
     }

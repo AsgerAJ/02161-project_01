@@ -12,7 +12,6 @@ import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class FindFreeEmployeeSteps {
