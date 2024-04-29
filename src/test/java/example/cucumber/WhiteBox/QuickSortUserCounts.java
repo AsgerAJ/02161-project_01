@@ -1,9 +1,11 @@
-package domain;
+package example.cucumber.WhiteBox;
+
+import domain.UserCount;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public abstract class UserCountSorter {
+public abstract class QuickSortUserCounts {
     public static ArrayList<UserCount> sortUsers(ArrayList<UserCount> list ) {
         UserCount[] tempList = new UserCount[list.size()];
         for (int i = 0; i<list.size();i++) {

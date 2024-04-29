@@ -2,6 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class Project {
     private String name;
@@ -161,8 +162,9 @@ public class Project {
             }
 
         }
+        returnList.sort(new CountSorting());
 
-        return UserCountSorter.sortUsers(returnList);
+        return returnList;
     }
 
     public String getID() {

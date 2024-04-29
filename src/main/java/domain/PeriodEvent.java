@@ -26,10 +26,10 @@ public abstract class PeriodEvent {
     public Calendar getStartdate() {return this.startdate;}
 
     public boolean timeOverlap(PeriodEvent event) {
-        boolean first = (event.getDeadline().after(this.startdate) && event.getStartdate().before(this.deadline));
-        boolean other = (this.deadline.after(event.getStartdate()) && this.startdate.before(event.getDeadline()));
-        return ((event.getDeadline().after(this.startdate) && event.getStartdate().before(this.deadline))
-                || (this.deadline.after(event.getStartdate()) && this.startdate.before(event.getDeadline())));
+        boolean first = (event.getDeadline().after(startdate) && event.getStartdate().before(deadline));
+        boolean other = (deadline.after(event.getStartdate()) && startdate.before(event.getDeadline()));
+        return ((event.getDeadline().after(startdate) && event.getStartdate().before(deadline))
+                || (deadline.after(event.getStartdate()) && startdate.before(event.getDeadline())));
     }
 
     public boolean timeLockdown() {

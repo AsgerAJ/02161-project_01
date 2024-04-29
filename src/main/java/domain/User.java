@@ -45,7 +45,7 @@ public class User {
         //}
         //return result;
 
-        for (PeriodEvent p : assignedActivities) {
+        for (PeriodEvent p : this.assignedActivities) {
             if (p.getStartdate() == null || p.getDeadline() == null){
                 continue;
             } 

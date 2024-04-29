@@ -5,7 +5,7 @@ import domain.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
-
+/* This class works both as a object itself, but also as a facade between the viewer class and the Business logic*/
 public class App { // Implementer javafx senere, hvis nødvendig
 
     private ArrayList<User> userList = new ArrayList<User>();
