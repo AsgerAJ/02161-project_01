@@ -44,10 +44,17 @@ public class Viewer { // Author Asger
                 }
 
             }else{
-                System.out.println("Enter '1' to log in, or '2' to register a new user ");
+                System.out.println("Enter '1' to log in, or '2' to register a new user, or 'ids' to see all user ids");
             }
             String input = loginScanner.nextLine();
             try {
+                if(input.equalsIgnoreCase("ids")){
+                    String outputstring = app.userList.get(0).getUserId();
+                    for (int i = 1; i < app.userList.size(); i++){
+                        outputstring += ", " + app.userList.get(i).getUserId();
+                    }
+                    System.out.println(outputstring);
+                }
                 loginValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 loginValue = -1;
