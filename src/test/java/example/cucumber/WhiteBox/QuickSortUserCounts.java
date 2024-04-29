@@ -8,11 +8,8 @@ import java.util.Collections;
 
 public abstract class QuickSortUserCounts {
     public static ArrayList<UserCount> sortUsers(ArrayList<UserCount> list ) {
-        UserCount[] tempList = new UserCount[list.size()];
-        for (int i = 0; i<list.size();i++) {
-            tempList[i]=list.get(i);
-        }
-        quickSort(tempList,0,list.size()-1);
+
+        quickSort(list,0,list.size()-1);
         ArrayList<UserCount> sortedList = new ArrayList<>(Arrays.asList(tempList));
         return sortedList;
     }
