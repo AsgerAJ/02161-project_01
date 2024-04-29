@@ -48,7 +48,7 @@ public class Viewer { // Author Asger
             }
             String input = loginScanner.nextLine();
             try {
-                if(input.equalsIgnoreCase("ids")){
+                if(input.equalsIgnoreCase("ids") && !app.userList.isEmpty()){
                     String outputstring = app.userList.get(0).getUserId();
                     for (int i = 1; i < app.userList.size(); i++){
                         outputstring += ", " + app.userList.get(i).getUserId();
