@@ -59,10 +59,6 @@ public class Project {
         activity.setStatus(true);
     }
 
-    public void createNewActivity(String name, Date startDate, Date deadline, float budgetTime){
-        this.activityList.add(new Activity(name, budgetTime));
-    }
-
     public void createNewActivity(Activity activity){
         this.activityList.add(activity);
     }

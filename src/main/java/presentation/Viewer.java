@@ -31,7 +31,7 @@ public class Viewer { // Author Asger
                 }catch (StringIndexOutOfBoundsException e){
                     System.out.println("User Id has 4 characters");
                 } catch (UserIdDoesNotExistExeption e){
-                    System.out.println("User id does not exist");
+                    System.out.println(e.getMessage());
                 }
 
             }else if (loginValue == 2){
@@ -40,7 +40,7 @@ public class Viewer { // Author Asger
                     User outuser = app.registerUser(loginScanner.next());
                     System.out.println("Your user id is: "+ outuser.getUserId());
                 } catch (UserIdAlreadyInUseExeption e){
-                    System.out.println("User id already exists");
+                    System.out.println(e.getMessage());
                 }
 
             }else{
