@@ -32,6 +32,7 @@ public class Activity extends PeriodEvent{
         return today.after(this.deadline);
     }
 
+    public HashMap<String, Double> getTimeMap(){return this.timeMap;}
     public boolean isOverBudget(){return this.totalHours > this.budgetTime;}
 
     public void setStartDate(Calendar cal){this.startDate = cal;}
