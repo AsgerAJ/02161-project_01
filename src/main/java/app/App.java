@@ -114,6 +114,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
         if (currentUser != null) {
             p.assignUser(this.currentUser);
+            p.setProjectLeader(this.currentUser);
         }
         //else must have signed in user(?)
         this.projectRepository.add(p);
