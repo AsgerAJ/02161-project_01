@@ -1,6 +1,6 @@
 package domain;
 
-public class DataPackage implements SuccessAmount,UserCount {
+public class DataPackage implements SuccessAmount, UserCount {
     private boolean truthValue =false;
     private int amount = 0;
     private User user;

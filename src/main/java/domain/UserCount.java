@@ -1,6 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
 
 public interface UserCount {
 

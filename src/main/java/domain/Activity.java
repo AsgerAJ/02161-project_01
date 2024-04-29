@@ -5,14 +5,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class Activity extends PeriodEvent{
-    private String name;
     private Calendar startDate = null;
     private Calendar deadline = null;
     private double budgetTime;
     private boolean isComplete = false;
     private HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private double totalHours = 0;
-    private int weight;
     private ArrayList<User> participantList = new ArrayList<User>();
 
 
@@ -22,6 +20,7 @@ public class Activity extends PeriodEvent{
     }
 
     public String getName(){return super.getName();}
+
     public void setStatus(boolean status){
         this.isComplete = status;
     }
