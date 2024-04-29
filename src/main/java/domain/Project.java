@@ -157,7 +157,24 @@ public class Project {
 
 
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
-       return findFreeEmployeeFacade.findFreeEmployees(this.participanList,activity);
+        if (activity.getStartdate() == null || activity.getDeadline() == null) {
+            return new ArrayList<UserCount>();
+        }
+        
+        ArrayList<UserCount> returnList = new ArrayList<>();
+        for (User user : this.participanList) {
+            SuccessAmount result = user.isAvailable(activity);
+
+            if (result.isTrue()) {
+                UserCount data = new DataPackage();
+                data.setUser(user);
+                data.setCount(result.amount());
+                returnList.add(data);
+            }
+
+        }
+
+        return UserCountSorter.sortUsers(returnList);
     }
 
     public String getID() {
