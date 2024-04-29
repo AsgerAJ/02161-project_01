@@ -8,4 +8,10 @@ public class UserInfo {
     public UserInfo(User user){
         this.userId = user.getUserId();
     }
+
+    public UserInfo(){}
+
+    public void setId(String string) {
+        this.userId = string;
+    }
 }

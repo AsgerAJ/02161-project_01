@@ -116,26 +116,31 @@ public class Project {
     }
 
     public String completionPercentage(){
-        double completionPercentage = 0;
-        for(int i = 0; i < this.getActivityList().size(); i++){
-            if(this.getActivityList().get(i).getStatus()){
-                completionPercentage += 100.0/this.activityList.size();
+        if(this.getActivityList() != null){
+            double completionPercentage = 0;
+            for(int i = 0; i < this.getActivityList().size(); i++){
+                if(this.getActivityList().get(i).getStatus()){
+                    completionPercentage += 100.0/this.activityList.size();
+                }
             }
-        }
-        completionPercentage = completionPercentage/100;
-        int totalBlocks = 20;
-        int completedBlocks = (int) (completionPercentage * totalBlocks);
+            completionPercentage = completionPercentage/100;
+            int totalBlocks = 20;
+            int completedBlocks = (int) (completionPercentage * totalBlocks);
 
-        StringBuilder progressBarBuilder = new StringBuilder();
-        for (int i = 0; i < totalBlocks; i++) {
-            if (i < completedBlocks) {
-                progressBarBuilder.append("■"); // Filled block
-            } else {
-                progressBarBuilder.append("□"); // Empty block
+            StringBuilder progressBarBuilder = new StringBuilder();
+            for (int i = 0; i < totalBlocks; i++) {
+                if (i < completedBlocks) {
+                    progressBarBuilder.append("■"); // Filled block
+                } else {
+                    progressBarBuilder.append("□"); // Empty block
+                }
             }
+
+            return progressBarBuilder.toString();
+        }else{
+            return "□□□□□□□□□□□□□□□□□□□□";
         }
 
-        return progressBarBuilder.toString();
     }
     public void setStartDate(Calendar date) throws InvalidDateException {
         if (this.deadline ==null || date.before(this.deadline)) {
@@ -153,5 +158,13 @@ public class Project {
 
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
        return findFreeEmployeeFacade.findFreeEmployees(this.participanList,activity);
+    }
+
+    public String getID() {
+        return this.projectID;
+    }
+
+    public User getProjectLeader() {
+        return this.projectLeader;
     }
 }
