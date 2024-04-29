@@ -1,7 +1,6 @@
 package example.cucumber;
 
 import domain.AUserIsAlreadyLoggedInException;
-import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
 import app.App;
 import domain.User;
@@ -11,7 +10,7 @@ import io.cucumber.java.en.When;
 
 import static org.junit.Assert.*;
 
-public class LogWorkedTime {
+public class LogWorkedTimeSteps {
     
     private App app;
     private ErrorMessageHolder errorMessage;
@@ -20,7 +19,7 @@ public class LogWorkedTime {
     private ActivityHelper activityHelper;
     private Double doubleInput;
     private Double doublePlus = 0.0;
-    public LogWorkedTime(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
+    public LogWorkedTimeSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
         this.app = app;
         this.errorMessage = errorMessage;
         this.userHelper = userHelper;

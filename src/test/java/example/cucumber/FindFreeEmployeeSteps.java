@@ -2,14 +2,17 @@ package example.cucumber;
 
 import app.App;
 import domain.Activity;
+import domain.DataPackage;
 import domain.User;
 import domain.UserCount;
+import domain.UserIdDoesNotExistExeption;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class FindFreeEmployeeSteps {
@@ -42,9 +45,8 @@ public class FindFreeEmployeeSteps {
                 }
             }
         }
-
-
     }
+
     @When("the user searches for free employee")
     public void theUserSearchesForFreeEmployee() {
         this.userHelper.setAvailableUserList(this.projectHelper.getProject().findFreeEmployee(this.activityHelper.getActivity()));
@@ -59,10 +61,8 @@ public class FindFreeEmployeeSteps {
 
         }
         assertTrue(returnedUsers.containsAll(userList));
-
-
-
     }
+
     @Then("the returned users are sorted by amount of activities overlapping")
     public void theReturnedUsersAreSortedByAmountOfActivitiesOverlapping() {
         ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
@@ -74,5 +74,25 @@ public class FindFreeEmployeeSteps {
         for (int i = 1; i<counts.length;i++) {
             assertTrue(counts[i]>=counts[i-1]);
         }
+    }
+
+    @Then("no users are found")
+    public void noUsersFound(){
+        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
+        assertTrue(results.size()==0);
+    }
+
+    @Then("{string} is not found")
+    public void userIsNotFound(String user){
+        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
+        for (UserCount userCount : results) {
+            if (userCount.getUser().getUserId().equals(user)) {
+                assertTrue(false);
+            }
+            else{
+                assertTrue(true);
+            }
+        }
+
     }
 }

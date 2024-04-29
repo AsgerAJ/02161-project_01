@@ -122,7 +122,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
     public boolean hasProjectWithTitle(String t) {
         for (Project p : projectRepository) {
-            if (p.getTitle().equals(t)) {
+            if (p.getName().equals(t)) {
                 return true;
             }
         }

@@ -12,11 +12,10 @@ public class Project {
     private ArrayList<User> participanList = new ArrayList<User>();
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
-
-    public Project(String name,Calendar creationDate,int projectAmount){
+    public Project(String name, Calendar creationDate, int projectAmount) {
         this.name = name;
 
-        //generate project ID
+        // generate project ID
 
         String idExtension = "";
 
@@ -31,51 +30,28 @@ public class Project {
                 idExtension += "0" + projectAmount;
                 break;
             default:
-                idExtension += projectAmount%10000; //modulo to reset when crossing limit
+                idExtension += projectAmount % 10000; // modulo to reset when crossing limit
                 break;
-
         }
 
-        this.projectID = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2,4)+idExtension;
+        this.projectID = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2, 4) + idExtension;
     }
 
-    public void assignUser(User user){
-        if (!this.participanList.contains(user)){
-            this.participanList.add(user);
-            user.assignProject(this);
-        }
+    public String getName() {return this.name;}
 
-    }
+    public String getProjectID() {return this.projectID;}
 
-    public boolean hasProjectLeader(){
-        return this.projectLeader != null;
-    }
+    public ArrayList<Activity> getActivityList() {return this.activityList;}
 
-    public boolean isProjectLeader(User user){
-        return this.projectLeader == user;
-    }
+    public ArrayList<User> getParticipantList() {return this.participanList;}
 
-    public void completeActivity(Activity activity){
-        activity.setStatus(true);
-    }
+    public Calendar getStartDate() {return this.startDate;}
 
-    public void createNewActivity(Activity activity){
-        this.activityList.add(activity);
-    }
-
-    public ArrayList<Activity> getActivityList(){
-        return this.activityList;
-    }
+    public Calendar getDeadline() {return this.deadline;}
 
 
-    public String getTitle() {
-        return this.name;
-    }
-    public String getProjectID() {
-        return this.projectID;
-    }
 
-    public Activity getActivityFromName(String name){
+    public Activity getActivityFromName(String name) {
         for (Activity activity : this.activityList) {
             if ((activity.getName().toLowerCase().equals(name.toLowerCase()))) {
                 return activity;
@@ -84,32 +60,49 @@ public class Project {
         return null;
     }
 
-    public ArrayList<User> getParticipantList() {
-        return this.participanList;
+    public void assignUser(User user) {
+        if (!this.participanList.contains(user)) {
+            this.participanList.add(user);
+            user.assignProject(this);
+        }
     }
 
-    public void setProjectLeader(User user){this.projectLeader = user;}
+    public boolean hasProjectLeader() {
+        return this.projectLeader != null;
+    }
 
-    public void setDeadline (Calendar date) throws InvalidDateException {
+    public boolean isProjectLeader(User user) {
+        return this.projectLeader == user;
+    }
+
+    public void completeActivity(Activity activity) {
+        activity.setStatus(true);
+    }
+
+    public void createNewActivity(Activity activity) {
+        this.activityList.add(activity);
+    }
+
+
+    public void setProjectLeader(User user) {
+        this.projectLeader = user;
+    }
+
+    public void setDeadline(Calendar date) throws InvalidDateException {
 
         if (this.startDate == null || date.after(this.startDate)) {
-            this.deadline=date;
+            this.deadline = date;
         } else {
             throw new InvalidDateException("deadline before start date");
         }
     }
 
 
-    public Calendar getDeadline() {
-        return this.deadline;
-    }
-
     public boolean isOverdue(Calendar date) {
 
-        if (this.deadline==null) {
+        if (this.deadline == null) {
             return false;
         }
-
 
         return date.after(this.deadline);
 
@@ -142,25 +135,20 @@ public class Project {
         }
 
     }
+
     public void setStartDate(Calendar date) throws InvalidDateException {
-        if (this.deadline ==null || date.before(this.deadline)) {
-            this.startDate=date;
+        if (this.deadline == null || date.before(this.deadline)) {
+            this.startDate = date;
         } else {
             throw new InvalidDateException("Startdate after deadline");
         }
     }
 
-    public Calendar getStartDate() {
-        return this.startDate;
-    }
-
-
-
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
         if (activity.getStartdate() == null || activity.getDeadline() == null) {
             return new ArrayList<UserCount>();
         }
-        
+
         ArrayList<UserCount> returnList = new ArrayList<>();
         for (User user : this.participanList) {
             SuccessAmount result = user.isAvailable(activity);

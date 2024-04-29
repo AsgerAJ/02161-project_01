@@ -4,13 +4,10 @@ import java.util.Calendar;
 
 public class Leave extends PeriodEvent {
 
-    private Calendar startDate;
-    private Calendar deadline;
-
-    public Leave (String name, Calendar startDate, Calendar endDate) {
+    public Leave(String name, Calendar startdate, Calendar deadline) {
         super(name);
-        this.startDate = startDate;
-        this.deadline = endDate;
+        this.setStartdate(startdate);
+        this.setDeadline(deadline);
     }
 
     @Override

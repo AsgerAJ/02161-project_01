@@ -37,7 +37,7 @@ public class ProjectSteps {
     }
     @Then("the project is created in app")
     public void theProjectIsCreatedInApp() {
-        assertTrue(this.app.hasProjectWithTitle(this.projectHelper.getProject().getTitle()));
+        assertTrue(this.app.hasProjectWithTitle(this.projectHelper.getProject().getName()));
     }
     @Then("the project is given the id {int}")
     public void theProjectIsGivenTheId(Integer int1) {

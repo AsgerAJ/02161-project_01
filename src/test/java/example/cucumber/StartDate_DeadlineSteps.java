@@ -95,7 +95,7 @@ public class StartDate_DeadlineSteps {
     public void allTheActivitiesHaveStartDate(Integer day,Integer month, Integer year) {
         Calendar date = new GregorianCalendar(year,month-1,day);
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
-        for (Activity act : actList) { act.setStartDate(date);}
+        for (Activity act : actList) { act.setStartdate(date);}
         for (Activity act : actList) {
             assertEquals((int) day, act.getStartdate().get(DAY_OF_MONTH));
             assertEquals((int) month - 1, act.getStartdate().get(MONTH)); //-1 to compensate for 0 indexing
@@ -118,7 +118,7 @@ public class StartDate_DeadlineSteps {
 
     @Given("the activity has start date {int},{int},{int}")
     public void theActivityHasStartDate(Integer day, Integer month, Integer year) {
-        this.activityHelper.getActivity().setStartDate(new GregorianCalendar(year,month,day));
+        this.activityHelper.getActivity().setStartdate(new GregorianCalendar(year,month,day));
     }
     @Given("the activity has deadline {int},{int},{int}")
     public void theActivityHasDeadline(Integer day, Integer month, Integer year) {
