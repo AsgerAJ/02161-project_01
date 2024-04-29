@@ -14,6 +14,7 @@ Feature: WhiteBox test of partition method of quicksorting UserCount
 
     Given the beginning index is 0
     And the end index i 4
+    And the arraylist contains a dataPackage with a null user, and a count of 5
     And the arraylist contains a dataPackage with a null user, and a count of 4
     And the arraylist contains a dataPackage with a null user, and a count of 3
     And the arraylist contains a dataPackage with a null user, and a count of 2
