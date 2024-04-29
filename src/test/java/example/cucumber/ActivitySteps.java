@@ -76,6 +76,10 @@ public class ActivitySteps {
     public void theUserIsPartOfTheActivity() {
         assertTrue(this.activityHelper.getActivity().getParticipantList().contains(this.userHelper.getUser()));
     }
+    @Given("the user is assigned the activity")
+    public void theUserIsAssignedTheActivity(){
+        this.activityHelper.getActivity().assignUser(this.userHelper.getUser());
+    }
 
 
 

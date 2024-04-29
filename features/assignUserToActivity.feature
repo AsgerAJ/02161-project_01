@@ -2,8 +2,6 @@ Feature: add user to acitvity participant list
   Description: employees can be added to acitvities
   Actor: User
 
-
-
   Scenario: Successfully add employee to activity
       Given a user with id "HUBA" exists
       And a project exists with title "test"
