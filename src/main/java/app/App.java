@@ -96,7 +96,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     public Project getProjectFromName(String name){
         for (Project project : this.projectRepository) {
-            if (Objects.equals(project.getTitle(), name)) {
+            if (Objects.equals(project.getName(), name)) {
                 return project;
             }
         }
@@ -117,7 +117,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
     public boolean hasProjectWithTitle(String t) {
         for (Project p : projectRepository) {
-            if (p.getTitle().equals(t)) {
+            if (p.getName().equals(t)) {
                 return true;
             }
         }

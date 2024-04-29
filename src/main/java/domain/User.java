@@ -23,10 +23,6 @@ public class User {
         this.assignedActivities.add(activity);
     }
 
-    public int isAvailable(Activity activity){
-        return 0;
-    }
-
     public boolean hasProjectWithID(String projectID) {
         for (Project p : assignedProjects) {
             if (p.getProjectID().equals(projectID)) {
@@ -53,7 +49,7 @@ public class User {
             if (p.getStartdate() == null || p.getDeadline() == null){
                 continue;
             } 
-            
+
             if (p.timeOverlap(event)) {
                 if (p.timeLockdown()) {
                     result.setTruthValue(false);

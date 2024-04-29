@@ -229,14 +229,14 @@ public class Viewer { // Author Asger
         System.out.println("List of projects:");
         int i = 1;
         for(Project project : app.getCurrentUser().getAssignedProjects()){
-            System.out.println(i + ": " +project.getProjectID() + " Name: " + project.getTitle());
+            System.out.println(i + ": " +project.getProjectID() + " Name: " + project.getName());
             i++;
         }
         System.out.println("Enter the number for the project, \"NEW\" to make a new project, or \"Exit\" to exit app");
     }
 
     private static void inProjectMenu(Project project){
-        System.out.println("Project: "+project.getTitle());
+        System.out.println("Project: "+project.getName());
         if(project.getActivityList()!=null){
             System.out.println(project.completionPercentage());
         }
