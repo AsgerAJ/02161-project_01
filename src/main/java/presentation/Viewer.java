@@ -7,9 +7,7 @@ import domain.AUserIsAlreadyLoggedInException;
 import app.App;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
-import io.cucumber.messages.types.Exception;
 import domain.*;
-import javafx.geometry.Dimension2D;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -19,11 +17,11 @@ import java.util.Scanner;
 public class Viewer { // Author Asger
     public static final App app = new App();
 
-    private static UserInfo currentuser = new UserInfo();
+    private static UserInfo currentUserInfo = new UserInfo();
 
-    private static ActivityInfo currentActivity = new ActivityInfo();
+    private static ActivityInfo currentActivityInfo = new ActivityInfo();
 
-    private static ProjectInfo currentProject = new ProjectInfo();
+    private static ProjectInfo currentProjectInfo = new ProjectInfo();
     public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
         // App setup
 
@@ -38,7 +36,7 @@ public class Viewer { // Author Asger
                     try {
                         String loginString = loginScanner.next().substring(0, 4).toUpperCase();
                         app.logInUser(loginString);
-                        currentuser = new UserInfo(app.getCurrentUser());
+                        currentUserInfo = new UserInfo(app.getCurrentUser());
                         showMainMenu();
                     }catch (StringIndexOutOfBoundsException e){
                         System.out.println("User Id has 4 characters");
@@ -79,8 +77,8 @@ public class Viewer { // Author Asger
         while((app.loggedInStatus())){
             if (startvalue > 0){
                 try{
-                    currentProject = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
-                    insideProjectMenu();
+                    currentProjectInfo = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
+                    insideProjectMenu(startvalue-1);
 
                 }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
@@ -107,14 +105,14 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void insideProjectMenu() {
+    private static void insideProjectMenu(int value) {
         Scanner projectScanner = new Scanner(System.in);
         int insideProjectValue = 0;
         while(true){
             if(insideProjectValue > 0){
                 try{
-                    currentActivity = new ActivityInfo(app.getActivityFromIndex(currentProject, insideProjectValue-1));
-                    currentActivity.setParentProjectID(currentProject.getProjectID());
+                    currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
+                    currentActivityInfo.setParentProjectID(currentProjectInfo.getProjectID());
                     enterActicvity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
@@ -134,13 +132,13 @@ public class Viewer { // Author Asger
                 }else if(input.equalsIgnoreCase("Add")){
                     System.out.println("Enter user id of user to be added to project");
                     String addName = projectScanner.nextLine();
-                    app.assignUserToProject(addName, currentProject);
+                    app.assignUserToProject(addName, currentProjectInfo);
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success = false;
                     while (!success) {
                         try {
                             Calendar c = getWeekOfYearFromUser(projectScanner);
-                            app.setProjectStartDate(c, currentProject);
+                            app.setProjectStartDate(c, currentProjectInfo);
                             success=true;
                         } catch (InvalidDateException e) {
                             System.out.print(e.getMessage());
@@ -153,10 +151,11 @@ public class Viewer { // Author Asger
                     while (!success) {
                         Calendar c = getWeekOfYearFromUser(projectScanner);
                         c.set(Calendar.DAY_OF_WEEK,8); //sunday. Java.Calendar has weird day of week format.
-                        app.setProjectDeadline(c, currentProject);
+                        app.setProjectDeadline(c, currentProjectInfo);
                         success=true;
                     }
                 }
+                refreshProjectInfoObject(value);
                 insideProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 insideProjectValue = 0;
@@ -180,13 +179,13 @@ public class Viewer { // Author Asger
                     String workedTimeString = activityScanner.nextLine();
                     try {
                         double workedTime = Double.parseDouble(workedTimeString);
-                        app.logTimeOnActivity(workedTime, app.getCurrentUser(), currentActivity);
+                        app.logTimeOnActivity(workedTime, app.getCurrentUser(), currentActivityInfo);
                     }catch (java.lang.Exception e){
                         System.out.println("Invalid time input");
                     }
                 }
                 else if (input.equalsIgnoreCase("Complete")){
-                    app.ChangeCompletenessOfActivity(true, currentActivity);
+                    app.ChangeCompletenessOfActivity(true, currentActivityInfo);
                     inProjectMenu();
                     break;
                 }else if(input.equalsIgnoreCase("Exit")){
@@ -195,7 +194,7 @@ public class Viewer { // Author Asger
                 }else if(input.equalsIgnoreCase("Assign")){
                     System.out.println("Enter user id of user to be added to activity");
                     String addName = activityScanner.nextLine();
-                    app.assignUserToActivity(addName, currentActivity);
+                    app.assignUserToActivity(addName, currentActivityInfo);
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -231,7 +230,7 @@ public class Viewer { // Author Asger
                 numberIn = 0;
             }
         }
-        app.createNewActivity(newActivityName, numberIn, currentProject);
+        app.createNewActivity(newActivityName, numberIn, currentProjectInfo);
     }
 
     private static void mainMenuOverview(){
@@ -242,23 +241,24 @@ public class Viewer { // Author Asger
     }
 
     private static void inProjectMenu(){
-        System.out.println("Project: "+currentProject.getName());
-        System.out.println("Project Leader: "+currentProject.getProjectLeader());
-        System.out.println("Project Members: "+currentProject.getParticipanList());
-        System.out.println(app.getProjectCompletionString(currentProject));
+        System.out.println("Project: "+ currentProjectInfo.getName());
+        System.out.println("Project Leader: "+ currentProjectInfo.getProjectLeader());
+        System.out.println("Project status: " + (currentProjectInfo.getComplete()? "Complete" :"Incomplete"));
+        System.out.println("Project Members: "+ currentProjectInfo.getParticipanList());
+        System.out.println(app.getProjectCompletionString(currentProjectInfo));
         System.out.println("List of Activities:");
-        System.out.println(app.getActivityListString(currentProject));
-        System.out.println("Startdate: " + dateToString(currentProject.getStartDate()));
-        System.out.println("Deadline: " + dateToString(currentProject.getDeadline()));
+        System.out.println(app.getActivityListString(currentProjectInfo));
+        System.out.println("Startdate: " + dateToString(currentProjectInfo.getStartDate()));
+        System.out.println("Deadline: " + dateToString(currentProjectInfo.getDeadline()));
         System.out.println("Enter the number for the activity,\"ADD\" to add member to project \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
         System.out.println("Enter \"Set start date\" to set start date of project:");
         System.out.println("Enter \"Set deadline\" to set deadline of project:");
     }
 
     private static void inActivityMenu() {
-        System.out.println("Activity name: " + currentActivity.getActivityName());
-        System.out.println("Activity status: " + (currentActivity.getIsComplete()? "Complete" :"Incomplete"));
-        System.out.println("Activity Members: " + currentActivity.getParticipantList());
+        System.out.println("Activity name: " + currentActivityInfo.getActivityName());
+        System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
+        System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
         System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity,\n\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
     }
 
@@ -347,4 +347,10 @@ public class Viewer { // Author Asger
             return d.get(Calendar.DAY_OF_MONTH)+"/"+(d.get(Calendar.MONTH)+1)+"/"+d.get(Calendar.YEAR) +"(Week: "+d.get(Calendar.WEEK_OF_YEAR)+")";
         }
     }
+
+
+    private static void refreshProjectInfoObject(int value){
+        currentProjectInfo = new ProjectInfo(app.getProjectFromIndex(value));
+    }
+
 }

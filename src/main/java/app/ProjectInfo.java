@@ -14,6 +14,8 @@ public class ProjectInfo {
     private User projectLeader;
     private Calendar deadline;
     private Calendar startDate;
+
+    private boolean complete = false;
     private ArrayList<User> participanList = new ArrayList<User>();
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
@@ -22,6 +24,7 @@ public class ProjectInfo {
     public ProjectInfo(Project project){
         this.name = project.getName();
         this.projectID = project.getProjectID();
+        this.complete = project.getStatus();
         this.projectLeader = project.getProjectLeader();
         this.deadline = project.getDeadline();
         this.startDate = project.getStartDate();
@@ -60,4 +63,9 @@ public class ProjectInfo {
         }
         return result;
     }
+
+    public boolean getComplete() {
+        return complete;
+    }
+
 }

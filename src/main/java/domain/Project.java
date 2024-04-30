@@ -10,12 +10,14 @@ public class Project {
     private User projectLeader;
     private Calendar deadline;
     private Calendar startDate;
+
+    private boolean complete = false;
     private ArrayList<User> participanList = new ArrayList<User>();
     private ArrayList<Activity> activityList = new ArrayList<Activity>();
 
     public Project(String name, Calendar creationDate, int projectAmount) {
         this.name = name;
-
+        this.complete = false;
         // generate project ID
 
         String idExtension = "";
@@ -76,9 +78,7 @@ public class Project {
         return this.projectLeader == user;
     }
 
-    public void completeActivity(Activity activity) {
-        activity.setStatus(true);
-    }
+    public void completeProject(boolean status){this.complete = status;}
 
     public void createNewActivity(Activity activity) {
         this.activityList.add(activity);
@@ -112,13 +112,16 @@ public class Project {
     public String completionPercentage(){
         if(this.getActivityList() != null){
             double completionPercentage = 0;
+
             for(int i = 0; i < this.getActivityList().size(); i++){
                 if(this.getActivityList().get(i).getStatus()){
                     completionPercentage += 100.0/this.activityList.size();
                 }
             }
+
             completionPercentage = completionPercentage/100;
             int totalBlocks = 20;
+            if(completionPercentage == 1){completeProject(completionPercentage == 1);}
             int completedBlocks = (int) (completionPercentage * totalBlocks);
 
             StringBuilder progressBarBuilder = new StringBuilder();
@@ -173,5 +176,9 @@ public class Project {
 
     public User getProjectLeader() {
         return this.projectLeader;
+    }
+
+    public boolean getStatus() {
+        return this.complete;
     }
 }
