@@ -46,4 +46,14 @@ public class QuickSortPartitionSteps {
     public void isReturned(Integer int1) {
         assertEquals(this.result, (int) int1);
     }
+    @Then("the dataPackage at index {int} has count {int}")
+    public void theDataPackageAtIndexHasCount(Integer int1, Integer int2) {
+        assertTrue(this.list.get(int1).getCount()==int2);
+    }
+
+
+
+
+
+
 }
