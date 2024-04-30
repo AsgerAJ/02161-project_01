@@ -1,7 +1,9 @@
 package domain;
 
 import java.util.Comparator;
-
+/*
+* Used to allow sorting of objects
+* */
 public class CountSorting implements Comparator<Count> {
 
 

@@ -7,13 +7,14 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public abstract class QuickSortUserCounts {
-    public static ArrayList<UserCount> sortUsers(ArrayList<UserCount> list ) {
 
+
+    public QuickSortUserCounts() {}
+    public  ArrayList<UserCount> sortUsers(ArrayList<UserCount> list ) {
         quickSort(list,0,list.size()-1);
-        ArrayList<UserCount> sortedList = new ArrayList<>(Arrays.asList(tempList));
-        return sortedList;
+        return list;
     }
-    private static void quickSort (ArrayList<UserCount> ucArr,int begin, int end) {
+    private  void quickSort (ArrayList<UserCount> ucArr,int begin, int end) {
         if (begin<end) {
             int pivot = partition(ucArr,begin,end); //define pivot element
             quickSort(ucArr,begin,pivot-1);
@@ -26,14 +27,14 @@ public abstract class QuickSortUserCounts {
         ucArr[index2]=tempU;
     }
 
-    private static int partition(ArrayList<UserCount> ucArr, int begin, int end) {
+    public int partition(ArrayList<UserCount> ucArr, int begin, int end) {
         int leqIndex = begin-1; //correctPlace of pivot in list.
         int pivotValue=ucArr.get(end).getCount(); //store value to compare to
 
         for (int check = begin;check<end;check++) {
             if (ucArr.get(check).getCount()<=pivotValue) {
                 leqIndex++; //move rightmost smallest value index
-                ucArr.swap(leqIndex,check); // swap checkValue into rightMost position of smaller than section
+                Collections.swap(ucArr,leqIndex,check); // swap checkValue into rightMost position of smaller than section
             }
         }
         Collections.swap(ucArr,leqIndex+1,end); //swap pivot into
