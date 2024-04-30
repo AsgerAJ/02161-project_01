@@ -1,16 +1,14 @@
 package presentation;
 
 import app.ActivityInfo;
+import app.App;
 import app.ProjectInfo;
 import app.UserInfo;
 import domain.AUserIsAlreadyLoggedInException;
-import app.App;
+import domain.InvalidDateException;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
-import domain.*;
-
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 
@@ -54,14 +52,17 @@ public class Viewer { // Author Asger
                         System.out.println(e.getMessage());
                     }
                     break;
+
                 default:
-                    System.out.println("Enter '1' to log in, or '2' to register a new user, or 'ids' to see all user ids");
+                    System.out.println("Enter '1' to log in, or '2' to register a new user, 'ids' to see all user ids\nor 'Exit' to exit the program");
             }
 
             String input = loginScanner.nextLine();
             try {
                 if(input.equalsIgnoreCase("ids") && !app.getUserList().isEmpty()){
                     System.out.println(app.getRegisteredUsers());
+                }else if(input.equalsIgnoreCase("Exit")) {
+                    break;
                 }
                 loginValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -217,12 +218,8 @@ public class Viewer { // Author Asger
         System.out.print("Enter activity name: " );
         String newActivityName = newActivityScanner.nextLine();
         double numberIn = 0;
-        while (true) {
-            if (numberIn > 0) {
-                break;
-            }else{
-                System.out.print("Enter amount of budgeted hours: ");
-            }
+        while (!(numberIn > 0)) {
+            System.out.print("Enter amount of budgeted hours: ");
             String numberInput = newActivityScanner.nextLine();
             try {
                 numberIn = Double.parseDouble(numberInput);
@@ -263,45 +260,7 @@ public class Viewer { // Author Asger
     }
 
 
-    private static Calendar stringToDate(String input) throws InvalidDateFormatException {
-        // format input to dates
-        if (!input.contains("/")) {
-            throw new InvalidDateFormatException("doesnt contain");
-        }
-        String[] dmy = input.split("/");
 
-        int day;
-        int month;
-        int year;
-        try {
-            day = Integer.parseInt(dmy[0]);
-            month = Integer.parseInt(dmy[1]) - 1;
-            year = Integer.parseInt(dmy[2]);
-        } catch (java.lang.Exception e) {
-            throw new InvalidDateFormatException("invalid date format. Please use dd/mm/yyyy");
-        }
-        if (day < 1) {
-            throw new InvalidDateFormatException("Invalid day");
-        }
-        if (month > 11 || month < 0) {
-            throw new InvalidDateFormatException("Month must be a number between 1 and 12");
-        }
-        int[] daysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-        if (month == 1) { // february for leap year
-            if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
-                if (day > 29) {
-                    throw new InvalidDateFormatException("Invalid day of month");
-                } else if (day > 28) {
-                    throw new InvalidDateFormatException("Invalid day of month");
-                }
-            }
-        } else {
-            if (day > daysInMonth[month]) {
-                throw new InvalidDateFormatException("Invalid day of month");
-            }
-        }
-        return new GregorianCalendar(year, month, day);
-    }
     private static Calendar getWeekOfYearFromUser (Scanner input) {
         System.out.println("What year? (format: yyyy)");
         boolean successfullYear = false;
