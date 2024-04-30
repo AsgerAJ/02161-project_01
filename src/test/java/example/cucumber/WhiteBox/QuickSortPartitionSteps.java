@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class QuickSortPartitionSteps {
     private QuickSortUserCounts sorter;
+    private boolean exceptionThrown=false;
 
     public QuickSortPartitionSteps(QuickSortUserCounts q) {this.sorter=q;}
 
@@ -27,8 +28,8 @@ public class QuickSortPartitionSteps {
     public void theBeginningIndexIs(Integer int1) {
         this.beginIndex=int1;
     }
-    @Given("the end index i {int}")
-    public void theEndIndexI(Integer int1) {
+    @Given("the end index is {int}")
+    public void theEndIndexIs(Integer int1) {
         this.endIndex=int1;
     }
     @Given("the arraylist contains a dataPackage with a null user, and a count of {int}")
@@ -40,7 +41,12 @@ public class QuickSortPartitionSteps {
     }
     @When("partition is called")
     public void partitionIsCalled() {
-        this.result=sorter.partition(this.list,beginIndex,endIndex);
+
+        try {
+            result=sorter.partition(this.list,beginIndex,endIndex);
+        } catch (Exception e) {
+            this.exceptionThrown=true;
+        }
     }
     @Then("{int} is returned")
     public void isReturned(Integer int1) {
@@ -52,7 +58,10 @@ public class QuickSortPartitionSteps {
     }
 
 
-
+    @Then("an exception is thrown")
+    public void anExceptionIsThrown() {
+        assertTrue(this.exceptionThrown);
+    }
 
 
 

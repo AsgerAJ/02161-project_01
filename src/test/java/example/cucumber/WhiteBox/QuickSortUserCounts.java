@@ -1,5 +1,6 @@
 package example.cucumber.WhiteBox;
 
+import domain.CountSorting;
 import domain.UserCount;
 
 import java.util.ArrayList;
@@ -10,11 +11,11 @@ public class QuickSortUserCounts {
 
 
     public QuickSortUserCounts() {}
-    public  ArrayList<UserCount> sortUsers(ArrayList<UserCount> list ) {
+    public  ArrayList<UserCount> sortUsers(ArrayList<UserCount> list ) throws Exception {
         quickSort(list,0,list.size()-1);
         return list;
     }
-    private  void quickSort (ArrayList<UserCount> ucArr,int begin, int end) {
+    private  void quickSort (ArrayList<UserCount> ucArr,int begin, int end) throws Exception {
         if (begin<end) {
             int pivot = partition(ucArr,begin,end); //define pivot element
             quickSort(ucArr,begin,pivot-1);
@@ -27,7 +28,17 @@ public class QuickSortUserCounts {
         ucArr[index2]=tempU;
     }
 
-    public int partition(ArrayList<UserCount> ucArr, int begin, int end) {
+    public int partition(ArrayList<UserCount> ucArr, int begin, int end) throws Exception {
+        if (ucArr==null|| begin<0||ucArr.isEmpty()||end>ucArr.size()||begin>end ) {
+            throw new Exception();
+        }
+        assert ucArr!=null;
+        assert !ucArr.isEmpty();
+        assert begin>=0;
+        assert end<ucArr.size();
+        assert begin<end;
+        ArrayList<UserCount> preList = new ArrayList<>(ucArr);
+
         int leqIndex = begin-1; //correctPlace of pivot in list.
         int pivotValue=ucArr.get(end).getCount(); //store value to compare to
 
@@ -38,6 +49,20 @@ public class QuickSortUserCounts {
             }
         }
         Collections.swap(ucArr,leqIndex+1,end); //swap pivot into
+        assert preList.containsAll(ucArr) && ucArr.containsAll(preList); //equal in this case
+        //assert all lesser than items are before, and bigger than are after
+        for (int index = 0; index<ucArr.size();index++) {
+            if (index<leqIndex+1) {
+                assert ucArr.get(index).getCount()<=ucArr.get(leqIndex+1).getCount();
+            } else if (index>leqIndex+1) {
+                assert ucArr.get(index).getCount()>=ucArr.get(leqIndex+1).getCount();
+
+            } else {
+                continue; // equal index, no need to compare
+            }
+        }
+
+
         return (leqIndex+1); //return position of pivot
     }
 }
