@@ -279,13 +279,10 @@ public class App { // Implementer javafx senere, hvis nødvendig
         }
     }
 
-    public void setProjectDeadline(Calendar c, ProjectInfo currentProject) {
-        Project p = getProjectFromID(currentProject.getProjectID());
-        try {
-            p.setDeadline(c);
-        } catch (InvalidDateException e) {
-            System.out.println(e.getMessage());
-        }
+    public void setProjectDeadline(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
+        getProjectFromID(currentProject.getProjectID()).setDeadline(c);
+
+
     }
     public String getProjectCompletionString(ProjectInfo currentProject) {
         Project p = getProjectFromID(currentProject.getProjectID());
@@ -438,10 +435,26 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
 
-    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) {
+    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
         getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setStartdate(c);
     }
-    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) {
+    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
         getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
+    }
+
+    public ActivityInfo getActivityInfo(ActivityInfo cai) {
+        return new ActivityInfo(getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()));
+    }
+    public ProjectInfo getProjectInfo(ProjectInfo cpi) {
+        return new ProjectInfo(getProjectFromID(cpi.getProjectID()));
+    }
+
+    public UserInfo getUserInfo(UserInfo cui)  {
+        try {
+            return new UserInfo(getUserFromId(cui.getUserId()));
+        } catch (UserIdDoesNotExistExeption e) {
+            return new UserInfo(getCurrentUser());
+        }
+
     }
 }

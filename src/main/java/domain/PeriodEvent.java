@@ -11,12 +11,20 @@ public abstract class PeriodEvent {
         this.name = name;
     }
 
-    public void setStartdate(Calendar cal) {
-        this.startdate = cal;
-    }
+    public void setDeadline(Calendar date) throws InvalidDateException {
 
-    public void setDeadline(Calendar cal) {
-        this.deadline = cal;
+        if (this.startdate == null || date.after(this.startdate)) {
+            this.deadline = date;
+        } else {
+            throw new InvalidDateException("deadline before start date");
+        }
+    }
+    public void setStartdate(Calendar date) throws InvalidDateException {
+        if (this.deadline == null || date.before(this.deadline)) {
+            this.startdate = date;
+        } else {
+            throw new InvalidDateException("Startdate after deadline");
+        }
     }
 
     public String getName() {return this.name;}
