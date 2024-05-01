@@ -125,4 +125,17 @@ public class StartDate_DeadlineSteps {
         this.activityHelper.getActivity().setDeadline(new GregorianCalendar(year,month-1,day));
     }
 
+    @When("user sets activity startdate to {int},{int},{int}")
+    public void userSetsActivityStartdateTo(Integer day,Integer month, Integer year) {
+        Calendar c = new GregorianCalendar(year,month-1,day);
+        this.activityHelper.getActivity().setStartdate(c);
+    }
+
+    @When("user sets activity deadline to {int},{int},{int}")
+    public void userSetsActivityDeadlineTo(Integer day,Integer month, Integer year) {
+        Calendar c = new GregorianCalendar(year,month-1,day);
+        this.activityHelper.getActivity().setDeadline(c);
+    }
+
+
 }
