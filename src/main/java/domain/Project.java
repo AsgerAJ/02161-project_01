@@ -121,7 +121,7 @@ public class Project {
 
             completionPercentage = completionPercentage/100;
             int totalBlocks = 20;
-            if(completionPercentage == 1){completeProject(completionPercentage == 1);}
+            if(completionPercentage == 1){completeProject(true);}
             int completedBlocks = (int) (completionPercentage * totalBlocks);
 
             StringBuilder progressBarBuilder = new StringBuilder();

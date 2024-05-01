@@ -5,10 +5,10 @@ import domain.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
-/* This class works both as a object itself, but also as a facade between the viewer class and the Business logic*/
+/* This class works both as an object itself, but also as a facade between the viewer class and the Business logic*/
 public class App { // Implementer javafx senere, hvis nødvendig
 
-    private ArrayList<User> userList = new ArrayList<User>();
+    private ArrayList<User> userList = new ArrayList<>();
     private User currentUser;
 
     private DateServer dateServer = new DateServer();
@@ -44,7 +44,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
     public  User getUserFromId(String id) throws UserIdDoesNotExistExeption{
-        String checkId = id;
         if(id.length()>4){
             id = id.substring(0,4);
         }else{
@@ -91,9 +90,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
         this.currentUser = null;
     }
 
-    public ArrayList<User> getUsers() {
-        return userList;
-    }
 
     public void setDateServer(DateServer d) {
         this.dateServer=d;
@@ -134,9 +130,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return this.currentUser;
     }
 
-    public ArrayList<Project> getProjectRepository() {
-        return projectRepository;
-    }
+
 
     public ArrayList<User> getUserList() {
         return userList;
@@ -149,7 +143,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
             p.assignUser(u);
 
         } catch (UserIdDoesNotExistExeption e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
 
         }
 
@@ -163,8 +157,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
             a.assignUser(u);
 
         } catch (UserIdDoesNotExistExeption e) {
-            e.printStackTrace();
-
+            System.out.println(e.getMessage());
         }
     }
 
@@ -188,7 +181,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
     public String getProjectListString(){
-        if(getCurrentUser().getAssignedProjects().size() != 0){
+        if(!getCurrentUser().getAssignedProjects().isEmpty()){
             String outputstring = "";
             int index = 1;
             for(Project project : getCurrentUser().getAssignedProjects()){
@@ -216,7 +209,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     public String getActivityListString(ProjectInfo currentProject) {
         Project p = getProjectFromID(currentProject.getProjectID());
-        if(p.getActivityList().size() != 0){
+        if(!p.getActivityList().isEmpty()){
             String outputstring = "";
             int index = 1;
             for(Activity activity : p.getActivityList()){
@@ -233,7 +226,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         try {
             p.setStartDate(c);
         } catch (InvalidDateException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -242,7 +235,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         try {
             p.setDeadline(c);
         } catch (InvalidDateException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
     public String getProjectCompletionString(ProjectInfo currentProject) {
