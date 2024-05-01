@@ -276,12 +276,19 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
         System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
+
         System.out.println("Activity start date:" + (currentActivityInfo.getStartDate()));
         System.out.println("Activity deadline:" + (currentActivityInfo.getDeadline()));
         System.out.println("Enter \"Log\" to log worked time, \"See worked time\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity, \"Remove\" to remove a user from the activity or \"Exit\" to go to main menu");
+
+
+        System.out.println("Activity start date:" + (currentActivityInfo.getStartDate()));
+        System.out.println("Activity deadline:" + (currentActivityInfo.getDeadline()));
+        System.out.println("Enter \"Log\" to log worked time, \"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity, \"Remove\" to remove a user from the activity or \"Exit\" to go to main menu");
+        System.out.println(("Enter \"find free employee\" to find available employee in project."));
+
         System.out.println("Enter \"Set start date\" to set start date of activity");
         System.out.println("Enter \"Set deadline\" to set deadline of activity");
-        System.out.println(("Enter \"find free employee\" to find available employee in project. (Requires start date and deadline"));
     }
 
 
