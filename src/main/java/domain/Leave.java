@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Leave extends PeriodEvent {
 
-    public Leave(String name, Calendar startdate, Calendar deadline) {
+    public Leave(String name, Calendar startdate, Calendar deadline) throws InvalidDateException {
         super(name);
         this.setStartdate(startdate);
         this.setDeadline(deadline);

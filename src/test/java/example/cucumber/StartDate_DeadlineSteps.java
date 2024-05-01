@@ -92,7 +92,7 @@ public class StartDate_DeadlineSteps {
 
 
     @Given("all the activities have start date {int},{int},{int}")
-    public void allTheActivitiesHaveStartDate(Integer day,Integer month, Integer year) {
+    public void allTheActivitiesHaveStartDate(Integer day,Integer month, Integer year) throws InvalidDateException {
         Calendar date = new GregorianCalendar(year,month-1,day);
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
         for (Activity act : actList) { act.setStartdate(date);}
@@ -104,7 +104,7 @@ public class StartDate_DeadlineSteps {
     }
 
     @Given("all the activities have deadline {int},{int},{int}")
-    public void allTheActivitiesHaveDeadline(Integer day, Integer month, Integer year) {
+    public void allTheActivitiesHaveDeadline(Integer day, Integer month, Integer year) throws InvalidDateException {
         Calendar date = new GregorianCalendar(year,month-1,day);
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
         for (Activity act : actList) { act.setDeadline(date);}
@@ -117,22 +117,22 @@ public class StartDate_DeadlineSteps {
     }
 
     @Given("the activity has start date {int},{int},{int}")
-    public void theActivityHasStartDate(Integer day, Integer month, Integer year) {
+    public void theActivityHasStartDate(Integer day, Integer month, Integer year) throws InvalidDateException {
         this.activityHelper.getActivity().setStartdate(new GregorianCalendar(year,month-1,day));
     }
     @Given("the activity has deadline {int},{int},{int}")
-    public void theActivityHasDeadline(Integer day, Integer month, Integer year) {
+    public void theActivityHasDeadline(Integer day, Integer month, Integer year) throws InvalidDateException {
         this.activityHelper.getActivity().setDeadline(new GregorianCalendar(year,month-1,day));
     }
 
     @When("user sets activity startdate to {int},{int},{int}")
-    public void userSetsActivityStartdateTo(Integer day,Integer month, Integer year) {
+    public void userSetsActivityStartdateTo(Integer day,Integer month, Integer year) throws InvalidDateException {
         Calendar c = new GregorianCalendar(year,month-1,day);
         this.activityHelper.getActivity().setStartdate(c);
     }
 
     @When("user sets activity deadline to {int},{int},{int}")
-    public void userSetsActivityDeadlineTo(Integer day,Integer month, Integer year) {
+    public void userSetsActivityDeadlineTo(Integer day,Integer month, Integer year) throws InvalidDateException {
         Calendar c = new GregorianCalendar(year,month-1,day);
         this.activityHelper.getActivity().setDeadline(c);
     }

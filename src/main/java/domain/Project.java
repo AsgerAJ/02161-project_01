@@ -103,7 +103,13 @@ public class Project {
             throw new InvalidDateException("deadline before start date");
         }
     }
-
+    public void setStartDate(Calendar date) throws InvalidDateException {
+        if (this.deadline == null || date.before(this.deadline)) {
+            this.startDate = date;
+        } else {
+            throw new InvalidDateException("Startdate after deadline");
+        }
+    }
 
     public boolean isOverdue(Calendar date) {
 
@@ -146,13 +152,7 @@ public class Project {
 
     }
 
-    public void setStartDate(Calendar date) throws InvalidDateException {
-        if (this.deadline == null || date.before(this.deadline)) {
-            this.startDate = date;
-        } else {
-            throw new InvalidDateException("Startdate after deadline");
-        }
-    }
+
 
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
         if (activity.getStartdate() == null || activity.getDeadline() == null) {

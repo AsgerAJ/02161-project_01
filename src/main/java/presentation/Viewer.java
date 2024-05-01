@@ -9,6 +9,7 @@ import domain.InvalidDateException;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
 
+import java.awt.desktop.SystemEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
@@ -149,16 +150,23 @@ public class Viewer { // Author Asger
                         } catch (InvalidDateException e) {
                             System.out.print(e.getMessage());
                             System.out.println("please try again;");
+                            success=false;
                         }
                     }
 
                 } else if (input.equalsIgnoreCase("set deadline")) {
                     boolean success = false;
                     while (!success) {
-                        Calendar c = getWeekOfYearFromUser(projectScanner);
-                        c.set(Calendar.DAY_OF_WEEK,8); //sunday. Java.Calendar has weird day of week format.
-                        app.setProjectDeadline(c, currentProjectInfo);
-                        success=true;
+                        try {
+                            Calendar c = getWeekOfYearFromUser(projectScanner);
+                            c.set(Calendar.DAY_OF_WEEK, 8); //sunday. Java.Calendar has weird day of week format.
+                            app.setProjectDeadline(c, currentProjectInfo);
+                            success = true;
+                        } catch (InvalidDateException e) {
+                            System.out.println(e.getMessage());
+                            System.out.println("Please try again.-");
+                            success=false;
+                        }
                     }
                 }
                 refreshProjectInfoObject(value);
@@ -211,11 +219,33 @@ public class Viewer { // Author Asger
                     ArrayList<String> results = app.findFreeEmployee(currentActivityInfo);
                     System.out.println(results.toString());
                 } else if (input.equalsIgnoreCase("set start date")) {
-                    Calendar c = getWeekOfYearFromUser(activityScanner);
-                    app.setActivityStartDateFromInfo(currentActivityInfo,c);
+                    boolean success =false;
+                    while(!success) {
+                        try {
+                            Calendar c = getWeekOfYearFromUser(activityScanner);
+                            app.setActivityStartDateFromInfo(currentActivityInfo, c);
+                            success = true;
+                        } catch(InvalidDateException e) {
+                            System.out.println(e.getMessage());
+                            System.out.println("Please try again");
+                        }
+                    }
+
                 } else if (input.equalsIgnoreCase("set deadline")) {
-                    Calendar c = getWeekOfYearFromUser(activityScanner);
-                    app.setActivityDeadlineFromInfo(currentActivityInfo,c);
+                    boolean success = false;
+                    while (!success) {
+                        try {
+                            Calendar c = getWeekOfYearFromUser(activityScanner);
+                            c.set(Calendar.DAY_OF_WEEK, 8);
+                            app.setActivityDeadlineFromInfo(currentActivityInfo,c);
+                            success=true;
+                        } catch (InvalidDateException e) {
+                            System.out.println(e.getMessage());
+                            System.out.println("Please try again");
+                        }
+
+                    }
+
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
