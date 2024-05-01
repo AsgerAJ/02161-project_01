@@ -76,7 +76,7 @@ public class Viewer { // Author Asger
         int startvalue = 0;
         Scanner programScanner = new Scanner(System.in);
         while((app.loggedInStatus())){
-            if (startvalue > 0){
+            if (startvalue != 0){
                 try{
                     currentProjectInfo = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
                     insideProjectMenu(startvalue-1);
@@ -84,9 +84,9 @@ public class Viewer { // Author Asger
                 }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
                     startvalue = 0;
+                    continue;
                 }
-            }
-            if(startvalue == 0){
+            } else {
                 mainMenuOverview();
             }
 
@@ -110,17 +110,16 @@ public class Viewer { // Author Asger
         Scanner projectScanner = new Scanner(System.in);
         int insideProjectValue = 0;
         while(true){
-            if(insideProjectValue > 0){
+            if(insideProjectValue != 0){
                 try{
                     currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
                     currentActivityInfo.setParentProjectID(currentProjectInfo.getProjectID());
                     enterActicvity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
+                    continue;
                 }
-
-
-            }else if(insideProjectValue == 0){
+            } else {
                 inProjectMenu();
             }
             String input = projectScanner.nextLine();
@@ -313,5 +312,4 @@ public class Viewer { // Author Asger
     private static void refreshProjectInfoObject(int value){
         currentProjectInfo = new ProjectInfo(app.getProjectFromIndex(value));
     }
-
 }
