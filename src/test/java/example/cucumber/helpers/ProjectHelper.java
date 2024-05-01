@@ -1,4 +1,4 @@
-package example.cucumber;
+package example.cucumber.helpers;
 
 import domain.Project;
 

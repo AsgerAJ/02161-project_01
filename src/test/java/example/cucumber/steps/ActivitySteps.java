@@ -1,7 +1,12 @@
-package example.cucumber;
+package example.cucumber.steps;
 
 import app.App;
 import domain.*;
+import example.cucumber.helpers.ErrorMessageHolder;
+import example.cucumber.helpers.ProjectHelper;
+import example.cucumber.helpers.UserHelper;
+import example.cucumber.helpers.ActivityHelper;
+import example.cucumber.helpers.MockDateHolder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

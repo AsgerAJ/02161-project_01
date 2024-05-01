@@ -1,8 +1,13 @@
-package example.cucumber;
+package example.cucumber.steps;
 
 import domain.Activity;
 import domain.InvalidDateException;
 import app.App;
+import example.cucumber.helpers.UserHelper;
+import example.cucumber.helpers.ActivityHelper;
+import example.cucumber.helpers.ErrorMessageHolder;
+import example.cucumber.helpers.MockDateHolder;
+import example.cucumber.helpers.ProjectHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

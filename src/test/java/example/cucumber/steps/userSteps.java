@@ -1,17 +1,16 @@
-package example.cucumber;
+package example.cucumber.steps;
 
 import domain.User;
 import domain.UserIdAlreadyInUseExeption;
-import domain.UserIdDoesNotExistExeption;
 import app.App;
-import domain.Leave;
+import example.cucumber.helpers.ErrorMessageHolder;
+import example.cucumber.helpers.ProjectHelper;
+import example.cucumber.helpers.UserHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
