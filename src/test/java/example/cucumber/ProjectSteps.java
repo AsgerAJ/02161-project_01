@@ -104,4 +104,14 @@ public class ProjectSteps {
 
     }
 
+    @When("the user is removed from the project")
+    public void removeUserFromProject() {
+        this.projectHelper.getProject().removeUser(this.userHelper.getUser());
+    }
+
+    @Then("the user is no longer part of the project")
+    public void userNoLongerPartOfProject() {
+        assertFalse(this.projectHelper.getProject().getParticipantList().contains(this.userHelper.getUser()));
+    }
+
 }
