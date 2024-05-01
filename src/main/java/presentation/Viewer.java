@@ -80,8 +80,8 @@ public class Viewer { // Author Asger
         while((app.loggedInStatus())){
             if (startvalue != 0){
                 try{
-                    currentProjectInfo = new ProjectInfo(app.getProjectFromIndex(startvalue-1));
-                    insideProjectMenu(startvalue-1);
+                    currentProjectInfo = new ProjectInfo(app.getProjectFromID(String.valueOf(startvalue)));
+                    insideProjectMenu(startvalue);
 
                 }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
@@ -248,7 +248,7 @@ public class Viewer { // Author Asger
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
         System.out.println("List of projects:");
         System.out.println(app.getProjectListString());
-        System.out.println("Enter the number for the project, \"NEW\" to make a new project, or \"Exit\" to exit app");
+        System.out.println("Enter the project id to enter a project, \"NEW\" to make a new project, or \"Exit\" to exit app");
     }
 
     private static void inProjectMenu(){
