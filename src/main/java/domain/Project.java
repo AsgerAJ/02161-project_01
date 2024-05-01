@@ -145,9 +145,9 @@ public class Project {
                 }
             }
 
-            return progressBarBuilder.toString() + " " +(completionPercentage * 100) + "%";
+            return "Project " + progressBarBuilder.toString() + " " +(completionPercentage * 100) + "% complete";
         }else{
-            return "□□□□□□□□□□□□□□□□□□□□ 0%";
+            return "Project □□□□□□□□□□□□□□□□□□□□ 0% complete";
         }
 
     }
@@ -157,23 +157,25 @@ public class Project {
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
         if (activity.getStartdate() == null || activity.getDeadline() == null) {
             return new ArrayList<UserCount>();
-        }
+        }else{
+            ArrayList<UserCount> returnList = new ArrayList<>();
+            for (User user : this.participanList) {
+                SuccessAmount result = user.isAvailable(activity);
 
-        ArrayList<UserCount> returnList = new ArrayList<>();
-        for (User user : this.participanList) {
-            SuccessAmount result = user.isAvailable(activity);
+                if (result.isTrue()) {
+                    UserCount data = new DataPackage();
+                    data.setUser(user);
+                    data.setCount(result.amount());
+                    returnList.add(data);
+                }
 
-            if (result.isTrue()) {
-                UserCount data = new DataPackage();
-                data.setUser(user);
-                data.setCount(result.amount());
-                returnList.add(data);
             }
+            returnList.sort(new CountSorting());
 
+            return returnList;
         }
-        returnList.sort(new CountSorting());
 
-        return returnList;
+
     }
 
     public String getID() {

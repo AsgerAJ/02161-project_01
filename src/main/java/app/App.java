@@ -327,12 +327,16 @@ public class App { // Implementer javafx senere, hvis nødvendig
         a.logTime(5, getUserFromId("NIKL"));
         a.logTime(5, getUserFromId("NIKO"));
         a.setStatus(true);
+        a.setStartdate(new Calendar.Builder().setDate(2024, 3, 1).build());
+        a.setDeadline(new Calendar.Builder().setDate(2024, 4, 6).build());
+
         a = p.getActivityFromName("Implementation");
         a.assignUser(getUserFromId("LOVR"));
         a.assignUser(getUserFromId("ASGE"));
         a.logTime(10, getUserFromId("LOVR"));
         a.logTime(2, getUserFromId("ASGE"));
         a.setStatus(true);
+
         a = p.getActivityFromName("Testing");
         a.assignUser(getUserFromId("NIKL"));
         a.assignUser(getUserFromId("NIKO"));
@@ -344,6 +348,8 @@ public class App { // Implementer javafx senere, hvis nødvendig
         a.logTime(10, getUserFromId("LOVR"));
         a.logTime(9, getUserFromId("ASGE"));
         a.logTime(5, getUserFromId("HUBA"));
+        a.setStartdate(new Calendar.Builder().setDate(2024, 4, 2).build());
+        a.setDeadline(new Calendar.Builder().setDate(2024, 4, 6).build());
 
         a = p.getActivityFromName("Documentation");
         a.assignUser(getUserFromId("NIKL"));

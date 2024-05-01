@@ -84,7 +84,7 @@ public class Viewer { // Author Asger
                     currentProjectInfo = new ProjectInfo(app.getProjectFromID(String.valueOf(startvalue)));
                     insideProjectMenu(startvalue);
 
-                }catch (IndexOutOfBoundsException e){
+                }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
                     startvalue = 0;
                     continue;
@@ -280,6 +280,8 @@ public class Viewer { // Author Asger
     }
 
     private static void mainMenuOverview(){
+        System.out.println();
+        System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
         System.out.println("List of projects:");
         System.out.println(app.getProjectListString());
@@ -287,6 +289,8 @@ public class Viewer { // Author Asger
     }
 
     private static void inProjectMenu(){
+        System.out.println();
+        System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Project: "+ currentProjectInfo.getName());
         System.out.println("Project Leader: "+ currentProjectInfo.getProjectLeader());
         System.out.println("Project status: " + (currentProjectInfo.getComplete()? "Complete" :"Incomplete"));
@@ -296,21 +300,25 @@ public class Viewer { // Author Asger
         System.out.println("Startdate: " +app.getActivityListString(currentProjectInfo));
         System.out.println("Startdate: " + currentProjectInfo.getStartDate());
         System.out.println("Deadline: " + currentProjectInfo.getDeadline());
-        System.out.println("Enter the number for the activity,\"ADD\" to add member to project,\"Remove\" to remove a member from the project, \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
-        System.out.println("Enter \"Set start date\" to set start date of project:");
-        System.out.println("Enter \"Set deadline\" to set deadline of project:");
+        System.out.println("Enter the number for the activity,\n\"ADD\" to add member to project,\n\"Remove\" to remove a member from the project, \n\"NEW\" to make a new activity, \n\"Exit\" to go to main menu");
+        System.out.println("\"Set start date\" to set start date of project:");
+        System.out.println("or \"Set deadline\" to set deadline of project:");
     }
 
     private static void inActivityMenu() {
+        System.out.println();
+        System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
         System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
-
-        System.out.println("Activity start date:" + (currentActivityInfo.getStartDate()));
-        System.out.println("Activity deadline:" + (currentActivityInfo.getDeadline()));
-        System.out.println("Enter \"Log\" to log worked time, \"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity, \"Remove\" to remove a user from the activity or \"Exit\" to go to main menu");
-        System.out.println("Enter \" Find free employee\" to find free employee in project.");
-
+        System.out.println("Budgeted time: " + currentActivityInfo.getBudgetTime());
+        System.out.println("Activity start date: " + (currentActivityInfo.getStartDate()));
+        System.out.println("Activity deadline: " + (currentActivityInfo.getDeadline()));
+        System.out.println();
+        System.out.println("Enter \"Log\" to log worked time, \n\"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\n\"Assign\" to assign user to activity, \n\"Remove\" to remove a user from the activity \n\"Exit\" to go to main menu");
+        if (currentActivityInfo.getDeadline() != "Date not set." && currentActivityInfo.getStartDate() != "Date not set.") {
+            System.out.println("or \" Find free employee\" to find free employee in project.");
+        }
     }
 
 
