@@ -39,7 +39,7 @@ public class Viewer { // Author Asger
                         app.logInUser(loginString);
                         currentUserInfo = new UserInfo(app.getCurrentUser());
                         showMainMenu();
-                    }catch (StringIndexOutOfBoundsException e){
+                    }catch (StringIndexOutOfBoundsException | NullPointerException e){
                         System.out.println("User Id has 4 characters");
                     } catch (UserIdDoesNotExistExeption e){
                         System.out.println(e.getMessage());
@@ -373,8 +373,6 @@ public class Viewer { // Author Asger
         String parentProjectId = currentActivityInfo.getParentProjectId();
         currentActivityInfo = app.getActivityInfo(currentActivityInfo);
         currentActivityInfo.setParentProjectID(parentProjectId);
-
-
     }
 
 
