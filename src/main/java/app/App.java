@@ -4,6 +4,7 @@ import domain.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -154,12 +155,37 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     }
 
+    public void removeUserFromProject(String userId, ProjectInfo pi) {
+        try {
+            User u = getUserFromId(userId);
+            Project p = getProjectFromID(pi.getProjectID());
+            p.removeUser(u);
+
+        } catch (UserIdDoesNotExistExeption e) {
+            System.out.println(e.getMessage());
+
+        }
+
+    }
+
     public void assignUserToActivity(String userId, ActivityInfo ai) {
         try {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
             Activity a = p.getActivityFromName(ai.getActivityName());
             a.assignUser(u);
+
+        } catch (UserIdDoesNotExistExeption e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void removeUserFromActivity(String userId, ActivityInfo ai) {
+        try {
+            User u = getUserFromId(userId);
+            Project p = getProjectFromID(ai.getParentProjectId());
+            Activity a = p.getActivityFromName(ai.getActivityName());
+            a.removeUser(u);
 
         } catch (UserIdDoesNotExistExeption e) {
             System.out.println(e.getMessage());
@@ -227,17 +253,19 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
     public String timeMapToString(ActivityInfo activityInfo) {
-        Project p = getProjectFromID(activityInfo.getParentProjectId());
+        Project p = this.getProjectFromID(activityInfo.getParentProjectId());
         Activity a = p.getActivityFromName(activityInfo.getActivityName());
         String outputstring = "";
-        if(!a.getTimeMap().isEmpty()){
-            for (String key : a.getTimeMap().keySet()) {
-                outputstring += key + " : " + a.getTimeMap().get(key) + " Hours" + "\n";
+        if (a.getTimeMap().isEmpty()) {
+            return outputstring;
+        } else {
+            String key;
+            for(Iterator var5 = a.getTimeMap().keySet().iterator(); var5.hasNext(); outputstring = outputstring + key + " : " + a.getTimeMap().get(key) + " Hours\n") {
+                key = (String)var5.next();
             }
+
             return outputstring;
         }
-
-        return outputstring;
     }
 
 

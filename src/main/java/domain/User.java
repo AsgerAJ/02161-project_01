@@ -18,9 +18,16 @@ public class User {
     public void assignProject(Project project){
         this.assignedProjects.add(project);
     }
+    public void removeProject(Project project){
+        this.assignedProjects.remove(project);
+    }
 
     public void assignActivity(PeriodEvent activity){
         this.assignedActivities.add(activity);
+    }
+
+    public void removeActivity(PeriodEvent activity){
+        this.assignedActivities.remove(activity);
     }
 
     public boolean hasProjectWithID(String projectID) {

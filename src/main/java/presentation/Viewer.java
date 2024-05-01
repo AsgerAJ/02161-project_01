@@ -116,7 +116,7 @@ public class Viewer { // Author Asger
                 try{
                     currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
                     currentActivityInfo.setParentProjectID(currentProjectInfo.getProjectID());
-                    enterActivity();
+                    enterActicvity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
                     continue;
@@ -135,6 +135,10 @@ public class Viewer { // Author Asger
                     System.out.println("Enter user id of user to be added to project");
                     String addName = projectScanner.nextLine();
                     app.assignUserToProject(addName, currentProjectInfo);
+                }else if(input.equalsIgnoreCase("Remove")){
+                        System.out.println("Enter user id of user to be removed from the project");
+                        String removeName = projectScanner.nextLine();
+                        app.removeUserFromProject(removeName, currentProjectInfo);
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success = false;
                     while (!success) {
@@ -167,7 +171,7 @@ public class Viewer { // Author Asger
 
 
 
-    private static void enterActivity() {
+    private static void enterActicvity() {
         Scanner activityScanner = new Scanner(System.in);
         int enterProjectValue = 0;
         while(true){
@@ -199,6 +203,10 @@ public class Viewer { // Author Asger
                     app.assignUserToActivity(addName, currentActivityInfo);
                 }else if(input.equalsIgnoreCase("See Time Worked")){
                     System.out.println(app.timeMapToString(currentActivityInfo));
+                }else if(input.equalsIgnoreCase("Remove")) {
+                    System.out.println("Enter user id of user to be removed from activity");
+                    String removeName = activityScanner.nextLine();
+                    app.removeUserFromActivity(removeName, currentActivityInfo);
                 } else if (input.equalsIgnoreCase("find free employee")) {
                     ArrayList<String> results = app.findFreeEmployee(currentActivityInfo);
                     System.out.println(results.toString());
@@ -262,8 +270,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
         System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
-
-        System.out.println("Enter \"Log\" to log worked time, \"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
+        System.out.println("Enter \"Log\" to log worked time, \"See worked time\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity, \"Remove\" to remove a user from the activity or \"Exit\" to go to main menu");
         System.out.println(("Enter \"find free employee\" to find available employee in project."));
     }
 

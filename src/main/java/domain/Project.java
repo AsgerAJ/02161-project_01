@@ -69,6 +69,12 @@ public class Project {
             user.assignProject(this);
         }
     }
+    public void removeUser(User user) {
+        if (this.participanList.contains(user)) {
+            this.participanList.remove(user);
+            user.removeProject(this);
+        }
+    }
 
     public boolean hasProjectLeader() {
         return this.projectLeader != null;
