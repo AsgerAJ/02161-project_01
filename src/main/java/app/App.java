@@ -4,6 +4,7 @@ import domain.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -98,12 +99,14 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
     public Project getProjectFromID(String id){
-        for (Project project : this.projectRepository) {
-            if (Objects.equals(project.getID(), id)) {
-                return project;
-            }
+        ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
+        if (!matchingProjects.isEmpty()) {
+            return matchingProjects.get(0);
+        } else {
+            return null;
         }
-        return null;
+
+
     }
 
     public Project createProject(String projectName) {
