@@ -438,6 +438,10 @@ public class App { // Implementer javafx senere, hvis nødvendig
     }
 
 
-
-
+    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) {
+        getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setStartdate(c);
+    }
+    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) {
+        getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
+    }
 }

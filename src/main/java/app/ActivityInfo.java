@@ -33,8 +33,8 @@ public class ActivityInfo {
         this.isComplete = activity.getStatus();
     }
 
-    public Calendar getStartDate() {return startDate;}
-    public Calendar getDeadline() {return deadline;}
+    public Calendar getStartDate() {return (Calendar) startDate.clone();}
+    public Calendar getDeadline() {return (Calendar) deadline.clone();}
     public double getBudgetTime() {return budgetTime;}
     public boolean getIsComplete() {return isComplete;}
     public HashMap<String, Double> getTimeMap() {return timeMap;}
