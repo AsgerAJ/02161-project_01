@@ -22,7 +22,7 @@ public class Viewer { // Author Asger
     private static ActivityInfo currentActivityInfo = new ActivityInfo();
 
     private static ProjectInfo currentProjectInfo = new ProjectInfo();
-    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
+    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption, InvalidDateException {
         // App setup
         app.enableDemoConfig();
         Scanner loginScanner = new Scanner(System.in);
