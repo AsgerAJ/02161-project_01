@@ -95,9 +95,9 @@ public class App { // Implementer javafx senere, hvis nødvendig
         this.dateServer=d;
     }
 
-    public Project getProjectFromID(String name){
+    public Project getProjectFromID(String id){
         for (Project project : this.projectRepository) {
-            if (Objects.equals(project.getID(), name)) {
+            if (Objects.equals(project.getID(), id)) {
                 return project;
             }
         }
@@ -235,6 +235,8 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return outputstring;
     }
 
+
+
     public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
         Project p = getProjectFromID(currentProject.getProjectID());
         try {
@@ -269,5 +271,106 @@ public class App { // Implementer javafx senere, hvis nødvendig
         a.setStatus(b);
     }
 
+    public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
+
+        registerUser("Huba");
+        registerUser("LOVR");
+        registerUser("ASGE");
+        registerUser("NIKL");
+        registerUser("NIKO");
+
+        //Log in as Huba
+        logInUser("Huba");
+        createProject("Soft. eng. project");
+        Project p = getProjectFromTitle("Soft. eng. project");
+        p.createNewActivity(new Activity("Design", 10));
+        p.createNewActivity(new Activity("Implementation", 20));
+        p.createNewActivity(new Activity("Testing", 10));
+        p.createNewActivity(new Activity("Documentation", 10));
+        p.assignUser(getUserFromId("LOVR"));
+        p.assignUser(getUserFromId("ASGE"));
+        p.assignUser(getUserFromId("NIKL"));
+        p.assignUser(getUserFromId("NIKO"));
+        Activity a = p.getActivityFromName("Design");
+        a.assignUser(getUserFromId("NIKL"));
+        a.assignUser(getUserFromId("NIKO"));
+        a.logTime(5, getUserFromId("NIKL"));
+        a.logTime(5, getUserFromId("NIKO"));
+        a.setStatus(true);
+        a = p.getActivityFromName("Implementation");
+        a.assignUser(getUserFromId("LOVR"));
+        a.assignUser(getUserFromId("ASGE"));
+        a.logTime(10, getUserFromId("LOVR"));
+        a.logTime(2, getUserFromId("ASGE"));
+        a.setStatus(true);
+        a = p.getActivityFromName("Testing");
+        a.assignUser(getUserFromId("NIKL"));
+        a.assignUser(getUserFromId("NIKO"));
+        a.assignUser(getUserFromId("LOVR"));
+        a.assignUser(getUserFromId("ASGE"));
+        a.assignUser(getUserFromId("HUBA"));
+        a.logTime(5, getUserFromId("NIKL"));
+        a.logTime(7, getUserFromId("NIKO"));
+        a.logTime(10, getUserFromId("LOVR"));
+        a.logTime(9, getUserFromId("ASGE"));
+        a.logTime(5, getUserFromId("HUBA"));
+
+        a = p.getActivityFromName("Documentation");
+        a.assignUser(getUserFromId("NIKL"));
+        a.assignUser(getUserFromId("HUBA"));
+        a.logTime(5, getUserFromId("NIKL"));
+        a.logTime(7, getUserFromId("HUBA"));
+
+        createProject("Yoga");
+        p = getProjectFromTitle("Yoga");
+        p.createNewActivity(new Activity("Yoga", 10));
+        p.createNewActivity(new Activity("Meditation", 20));
+        a = p.getActivityFromName("Yoga");
+        a.logTime(5, getUserFromId("Huba"));
+
+
+        logOut();
+
+        //Log in as Asger
+        logInUser("ASGE");
+        createProject("Exam Preperation");
+        p = getProjectFromTitle("Exam Preperation");
+        p.createNewActivity(new Activity("Math 1b", 40));
+        p.createNewActivity(new Activity("Physics", 20));
+        p.createNewActivity(new Activity("Algorithms and datastructures", 30));
+        p.createNewActivity(new Activity("Software eng.", 70));
+
+        a = p.getActivityFromName("Math 1b");
+        a.setStatus(true);
+
+        logOut();
+
+        //Log in as Lovro
+
+        logInUser("LOVR");
+        createProject("Coding");
+        p = getProjectFromTitle("Coding");
+        p.createNewActivity(new Activity("Java (•́︵•̀)", 40));
+        p.createNewActivity(new Activity("Python", 20));
+        p.createNewActivity(new Activity("C++", 30));
+        p.createNewActivity(new Activity("C#", 70));
+
+        logOut();
+
+        //Log in as Niklas
+
+        logInUser("NIKL");
+        logOut();
+        //Log in as Nikolaj
+    }
+
+    public Project getProjectFromTitle(String title) {
+        for (Project p : projectRepository) {
+            if (p.getName().equalsIgnoreCase(title)) {
+                return p;
+            }
+        }
+        return null;
+    }
 
 }

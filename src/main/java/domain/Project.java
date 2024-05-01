@@ -133,9 +133,9 @@ public class Project {
                 }
             }
 
-            return progressBarBuilder.toString();
+            return progressBarBuilder.toString() + " " +(completionPercentage * 100) + "%";
         }else{
-            return "□□□□□□□□□□□□□□□□□□□□";
+            return "□□□□□□□□□□□□□□□□□□□□ 0%";
         }
 
     }
