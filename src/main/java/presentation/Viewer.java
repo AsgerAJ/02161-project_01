@@ -258,6 +258,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
         System.out.println("Enter \"Log\" to log worked time, \"See worked time\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
+        System.out.println(("Enter \"find free employee\" to find available employee in project."));
     }
 
 
