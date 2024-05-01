@@ -221,6 +221,7 @@ public class Viewer { // Author Asger
             } catch (NumberFormatException e) {
                 enterProjectValue = 0;
             }
+            refreshActivityInfos();
         }
     }
 
@@ -280,7 +281,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity start date:" + (currentActivityInfo.getStartDate()));
         System.out.println("Activity deadline:" + (currentActivityInfo.getDeadline()));
         System.out.println("Enter \"Log\" to log worked time, \"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity, \"Remove\" to remove a user from the activity or \"Exit\" to go to main menu");
-
+        System.out.println("Enter \" Find free employee\" to find free employee in project.");
 
     }
 
@@ -337,6 +338,16 @@ public class Viewer { // Author Asger
 
 
     private static void refreshProjectInfoObject(int value){
-        currentProjectInfo = new ProjectInfo(app.getProjectFromID(String.valueOf(value)));
+        currentProjectInfo = app.getProjectInfo(currentProjectInfo);
+    }
+
+    private static void refreshActivityInfos() {
+        currentActivityInfo = app.getActivityInfo(currentActivityInfo);
+
+    }
+
+
+    private static void refreshUserInfo() {
+        currentUserInfo = app.getUserInfo(currentUserInfo);
     }
 }

@@ -444,4 +444,20 @@ public class App { // Implementer javafx senere, hvis nødvendig
     public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) {
         getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
     }
+
+    public ActivityInfo getActivityInfo(ActivityInfo cai) {
+        return new ActivityInfo(getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()));
+    }
+    public ProjectInfo getProjectInfo(ProjectInfo cpi) {
+        return new ProjectInfo(getProjectFromID(cpi.getProjectID()));
+    }
+
+    public UserInfo getUserInfo(UserInfo cui)  {
+        try {
+            return new UserInfo(getUserFromId(cui.getUserId()));
+        } catch (UserIdDoesNotExistExeption e) {
+            return new UserInfo(getCurrentUser());
+        }
+
+    }
 }
