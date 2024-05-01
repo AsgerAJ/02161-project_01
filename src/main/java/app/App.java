@@ -221,6 +221,20 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return("No activities found");
     }
 
+    public String timeMapToString(ActivityInfo activityInfo) {
+        Project p = getProjectFromID(activityInfo.getParentProjectId());
+        Activity a = p.getActivityFromName(activityInfo.getActivityName());
+        String outputstring = "";
+        if(!a.getTimeMap().isEmpty()){
+            for (String key : a.getTimeMap().keySet()) {
+                outputstring += key + " : " + a.getTimeMap().get(key) + " Hours" + "\n";
+            }
+            return outputstring;
+        }
+
+        return outputstring;
+    }
+
     public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
         Project p = getProjectFromID(currentProject.getProjectID());
         try {
@@ -254,4 +268,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
         a.setStatus(b);
     }
+
+
 }

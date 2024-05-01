@@ -56,4 +56,5 @@ public class Activity extends PeriodEvent {
         u.assignActivity(this);
     }
 
+
 }
