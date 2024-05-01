@@ -114,7 +114,7 @@ public class Viewer { // Author Asger
                 try{
                     currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
                     currentActivityInfo.setParentProjectID(currentProjectInfo.getProjectID());
-                    enterActicvity();
+                    enterActivity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
                     continue;
