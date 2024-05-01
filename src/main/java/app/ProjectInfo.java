@@ -40,9 +40,9 @@ public class ProjectInfo {
 
     public String getProjectLeader() {return projectLeader.getUserId();}
 
-    public Calendar getDeadline() {return deadline;}
+    public Calendar getDeadline() {return (Calendar) this.deadline.clone();}
 
-    public Calendar getStartDate() {return startDate;}
+    public Calendar getStartDate() {return (Calendar) this.startDate.clone();}
 
     public String getParticipantList() {
         String result = "";
