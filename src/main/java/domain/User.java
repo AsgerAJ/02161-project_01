@@ -44,6 +44,11 @@ public class User {
     }
 
     public SuccessAmount isAvailable(PeriodEvent event) {
+        if (this.assignedActivities.contains(event)) {
+            SuccessAmount d= new DataPackage();
+            d.setTruthValue(false);
+            return d;
+        }
         SuccessAmount result = new DataPackage();
         result.setTruthValue(true);
         //result.setTruthValue(assignedActivities.stream().filter(p->p.timeOverlap(event)).noneMatch(p-> p.timeLockdown()));
