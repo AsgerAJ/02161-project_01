@@ -5,6 +5,8 @@ import domain.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 /* This class works both as an object itself, but also as a facade between the viewer class and the Business logic*/
 public class App { // Implementer javafx senere, hvis nødvendig
 
@@ -372,5 +374,17 @@ public class App { // Implementer javafx senere, hvis nødvendig
         }
         return null;
     }
+
+    public ArrayList<String> findFreeEmployee(ActivityInfo aci) {
+        Project p = getProjectFromID(aci.getParentProjectId());
+        Activity a = p.getActivityFromName(aci.getActivityName());
+        ArrayList <UserCount> avU = p.findFreeEmployee(a);
+        return avU.stream().map(entry -> entry.getUser().getUserId() + ": " + entry.getCount() + " activities overlapping").collect(Collectors.toCollection(ArrayList::new));
+
+
+    }
+
+
+
 
 }

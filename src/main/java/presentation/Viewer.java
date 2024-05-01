@@ -8,6 +8,8 @@ import domain.AUserIsAlreadyLoggedInException;
 import domain.InvalidDateException;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -197,6 +199,9 @@ public class Viewer { // Author Asger
                     app.assignUserToActivity(addName, currentActivityInfo);
                 }else if(input.equalsIgnoreCase("See Time Worked")){
                     System.out.println(app.timeMapToString(currentActivityInfo));
+                } else if (input.equalsIgnoreCase("find free employee")) {
+                    ArrayList<String> results = app.findFreeEmployee(currentActivityInfo);
+                    System.out.println(results.toString());
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -257,7 +262,9 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
         System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
+
         System.out.println("Enter \"Log\" to log worked time, \"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
+        System.out.println(("Enter \"find free employee\" to find available employee in project."));
     }
 
 
@@ -300,6 +307,9 @@ public class Viewer { // Author Asger
         return c;
 
     }
+
+
+
     private static String dateToString(Calendar d) {
         if (d==null) {
             return "Date not Set";

@@ -36,7 +36,7 @@ public class QuickSortUserCounts {
         assert !ucArr.isEmpty();
         assert begin>=0;
         assert end<ucArr.size();
-        assert begin<end;
+        assert begin<=end;
         ArrayList<UserCount> preList = new ArrayList<>(ucArr);
 
         int leqIndex = begin-1; //correctPlace of pivot in list.
