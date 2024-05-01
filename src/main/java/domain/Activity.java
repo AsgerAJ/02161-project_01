@@ -56,5 +56,8 @@ public class Activity extends PeriodEvent {
         u.assignActivity(this);
     }
 
-
+    public void removeUser(User u) {
+        this.participantList.remove(u);
+        u.removeActivity(this);
+    }
 }
