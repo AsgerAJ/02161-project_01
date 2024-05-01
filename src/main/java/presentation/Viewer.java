@@ -85,6 +85,7 @@ public class Viewer { // Author Asger
                     insideProjectMenu(startvalue);
 
                 }catch (IndexOutOfBoundsException | NullPointerException e){
+                    System.out.println(e.getMessage());
                     System.out.println("Project not found");
                     startvalue = 0;
                     continue;
@@ -150,7 +151,6 @@ public class Viewer { // Author Asger
                         } catch (InvalidDateException e) {
                             System.out.print(e.getMessage());
                             System.out.println("please try again;");
-                            success=false;
                         }
                     }
 
@@ -165,16 +165,16 @@ public class Viewer { // Author Asger
                         } catch (InvalidDateException e) {
                             System.out.println(e.getMessage());
                             System.out.println("Please try again.-");
-                            success=false;
                         }
                     }
                 }
-                refreshProjectInfoObject(value);
+
                 insideProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
                 insideProjectValue = 0;
             }
         }
+        refreshProjectInfoObject();
     }
 
 
@@ -367,7 +367,7 @@ public class Viewer { // Author Asger
     }
 
 
-    private static void refreshProjectInfoObject(int value){
+    private static void refreshProjectInfoObject(){
         currentProjectInfo = app.getProjectInfo(currentProjectInfo);
     }
 

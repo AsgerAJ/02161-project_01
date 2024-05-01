@@ -271,12 +271,9 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
 
     public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
-        Project p = getProjectFromID(currentProject.getProjectID());
-        try {
-            p.setStartDate(c);
-        } catch (InvalidDateException e) {
-            System.out.println(e.getMessage());
-        }
+        getProjectFromID(currentProject.getProjectID()).setStartDate(c);
+
+
     }
 
     public void setProjectDeadline(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
