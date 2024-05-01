@@ -42,18 +42,6 @@ public class userSteps {
 
     }
 
-    @Given("user {string} is on {string} leave from {int},{int},{int} to {int},{int},{int}")
-    public void userIsOnLeave(String user, String leave_name, int start_day, int start_month, int start_year, int end_day, int end_month, int end_year) {
-        Calendar startdate = new GregorianCalendar(start_year, start_month-1, start_day);
-        Calendar deadline = new GregorianCalendar(end_year, end_month-1, end_day);
-        Leave leave = new Leave(leave_name, startdate, deadline);
-        try {
-            this.app.getUserFromId(user).assignActivity(leave);
-        } catch (UserIdDoesNotExistExeption e) {
-            errorMessage.setErrorMessage(e.getMessage());
-        }        
-    }
-
     @Then("a user is registered with id {string}")
     public void a_user_is_registered_with_id(String string) {
         assertTrue(app.hasUserWithID(string));
