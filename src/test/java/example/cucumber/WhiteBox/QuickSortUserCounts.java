@@ -1,10 +1,8 @@
 package example.cucumber.WhiteBox;
 
-import domain.CountSorting;
-import domain.UserCount;
+import domain.Interfaces.UserCount;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class QuickSortUserCounts {

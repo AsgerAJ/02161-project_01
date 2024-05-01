@@ -1,7 +1,10 @@
 package example.cucumber.steps;
 
-import domain.*;
 import app.App;
+import domain.Classes.Leave;
+import domain.Classes.PeriodEvent;
+import domain.exceptions.InvalidDateException;
+import domain.exceptions.UserIdDoesNotExistExeption;
 import example.cucumber.helpers.ProjectHelper;
 import example.cucumber.helpers.UserHelper;
 import example.cucumber.helpers.ErrorMessageHolder;

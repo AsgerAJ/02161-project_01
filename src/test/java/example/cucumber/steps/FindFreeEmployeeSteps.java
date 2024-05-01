@@ -1,9 +1,9 @@
 package example.cucumber.steps;
 
 import app.App;
-import domain.Activity;
-import domain.User;
-import domain.UserCount;
+import domain.Classes.Activity;
+import domain.Classes.User;
+import domain.Interfaces.UserCount;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.MockDateHolder;
 import example.cucumber.helpers.ProjectHelper;

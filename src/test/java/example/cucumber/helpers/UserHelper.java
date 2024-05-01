@@ -1,7 +1,8 @@
 package example.cucumber.helpers;
 
-import domain.User;
-import domain.UserCount;
+import app.UserInfo;
+import domain.Classes.User;
+import domain.Interfaces.UserCount;
 
 import java.util.ArrayList;
 
@@ -9,15 +10,19 @@ public class UserHelper {
     private User user;
     private ArrayList<User> exampleUserList = new ArrayList<>();
     private ArrayList<UserCount> availableUserList;
+    private UserInfo userInfo;
 
     public UserHelper(){}
 
     public void setUser(User u) {
         this.user=u;
+        this.userInfo=new UserInfo(user);
     }
     public User getUser() {
         return this.user;
     }
+    public UserInfo getUserInfo() {return this.userInfo;}
+
 
 
     public ArrayList<User> getExampleUsers(int amount) {

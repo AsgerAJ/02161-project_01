@@ -1,16 +1,22 @@
 package example.cucumber.helpers;
 
-import domain.Activity;
+import app.ActivityInfo;
+import domain.Classes.Activity;
 
 import java.util.ArrayList;
 
 public class ActivityHelper {
     private Activity activity;
     private ArrayList<Activity> exampleActivityList = new ArrayList<>();
+    private ActivityInfo aI;
     public ActivityHelper (){
 
     }
-    public void setActivity(Activity a){this.activity=a;}
+    public void setActivity(Activity a){
+        this.activity=a;
+        this.aI=new ActivityInfo(a);}
+
+    public void setActivityInfoParentProjectId(String id){aI.setParentProjectID(id);}
 
     public Activity getActivity() {return activity;}
 

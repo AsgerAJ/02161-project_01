@@ -1,9 +1,9 @@
 package example.cucumber.steps;
 
 import app.App;
-import domain.Activity;
-import domain.User;
-import domain.UserIdDoesNotExistExeption;
+import domain.Classes.Activity;
+import domain.Classes.User;
+import domain.exceptions.UserIdDoesNotExistExeption;
 import example.cucumber.helpers.UserHelper;
 import example.cucumber.helpers.ActivityHelper;
 import example.cucumber.helpers.ErrorMessageHolder;

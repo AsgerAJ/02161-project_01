@@ -1,7 +1,7 @@
 package example.cucumber.steps;
 
 import app.App;
-import domain.*;
+import domain.Classes.Activity;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.ProjectHelper;
 import example.cucumber.helpers.UserHelper;

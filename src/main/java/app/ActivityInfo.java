@@ -1,8 +1,7 @@
 package app;
 
-import domain.Activity;
-import domain.Project;
-import domain.User;
+import domain.Classes.Activity;
+import domain.Classes.User;
 
 import java.util.ArrayList;
 import java.util.Calendar;

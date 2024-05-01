@@ -1,7 +1,7 @@
 package example.cucumber.helpers;
 
 import app.App;
-import domain.DateServer;
+import domain.Classes.DateServer;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;

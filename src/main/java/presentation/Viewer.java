@@ -4,12 +4,11 @@ import app.ActivityInfo;
 import app.App;
 import app.ProjectInfo;
 import app.UserInfo;
-import domain.AUserIsAlreadyLoggedInException;
-import domain.InvalidDateException;
-import domain.UserIdAlreadyInUseExeption;
-import domain.UserIdDoesNotExistExeption;
+import domain.exceptions.AUserIsAlreadyLoggedInException;
+import domain.exceptions.InvalidDateException;
+import domain.exceptions.UserIdAlreadyInUseExeption;
+import domain.exceptions.UserIdDoesNotExistExeption;
 
-import java.awt.desktop.SystemEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;

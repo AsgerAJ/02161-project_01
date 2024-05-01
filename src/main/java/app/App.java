@@ -1,12 +1,18 @@
 package app;
 
-import domain.*;
+import domain.Classes.Activity;
+import domain.Classes.DateServer;
+import domain.Classes.Project;
+import domain.Classes.User;
+import domain.Interfaces.UserCount;
+import domain.exceptions.AUserIsAlreadyLoggedInException;
+import domain.exceptions.InvalidDateException;
+import domain.exceptions.UserIdAlreadyInUseExeption;
+import domain.exceptions.UserIdDoesNotExistExeption;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.Collections;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /* This class works both as an object itself, but also as a facade between the viewer class and the Business logic*/
@@ -47,7 +53,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return u;
     }
 
-    public  User getUserFromId(String id) throws UserIdDoesNotExistExeption{
+    public  User getUserFromId(String id) throws UserIdDoesNotExistExeption {
         if(id.length()>4){
             id = id.substring(0,4);
         }else{
@@ -204,12 +210,6 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return (outputstring);
     }
 
-    public Project getProjectFromIndex(int index) {
-        if(index <= projectRepository.size()){
-            return projectRepository.get(index);
-        }
-        return null;
-    }
 
     public String getProjectListString(){
         if(!getCurrentUser().getAssignedProjects().isEmpty()){

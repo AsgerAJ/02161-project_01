@@ -1,7 +1,7 @@
 package example.cucumber.steps;
 
-import domain.Activity;
-import domain.InvalidDateException;
+import domain.Classes.Activity;
+import domain.exceptions.InvalidDateException;
 import app.App;
 import example.cucumber.helpers.UserHelper;
 import example.cucumber.helpers.ActivityHelper;
@@ -45,7 +45,7 @@ public class StartDate_DeadlineSteps {
     @When("sets the deadline of the project to {int},{int},{int}")
     public void setsTheDeadlineOfTheProjectTo(Integer day, Integer month, Integer year) throws InvalidDateException {
        try {
-           this.projectHelper.getProject().setDeadline(new GregorianCalendar(year, month-1, day));
+           this.app.setProjectDeadline(new GregorianCalendar(year, month-1, day),this.projectHelper.getProjectInfo());
        } catch (InvalidDateException e) {
            this.errorMessage.setErrorMessage(e.getMessage());
        }
@@ -80,7 +80,7 @@ public class StartDate_DeadlineSteps {
     @When("sets the startdate of the project to {int},{int},{int}")
     public void setsTheStartdateOfTheProjectTo(Integer day, Integer month, Integer year) throws InvalidDateException {
         try {
-            this.projectHelper.getProject().setStartDate(new GregorianCalendar(year, month - 1, day));
+            this.app.setProjectStartDate(new GregorianCalendar(year, month - 1, day),this.projectHelper.getProjectInfo());
         } catch (InvalidDateException e) {
             this.errorMessage.setErrorMessage(e.getMessage());
         }

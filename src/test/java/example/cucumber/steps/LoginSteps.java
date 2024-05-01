@@ -1,10 +1,10 @@
 package example.cucumber.steps;
 
-import domain.AUserIsAlreadyLoggedInException;
-import domain.UserIdAlreadyInUseExeption;
-import domain.UserIdDoesNotExistExeption;
+import domain.exceptions.AUserIsAlreadyLoggedInException;
+import domain.exceptions.UserIdAlreadyInUseExeption;
+import domain.exceptions.UserIdDoesNotExistExeption;
 import app.App;
-import domain.User;
+import domain.Classes.User;
 import example.cucumber.helpers.ProjectHelper;
 import example.cucumber.helpers.UserHelper;
 import example.cucumber.helpers.ErrorMessageHolder;

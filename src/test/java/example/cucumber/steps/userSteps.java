@@ -1,7 +1,7 @@
 package example.cucumber.steps;
 
-import domain.User;
-import domain.UserIdAlreadyInUseExeption;
+import domain.Classes.User;
+import domain.exceptions.UserIdAlreadyInUseExeption;
 import app.App;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.ProjectHelper;
