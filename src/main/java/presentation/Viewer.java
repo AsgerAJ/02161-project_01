@@ -8,6 +8,8 @@ import domain.AUserIsAlreadyLoggedInException;
 import domain.InvalidDateException;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -22,7 +24,7 @@ public class Viewer { // Author Asger
     private static ProjectInfo currentProjectInfo = new ProjectInfo();
     public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
         // App setup
-
+        app.enableDemoConfig();
         Scanner loginScanner = new Scanner(System.in);
 
         // Login & Register user Slice
@@ -205,6 +207,9 @@ public class Viewer { // Author Asger
                     System.out.println("Enter user id of user to be removed from activity");
                     String removeName = activityScanner.nextLine();
                     app.removeUserFromActivity(removeName, currentActivityInfo);
+                } else if (input.equalsIgnoreCase("find free employee")) {
+                    ArrayList<String> results = app.findFreeEmployee(currentActivityInfo);
+                    System.out.println(results.toString());
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -309,6 +314,9 @@ public class Viewer { // Author Asger
         return c;
 
     }
+
+
+
     private static String dateToString(Calendar d) {
         if (d==null) {
             return "Date not Set";
