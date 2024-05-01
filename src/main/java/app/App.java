@@ -243,10 +243,10 @@ public class App { // Implementer javafx senere, hvis nødvendig
         return p.completionPercentage();
     }
 
-    public void logTimeOnActivity(double workedTime, User currentUser, ActivityInfo currentActivity) {
+    public void logTimeOnActivity(double workedTime, ActivityInfo currentActivity) {
         Project p = getProjectFromID(currentActivity.getParentProjectId());
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
-        a.logTime(workedTime, currentUser);
+        a.logTime(workedTime, this.currentUser);
     }
 
     public void ChangeCompletenessOfActivity(boolean b, ActivityInfo currentActivity) {

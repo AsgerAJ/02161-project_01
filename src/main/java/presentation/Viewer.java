@@ -166,7 +166,7 @@ public class Viewer { // Author Asger
 
 
 
-    private static void enterActicvity() {
+    private static void enterActivity() {
         Scanner activityScanner = new Scanner(System.in);
         int enterProjectValue = 0;
         while(true){
@@ -180,7 +180,7 @@ public class Viewer { // Author Asger
                     String workedTimeString = activityScanner.nextLine();
                     try {
                         double workedTime = Double.parseDouble(workedTimeString);
-                        app.logTimeOnActivity(workedTime, app.getCurrentUser(), currentActivityInfo);
+                        app.logTimeOnActivity(workedTime, currentActivityInfo);
                     }catch (java.lang.Exception e){
                         System.out.println("Invalid time input");
                     }
