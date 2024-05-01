@@ -320,6 +320,6 @@ public class Viewer { // Author Asger
 
 
     private static void refreshProjectInfoObject(int value){
-        currentProjectInfo = new ProjectInfo(app.getProjectFromIndex(value));
+        currentProjectInfo = new ProjectInfo(app.getProjectFromID(String.valueOf(value)));
     }
 }
