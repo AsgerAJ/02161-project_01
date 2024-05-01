@@ -114,7 +114,7 @@ public class Viewer { // Author Asger
                 try{
                     currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
                     currentActivityInfo.setParentProjectID(currentProjectInfo.getProjectID());
-                    enterActicvity();
+                    enterActivity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
                     continue;
@@ -195,6 +195,8 @@ public class Viewer { // Author Asger
                     System.out.println("Enter user id of user to be added to activity");
                     String addName = activityScanner.nextLine();
                     app.assignUserToActivity(addName, currentActivityInfo);
+                }else if(input.equalsIgnoreCase("See Time Worked")){
+                    System.out.println(app.timeMapToString(currentActivityInfo));
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -255,7 +257,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
         System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
-        System.out.println("Enter \"Log\" to log worked time, \"Complete\" to complete activity,\n\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
+        System.out.println("Enter \"Log\" to log worked time, \"See worked time\" to see time worked on project,\n\"Complete\" to complete activity,\"Assign\" to assign user to activity or \"Exit\" to go to main menu");
     }
 
 
