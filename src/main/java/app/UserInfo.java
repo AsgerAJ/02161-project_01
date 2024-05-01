@@ -1,9 +1,8 @@
 package app;
 
-import domain.Activity;
-import domain.PeriodEvent;
-import domain.Project;
-import domain.User;
+import domain.Classes.PeriodEvent;
+import domain.Classes.Project;
+import domain.Classes.User;
 
 import java.util.ArrayList;
 

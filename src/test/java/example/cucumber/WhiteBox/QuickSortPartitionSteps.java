@@ -1,7 +1,7 @@
 package example.cucumber.WhiteBox;
 
-import domain.DataPackage;
-import domain.UserCount;
+import domain.Classes.DataPackage;
+import domain.Interfaces.UserCount;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

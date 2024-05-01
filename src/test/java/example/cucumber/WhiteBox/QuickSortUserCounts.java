@@ -1,10 +1,8 @@
 package example.cucumber.WhiteBox;
 
-import domain.CountSorting;
-import domain.UserCount;
+import domain.Interfaces.UserCount;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class QuickSortUserCounts {
@@ -22,11 +20,7 @@ public class QuickSortUserCounts {
             quickSort(ucArr,pivot+1,end);
         }
     }
-    private static void swap(UserCount[] ucArr,int index1, int index2) {
-        UserCount tempU = ucArr[index1];
-        ucArr[index1]=ucArr[index2];
-        ucArr[index2]=tempU;
-    }
+
 
     //public to allow cucumber/Junit direct access
     public int partition(ArrayList<UserCount> ucArr, int begin, int end) {
@@ -37,18 +31,18 @@ public class QuickSortUserCounts {
         assert begin>=0;
         assert end<ucArr.size();
         assert begin<=end;
-        ArrayList<UserCount> preList = new ArrayList<>(ucArr);
+        ArrayList<UserCount> preList = new ArrayList<>(ucArr); //for purpose of assert postcondition
 
-        int leqIndex = begin-1; //correctPlace of pivot in list.
-        int pivotValue=ucArr.get(end).getCount(); //store value to compare to
+        int leqIndex = begin-1; //1 //correctPlace of pivot in list.
+        int pivotValue=ucArr.get(end).getCount();//2 //store value to compare to
 
-        for (int check = begin;check<end;check++) {
-            if (ucArr.get(check).getCount()<=pivotValue) {
-                leqIndex++; //move rightmost smallest value index
-                Collections.swap(ucArr,leqIndex,check); // swap checkValue into rightMost position of smaller than section
+        for (int check = begin;check<end;check++) { //3
+            if (ucArr.get(check).getCount()<=pivotValue) { //4
+                leqIndex++; //5 //move rightmost smallest value index
+                Collections.swap(ucArr,leqIndex,check);// 6 // swap checkValue into rightMost position of smaller than section
             }
         }
-        Collections.swap(ucArr,leqIndex+1,end); //swap pivot into
+        Collections.swap(ucArr,leqIndex+1,end); //7 //swap pivot into
         assert preList.containsAll(ucArr) && ucArr.containsAll(preList); //equal in this case
         //assert all lesser than items are before, and bigger than are after
         for (int index = begin; index<end;index++) {
@@ -61,6 +55,6 @@ public class QuickSortUserCounts {
                 continue; // equal index, no need to compare
             }
         }
-        return (leqIndex+1); //return position of pivot
+        return (leqIndex+1); //8 //return position of pivot
     }
 }
