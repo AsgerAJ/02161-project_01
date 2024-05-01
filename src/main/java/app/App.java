@@ -15,8 +15,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
-/* This class works both as an object itself, but also as a facade between the viewer class and the Business logic*/
-public class App { // Implementer javafx senere, hvis nødvendig
+/* This class works both as an object itself, but also as a facade between the viewer class and the other Business logic*/
+public class App {
 
     private ArrayList<User> userList = new ArrayList<>();
     private User currentUser;
@@ -439,14 +439,14 @@ public class App { // Implementer javafx senere, hvis nødvendig
         getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
     }
 
-    public ActivityInfo getActivityInfo(ActivityInfo cai) {
+    public ActivityInfo renewActivityInfo(ActivityInfo cai) {
         return new ActivityInfo(getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()));
     }
-    public ProjectInfo getProjectInfo(ProjectInfo cpi) {
+    public ProjectInfo renewProjectInfo(ProjectInfo cpi) {
         return new ProjectInfo(getProjectFromID(cpi.getProjectID()));
     }
 
-    public UserInfo getUserInfo(UserInfo cui)  {
+    public UserInfo renewUserInfo(UserInfo cui)  {
         try {
             return new UserInfo(getUserFromId(cui.getUserId()));
         } catch (UserIdDoesNotExistExeption e) {

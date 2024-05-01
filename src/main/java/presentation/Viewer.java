@@ -365,17 +365,17 @@ public class Viewer { // Author Asger
 
 
     private static void refreshProjectInfoObject(){
-        currentProjectInfo = app.getProjectInfo(currentProjectInfo);
+        currentProjectInfo = app.renewProjectInfo(currentProjectInfo);
     }
 
     private static void refreshActivityInfos() {
         String parentProjectId = currentActivityInfo.getParentProjectId();
-        currentActivityInfo = app.getActivityInfo(currentActivityInfo);
+        currentActivityInfo = app.renewActivityInfo(currentActivityInfo);
         currentActivityInfo.setParentProjectID(parentProjectId);
     }
 
 
     private static void refreshUserInfo() {
-        currentUserInfo = app.getUserInfo(currentUserInfo);
+        currentUserInfo = app.renewUserInfo(currentUserInfo);
     }
 }
