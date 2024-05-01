@@ -40,9 +40,22 @@ public class ProjectInfo {
 
     public String getProjectLeader() {return projectLeader.getUserId();}
 
-    public Calendar getDeadline() {return (Calendar) this.deadline.clone();}
+    public String getDeadline() {
+        if (this.deadline == null) {
+            return "Date not set";
+        } else {
+            return ""+this.deadline.get(Calendar.DAY_OF_MONTH)+"/"+(deadline.get(Calendar.MONTH)+1)+"/"+deadline.get(Calendar.YEAR)+"(Week: "+deadline.get(Calendar.WEEK_OF_YEAR)+")";
+        }
+    }
 
-    public Calendar getStartDate() {return (Calendar) this.startDate.clone();}
+    public String getStartDate() {
+        if (startDate==null) {
+            return "Date not set";
+        } else {
+            return ""+this.startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.YEAR)+"(Week: "+startDate.get(Calendar.WEEK_OF_YEAR)+")";
+        }
+
+    }
 
     public String getParticipantList() {
         String result = "";
