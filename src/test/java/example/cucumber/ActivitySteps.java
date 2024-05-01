@@ -17,7 +17,6 @@ public class ActivitySteps {
 
     private UserHelper userHelper;
     private ProjectHelper projectHelper;
-
     private ActivityHelper activityHelper;
     public ActivitySteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
         this.app = app;
@@ -81,6 +80,13 @@ public class ActivitySteps {
         this.activityHelper.getActivity().assignUser(this.userHelper.getUser());
     }
 
+    @When("the user is removed from the activity")
+    public void removeUserFromActivity() {
+        this.activityHelper.getActivity().removeUser(this.userHelper.getUser());
+    }
 
-
+    @Then("the user is no longer part of the activity")
+    public void userNoLongerPartOfActivity() {
+        assertFalse(this.activityHelper.getActivity().getParticipantList().contains(this.userHelper.getUser()));
+    }
 }

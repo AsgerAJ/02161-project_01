@@ -6,5 +6,6 @@ Feature: Remove member from activity
     Given a user with id "HUBA" exists
     And a project exists with title "testProject"
     And the project has an activity with name "testActivity"
+    And the user is added to the activity
     When the user is removed from the activity
     Then the user is no longer part of the activity
