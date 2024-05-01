@@ -101,7 +101,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
 
     public Project getProjectFromID(String id){
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
-        if (!matchingProjects.isEmpty()) {
+        if (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) {
             return matchingProjects.get(0);
         } else {
             return null;
