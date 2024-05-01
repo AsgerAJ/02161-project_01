@@ -84,8 +84,7 @@ public class Viewer { // Author Asger
                     currentProjectInfo = new ProjectInfo(app.getProjectFromID(String.valueOf(startvalue)));
                     insideProjectMenu(startvalue);
 
-                }catch (IndexOutOfBoundsException | NullPointerException e){
-                    System.out.println(e.getMessage());
+                }catch (IndexOutOfBoundsException e){
                     System.out.println("Project not found");
                     startvalue = 0;
                     continue;
@@ -117,7 +116,7 @@ public class Viewer { // Author Asger
             if(insideProjectValue != 0){
                 try{
                     currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
-                    currentActivityInfo.setParentProjectID(currentProjectInfo.getProjectID());
+                    currentActivityInfo.setParentProjectID(String.valueOf(value));
                     enterActivity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
@@ -138,9 +137,9 @@ public class Viewer { // Author Asger
                     String addName = projectScanner.nextLine();
                     app.assignUserToProject(addName, currentProjectInfo);
                 }else if(input.equalsIgnoreCase("Remove")){
-                        System.out.println("Enter user id of user to be removed from the project");
-                        String removeName = projectScanner.nextLine();
-                        app.removeUserFromProject(removeName, currentProjectInfo);
+                    System.out.println("Enter user id of user to be removed from the project");
+                    String removeName = projectScanner.nextLine();
+                    app.removeUserFromProject(removeName, currentProjectInfo);
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success = false;
                     while (!success) {
@@ -236,7 +235,6 @@ public class Viewer { // Author Asger
                     while (!success) {
                         try {
                             Calendar c = getWeekOfYearFromUser(activityScanner);
-                            c.set(Calendar.DAY_OF_WEEK, 8);
                             app.setActivityDeadlineFromInfo(currentActivityInfo,c);
                             success=true;
                         } catch (InvalidDateException e) {
@@ -372,7 +370,10 @@ public class Viewer { // Author Asger
     }
 
     private static void refreshActivityInfos() {
+        String parentProjectId = currentActivityInfo.getParentProjectId();
         currentActivityInfo = app.getActivityInfo(currentActivityInfo);
+        currentActivityInfo.setParentProjectID(parentProjectId);
+
 
     }
 
