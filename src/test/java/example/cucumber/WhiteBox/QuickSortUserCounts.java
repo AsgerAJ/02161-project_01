@@ -51,7 +51,7 @@ public class QuickSortUserCounts {
         Collections.swap(ucArr,leqIndex+1,end); //swap pivot into
         assert preList.containsAll(ucArr) && ucArr.containsAll(preList); //equal in this case
         //assert all lesser than items are before, and bigger than are after
-        for (int index = 0; index<ucArr.size();index++) {
+        for (int index = begin; index<end;index++) {
             if (index<leqIndex+1) {
                 assert ucArr.get(index).getCount()<=ucArr.get(leqIndex+1).getCount();
             } else if (index>leqIndex+1) {
