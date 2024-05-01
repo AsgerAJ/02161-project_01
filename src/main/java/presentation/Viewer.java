@@ -8,6 +8,8 @@ import domain.AUserIsAlreadyLoggedInException;
 import domain.InvalidDateException;
 import domain.UserIdAlreadyInUseExeption;
 import domain.UserIdDoesNotExistExeption;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
@@ -197,6 +199,9 @@ public class Viewer { // Author Asger
                     app.assignUserToActivity(addName, currentActivityInfo);
                 }else if(input.equalsIgnoreCase("See Time Worked")){
                     System.out.println(app.timeMapToString(currentActivityInfo));
+                } else if (input.equalsIgnoreCase("find free employee")) {
+                    ArrayList<String> results = app.findFreeEmployee(currentActivityInfo);
+                    System.out.println(results.toString());
                 }
                 enterProjectValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -301,6 +306,9 @@ public class Viewer { // Author Asger
         return c;
 
     }
+
+
+
     private static String dateToString(Calendar d) {
         if (d==null) {
             return "Date not Set";
