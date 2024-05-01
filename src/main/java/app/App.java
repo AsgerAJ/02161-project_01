@@ -304,7 +304,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         a.setStatus(b);
     }
 
-    public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
+    public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, InvalidDateException {
 
         registerUser("Huba");
         registerUser("LOVR");
@@ -324,6 +324,9 @@ public class App { // Implementer javafx senere, hvis nødvendig
         p.assignUser(getUserFromId("ASGE"));
         p.assignUser(getUserFromId("NIKL"));
         p.assignUser(getUserFromId("NIKO"));
+        p.setStartDate(new Calendar.Builder().setDate(2024, 3, 1).build());
+        p.setDeadline(new Calendar.Builder().setDate(2024, 4, 6).build());
+
         Activity a = p.getActivityFromName("Design");
         a.assignUser(getUserFromId("NIKL"));
         a.assignUser(getUserFromId("NIKO"));
@@ -393,8 +396,27 @@ public class App { // Implementer javafx senere, hvis nødvendig
         //Log in as Niklas
 
         logInUser("NIKL");
+        createProject("Git gud");
+        p = getProjectFromTitle("Git gud");
+        p.createNewActivity(new Activity("Quick Scoping", 40));
+        p.createNewActivity(new Activity("No scoping", 20));
+        p.createNewActivity(new Activity("360 no scoping", 30));
+
+        a = p.getActivityFromName("No Scoping");
+        a.setStatus(true);
+
         logOut();
+
         //Log in as Nikolaj
+        logInUser("NiKO");
+        createProject("Rapport 2");
+        p = getProjectFromTitle("Rapport 2");
+        p.createNewActivity(new Activity("Rapport", 40));
+        p.createNewActivity(new Activity("Rapport 2", 20));
+        p.createNewActivity(new Activity("Rapport 2 electric boogaloo", 30));
+        p.createNewActivity(new Activity("Rapport 4", 70));
+
+        logOut();
     }
 
     public Project getProjectFromTitle(String title) {

@@ -22,7 +22,7 @@ public class Viewer { // Author Asger
     private static ActivityInfo currentActivityInfo = new ActivityInfo();
 
     private static ProjectInfo currentProjectInfo = new ProjectInfo();
-    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption {
+    public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption, InvalidDateException {
         // App setup
         app.enableDemoConfig();
         Scanner loginScanner = new Scanner(System.in);
@@ -261,7 +261,7 @@ public class Viewer { // Author Asger
         System.out.println(app.getActivityListString(currentProjectInfo));
         System.out.println("Startdate: " + dateToString(currentProjectInfo.getStartDate()));
         System.out.println("Deadline: " + dateToString(currentProjectInfo.getDeadline()));
-        System.out.println("Enter the number for the activity,\"ADD\" to add member to project \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
+        System.out.println("Enter the number for the activity,\"ADD\" to add member to project,\"Remove\" to remove a member from the project, \"NEW\" to make a new activity,\nor \"Exit\" to go to main menu");
         System.out.println("Enter \"Set start date\" to set start date of project:");
         System.out.println("Enter \"Set deadline\" to set deadline of project:");
     }
