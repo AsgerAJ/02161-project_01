@@ -432,7 +432,7 @@ public class App { // Implementer javafx senere, hvis nødvendig
         Project p = getProjectFromID(aci.getParentProjectId());
         Activity a = p.getActivityFromName(aci.getActivityName());
         ArrayList <UserCount> avU = p.findFreeEmployee(a);
-        return avU.stream().map(entry -> entry.getUser().getUserId() + ": " + entry.getCount() + " activities overlapping").collect(Collectors.toCollection(ArrayList::new));
+        return avU.stream().map(entry -> entry.UserCountToString()+" activities overlapping").collect(Collectors.toCollection(ArrayList::new));
 
 
     }
