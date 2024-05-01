@@ -29,7 +29,7 @@ public class QuickSortUserCounts {
     }
 
     //public to allow cucumber/Junit direct access
-    public int partition(ArrayList<UserCount> ucArr, int begin, int end) throws Exception {
+    public int partition(ArrayList<UserCount> ucArr, int begin, int end) {
         //place all elements smaller than element at end index before the element
         //And greater than the element after
         assert ucArr!=null;
