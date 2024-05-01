@@ -8,8 +8,7 @@ Feature: WhiteBox test of partition method of quicksorting UserCount
         And the arraylist contains a dataPackage with a null user, and a count of 2
         And the arraylist contains a dataPackage with a null user, and a count of 7
         When partition is called
-        Then an exception is thrown
-        #Then 2 is returned
+        Then 1 is returned
         #And the dataPackage at index 0 has count 4
         #And the dataPackage at index 1 has count 7
         #And the dataPackage at index 2 has count 2

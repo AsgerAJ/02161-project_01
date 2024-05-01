@@ -28,10 +28,10 @@ public class QuickSortUserCounts {
         ucArr[index2]=tempU;
     }
 
+    //public to allow cucumber/Junit direct access
     public int partition(ArrayList<UserCount> ucArr, int begin, int end) throws Exception {
-        if (ucArr==null|| begin<0||ucArr.isEmpty()||end>ucArr.size()||begin>end ) {
-            throw new Exception();
-        }
+        //place all elements smaller than element at end index before the element
+        //And greater than the element after
         assert ucArr!=null;
         assert !ucArr.isEmpty();
         assert begin>=0;
@@ -61,8 +61,6 @@ public class QuickSortUserCounts {
                 continue; // equal index, no need to compare
             }
         }
-
-
         return (leqIndex+1); //return position of pivot
     }
 }

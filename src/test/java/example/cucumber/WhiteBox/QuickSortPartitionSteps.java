@@ -44,6 +44,8 @@ public class QuickSortPartitionSteps {
 
         try {
             result=sorter.partition(this.list,beginIndex,endIndex);
+        } catch (AssertionError e) {
+            this.exceptionThrown=true;
         } catch (Exception e) {
             this.exceptionThrown=true;
         }
