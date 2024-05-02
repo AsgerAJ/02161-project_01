@@ -1,11 +1,12 @@
 package domain.Classes;
 
-import domain.Interfaces.SuccessAmount;
+import domain.Interfaces.SuccessCount;
 import domain.Interfaces.UserCount;
+import domain.Interfaces.FinalUserCount;
 
-public class DataPackage implements SuccessAmount, UserCount {
+public class DataPackage implements SuccessCount, UserCount, FinalUserCount {
     private boolean truthValue = false;
-    private int amount = 0;
+
     private User user;
     private int count;
 
@@ -13,8 +14,8 @@ public class DataPackage implements SuccessAmount, UserCount {
     }
 
     @Override
-    public void setAmount(int i) {
-        this.amount = i;
+    public void setCount(int i) {
+        this.count = i;
     }
 
     @Override
@@ -28,35 +29,31 @@ public class DataPackage implements SuccessAmount, UserCount {
     }
 
     @Override
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    @Override
     public User getUser() {return this.user;}
 
     @Override
     public int getCount() {return this.count;}
 
-    
+    @Override
+    public String getUserID() {
+        return this.user.getUserId();
+    }
+
+
     @Override
     public boolean isTrue() {
         return this.truthValue;
     }
 
+
     @Override
-    public int amount() {
-        return this.amount;
+    public void increaseCount(int i) {
+        this.count += i;
     }
 
     @Override
-    public void increaseAmount(int i) {
-        this.amount += i;
-    }
-
-    @Override
-    public void decreaseAmount(int i) {
-        this.amount -= i;
+    public void decreaseCount(int i) {
+        this.count -= i;
     }
 
 }
