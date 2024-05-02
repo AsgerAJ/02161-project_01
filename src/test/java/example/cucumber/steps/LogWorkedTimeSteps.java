@@ -1,5 +1,6 @@
 package example.cucumber.steps;
 
+import app.ActivityInfo;
 import domain.exceptions.AUserIsAlreadyLoggedInException;
 import domain.exceptions.UserIdDoesNotExistExeption;
 import app.App;
@@ -32,22 +33,19 @@ public class LogWorkedTimeSteps {
     }
     @Given("the user has loggged {double} hours of work to the activity")
     public void userHasLoggedHours(Double double1) {
-        User user = this.userHelper.getUser();
         this.doublePlus += double1;
-        this.activityHelper.getActivity().logTime(double1, user);
+        app.logTimeOnActivity(doublePlus,this.activityHelper.getActivityInfo() );
     }
     @When("the user logs {double} hours of work to the activity")
     public void loggingTimeWorked(Double double1) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
-        User user = this.userHelper.getUser();
-        this.doubleInput = double1;
-        this.activityHelper.getActivity().logTime(double1, user);
+        app.logTimeOnActivity(double1,this.activityHelper.getActivityInfo());
+
     }
     @Then("the user has logged {double} hours of work to the activity")
-    public void theUserHasTimeLogged(Double float1) {
-        String userId = this.userHelper.getUser().getUserId();
-        Double value = this.activityHelper.getActivity().getTimeMap().get(userId);
-        Double expected = this.doublePlus + this.doubleInput;
-        assertEquals(expected, value);
+    public void theUserHasTimeLogged(Double dob1) {
+        ActivityInfo ai = app.getActivityInfoFromName(this.projectHelper.getProjectInfo(),this.activityHelper.getActivityInfo().getActivityName());
+        assertEquals(ai.getTimeMap().get(this.userHelper.getUserInfo().getUserId()),dob1);
+
     }
 
 

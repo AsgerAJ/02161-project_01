@@ -3,6 +3,7 @@ package example.cucumber.steps;
 import app.App;
 import domain.Classes.Activity;
 import domain.Classes.User;
+import domain.Interfaces.FinalUserCount;
 import domain.Interfaces.UserCount;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.MockDateHolder;
@@ -25,6 +26,7 @@ public class FindFreeEmployeeSteps {
     private UserHelper userHelper;
     private ProjectHelper projectHelper;
     private ActivityHelper activityHelper;
+
 
     public FindFreeEmployeeSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder, UserHelper userHelper, ProjectHelper p, ActivityHelper a){
         this.app = app;
@@ -51,15 +53,16 @@ public class FindFreeEmployeeSteps {
 
     @When("the user searches for free employee")
     public void theUserSearchesForFreeEmployee() {
-        this.userHelper.setAvailableUserList(this.projectHelper.getProject().findFreeEmployee(this.activityHelper.getActivity()));
+        this.userHelper.setAvailableUserFinalList(app.findFreeEmployee(this.activityHelper.getActivityInfo()));
     }
     @Then("all users are returned")
     public void allUsersAreReturned() {
-        ArrayList<User> userList = this.userHelper.getExampleUsersList();
-        ArrayList<User> returnedUsers = new ArrayList<>();
-        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
-        for (UserCount uc : results) {
-            returnedUsers.add(uc.getUser());
+        ArrayList<String> userList = new ArrayList<>(this.userHelper.getExampleUsersList().stream().map(u->u.getUserId()).toList());
+
+        ArrayList<String> returnedUsers = new ArrayList<>();
+        ArrayList<FinalUserCount> results = this.userHelper.getAvailableUserFinalList();
+        for (FinalUserCount uc : results) {
+            returnedUsers.add(uc.getUserID());
 
         }
         assertTrue(returnedUsers.containsAll(userList));
@@ -67,7 +70,7 @@ public class FindFreeEmployeeSteps {
 
     @Then("the returned users are sorted by amount of activities overlapping")
     public void theReturnedUsersAreSortedByAmountOfActivitiesOverlapping() {
-        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
+        ArrayList<FinalUserCount> results = this.userHelper.getAvailableUserFinalList();
 
         int[] counts =  new int[results.size()];
         for (int i = 0; i<results.size(); i++) {
@@ -80,21 +83,11 @@ public class FindFreeEmployeeSteps {
 
     @Then("no users are found")
     public void noUsersFound(){
-        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
-        assertTrue(results.size()==0);
+        assertTrue(this.userHelper.getAvailableUserFinalList().isEmpty());
     }
 
     @Then("{string} is not found")
     public void userIsNotFound(String user){
-        ArrayList<UserCount> results = this.userHelper.getAvailableUserList();
-        for (UserCount userCount : results) {
-            if (userCount.getUser().getUserId().equals(user)) {
-                assertTrue(false);
-            }
-            else{
-                assertTrue(true);
-            }
-        }
-
+        assertTrue(this.userHelper.getAvailableUserFinalList().stream().noneMatch(u->u.getUserID().equalsIgnoreCase(user)));
     }
 }

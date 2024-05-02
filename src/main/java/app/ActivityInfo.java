@@ -1,11 +1,11 @@
 package app;
 
 import domain.Classes.Activity;
+import domain.Classes.Project;
 import domain.Classes.User;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ActivityInfo {
     private String activityName;
@@ -24,45 +24,63 @@ public class ActivityInfo {
     public ActivityInfo(Activity activity){
         this.activityName = activity.getName();
         this.startDate = activity.getStartdate();
+
+
         this.deadline = activity.getDeadline();
         this.budgetTime = activity.getBudgetTime();
         this.timeMap = activity.getTimeMap();
         this.totalHours = activity.getTotalHours();
         this.participantList = activity.getParticipantList();
         this.isComplete = activity.getStatus();
+        this.parentProjectId=activity.getParentProjectID();
     }
 
     public String getStartDate() {
-        if (this.startDate==null) {
-            return "Date not set.";
-        } else {
-            return ""+this.startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.YEAR)+"(Week: "+startDate.get(Calendar.WEEK_OF_YEAR)+")";
-        }
+        return dateToString(this.startDate);
     }
     public String getDeadline() {
-        if (this.deadline==null) {
-            return "Date not set.";
-        } else {
-            return  ""+this.deadline.get(Calendar.DAY_OF_MONTH)+"/"+(deadline.get(Calendar.MONTH)+1)+"/"+deadline.get(Calendar.YEAR)+"(Week: "+deadline.get(Calendar.WEEK_OF_YEAR)+")";
-        }
+        return dateToString(this.deadline);
         }
     public double getBudgetTime() {return budgetTime;}
     public boolean getIsComplete() {return isComplete;}
-    public HashMap<String, Double> getTimeMap() {return timeMap;}
+    public HashMap<String, Double> getTimeMap() {
+        return timeMap;}
 
-    public String getParticipantList() {
-        String result = "";
-        for (User u : participantList) {
-            result += u.getUserId() + " ";
-        }
-        return result;
+    public ArrayList<String> getParticipantList() {
+        return new ArrayList<>(this.participantList.stream().map(u->u.getUserId()).toList());
     }
     public String getActivityName() {return activityName;}
 
     public String getParentProjectId() {return parentProjectId;}
 
 
-    public void setParentProjectID(String projectID) {
-        this.parentProjectId = projectID;
+    private static String dateToString(Calendar d) {
+        if (d==null) {
+            return "Date not Set";
+        } else {
+            return d.get(Calendar.DAY_OF_MONTH)+"/"+(d.get(Calendar.MONTH)+1)+"/"+d.get(Calendar.YEAR) +"(Week: "+d.get(Calendar.WEEK_OF_YEAR)+")";
+        }
     }
+
+    public String timeMapToString() {
+        String outputstring = "";
+        if (this.getTimeMap().isEmpty()) {
+            return outputstring;
+        } else {
+            String key;
+            for(Iterator var5 = this.getTimeMap().keySet().iterator(); var5.hasNext(); outputstring = outputstring + key + " : " + this.getTimeMap().get(key) + " Hours\n") {
+                key = (String)var5.next();
+            }
+
+            return outputstring;
+        }
+    }
+    public Calendar getStartdateCopy() {
+        return (Calendar) this.startDate.clone();
+    }
+    public Calendar getDeadlineCopy(){
+        return (Calendar) this.deadline.clone();
+    }
+
+
 }

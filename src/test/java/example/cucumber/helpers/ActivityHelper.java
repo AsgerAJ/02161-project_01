@@ -16,17 +16,23 @@ public class ActivityHelper {
         this.activity=a;
         this.aI=new ActivityInfo(a);}
 
-    public void setActivityInfoParentProjectId(String id){aI.setParentProjectID(id);}
 
     public Activity getActivity() {return activity;}
 
     public ArrayList<Activity> getExampleActivityList() {
         return exampleActivityList;
     }
-    public ArrayList<Activity> getExampleActivities(int amount,int budget) {
+    public ArrayList<Activity> getExampleActivities(int amount,int budget,String parentProjectId) {
         for (int i = 1; i<=amount;i++) {
-            exampleActivityList.add(new Activity("exampleActivity"+i,budget));
+            exampleActivityList.add(new Activity("exampleActivity"+i,budget,parentProjectId));
         }
         return this.exampleActivityList;
+    }
+
+    public void setActivityInfo(ActivityInfo a) {
+        this.aI=a;
+    }
+    public ActivityInfo getActivityInfo(){
+        return this.aI;
     }
 }

@@ -4,6 +4,7 @@ import app.ActivityInfo;
 import app.App;
 import app.ProjectInfo;
 import app.UserInfo;
+import domain.Interfaces.FinalUserCount;
 import domain.exceptions.AUserIsAlreadyLoggedInException;
 import domain.exceptions.InvalidDateException;
 import domain.exceptions.UserIdAlreadyInUseExeption;
@@ -36,7 +37,7 @@ public class Viewer { // Author Asger
                     try {
                         String loginString = loginScanner.next().substring(0, 4).toUpperCase();
                         app.logInUser(loginString);
-                        currentUserInfo = new UserInfo(app.getCurrentUser());
+                        currentUserInfo = app.getCurrentUserInfo();
                         showMainMenu();
                     }catch (StringIndexOutOfBoundsException | NullPointerException e){
                         System.out.println("User Id has 4 characters");
@@ -80,7 +81,7 @@ public class Viewer { // Author Asger
         while((app.loggedInStatus())){
             if (startvalue != 0){
                 try{
-                    currentProjectInfo = new ProjectInfo(app.getProjectFromID(String.valueOf(startvalue)));
+                    currentProjectInfo = app.getProjectInfoFromID(String.valueOf(startvalue));
                     insideProjectMenu(startvalue);
 
                 }catch (IndexOutOfBoundsException | NullPointerException e){
@@ -114,8 +115,8 @@ public class Viewer { // Author Asger
         while(true){
             if(insideProjectValue != 0){
                 try{
-                    currentActivityInfo = new ActivityInfo(app.getActivityFromIndex(currentProjectInfo, insideProjectValue-1));
-                    currentActivityInfo.setParentProjectID(String.valueOf(value));
+                    currentActivityInfo = app.getActivityInfoFromIndex(currentProjectInfo, insideProjectValue-1);
+
                     enterActivity();
                 }catch (IndexOutOfBoundsException e){
                     System.out.println("Activity not found");
@@ -208,14 +209,13 @@ public class Viewer { // Author Asger
                     String addName = activityScanner.nextLine();
                     app.assignUserToActivity(addName, currentActivityInfo);
                 }else if(input.equalsIgnoreCase("See Time Worked")){
-                    System.out.println(app.timeMapToString(currentActivityInfo));
+                    System.out.println(currentActivityInfo.timeMapToString());
                 }else if(input.equalsIgnoreCase("Remove")) {
                     System.out.println("Enter user id of user to be removed from activity");
                     String removeName = activityScanner.nextLine();
                     app.removeUserFromActivity(removeName, currentActivityInfo);
                 } else if (input.equalsIgnoreCase("find free employee")) {
-                    ArrayList<String> results = app.findFreeEmployee(currentActivityInfo);
-                    System.out.println(results.toString());
+                    printFreeEmployees(app.findFreeEmployee(currentActivityInfo));
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success =false;
                     while(!success) {
@@ -277,7 +277,7 @@ public class Viewer { // Author Asger
         }
         app.createNewActivity(newActivityName, numberIn, currentProjectInfo);
     }
-
+    //Print methods-------------------------------------------------------------------------
     private static void mainMenuOverview(){
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
@@ -294,7 +294,7 @@ public class Viewer { // Author Asger
         System.out.println("Project Leader: "+ currentProjectInfo.getProjectLeader());
         System.out.println("Project status: " + (currentProjectInfo.getComplete()? "Complete" :"Incomplete"));
         System.out.println("Project Members: "+ currentProjectInfo.getParticipanList());
-        System.out.println(app.getProjectCompletionString(currentProjectInfo));
+        System.out.println(currentProjectInfo.completionPercentageString());
         System.out.println("List of Activities:");
         System.out.println("Startdate: " +app.getActivityListString(currentProjectInfo));
         System.out.println("Startdate: " + currentProjectInfo.getStartDate());
@@ -315,11 +315,24 @@ public class Viewer { // Author Asger
         System.out.println("Activity deadline: " + (currentActivityInfo.getDeadline()));
         System.out.println();
         System.out.println("Enter \"Log\" to log worked time, \n\"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\n\"Assign\" to assign user to activity, \n\"Remove\" to remove a user from the activity \n\"Exit\" to go to main menu");
-        if (currentActivityInfo.getDeadline() != "Date not set." && currentActivityInfo.getStartDate() != "Date not set.") {
+        if (!currentActivityInfo.getDeadline().equals("Date not set.") && !currentActivityInfo.getStartDate().equals("Date not set.")) {
             System.out.println("or \" Find free employee\" to find free employee in project.");
         }
     }
 
+    private static void printFreeEmployees(ArrayList<FinalUserCount> results) {
+        StringBuilder resultsString = new StringBuilder();
+        if (results.isEmpty()) {
+            resultsString.append("No employees available.");
+        } else {
+             resultsString = new StringBuilder(results.get(0).getUserID() + ": " + results.get(0).getCount() + " activities overlapping");
+            for (FinalUserCount u : results) {
+                resultsString.append(",").append(u.getUserID()).append(": ").append(u.getCount()).append(" activities overlapping");
+            }
+            resultsString.append(".");
+        }
+        System.out.println(resultsString);
+    }
 
 
     private static Calendar getWeekOfYearFromUser (Scanner input) {
@@ -363,13 +376,7 @@ public class Viewer { // Author Asger
 
 
 
-    private static String dateToString(Calendar d) {
-        if (d==null) {
-            return "Date not Set";
-        } else {
-            return d.get(Calendar.DAY_OF_MONTH)+"/"+(d.get(Calendar.MONTH)+1)+"/"+d.get(Calendar.YEAR) +"(Week: "+d.get(Calendar.WEEK_OF_YEAR)+")";
-        }
-    }
+
 
 
     private static void refreshProjectInfoObject(){
@@ -379,11 +386,12 @@ public class Viewer { // Author Asger
     private static void refreshActivityInfos() {
         String parentProjectId = currentActivityInfo.getParentProjectId();
         currentActivityInfo = app.renewActivityInfo(currentActivityInfo);
-        currentActivityInfo.setParentProjectID(parentProjectId);
+
     }
 
 
     private static void refreshUserInfo() {
         currentUserInfo = app.renewUserInfo(currentUserInfo);
     }
+
 }

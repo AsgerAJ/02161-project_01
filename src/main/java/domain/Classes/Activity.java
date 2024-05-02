@@ -1,5 +1,7 @@
 package domain.Classes;
 
+import app.ActivityInfo;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -10,10 +12,12 @@ public class Activity extends PeriodEvent {
     private HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private double totalHours = 0;
     private ArrayList<User> participantList = new ArrayList<User>();
+    private String parentProjectID;
 
-    public Activity(String name, double budgetTime) {
+    public Activity(String name, double budgetTime, String parentProjectID) {
         super(name);
         this.budgetTime = budgetTime;
+        this.parentProjectID=parentProjectID;
     }
 
     public void setStatus(boolean status) {
@@ -58,4 +62,11 @@ public class Activity extends PeriodEvent {
         this.participantList.remove(u);
         u.removeActivity(this);
     }
+
+    public ActivityInfo asInfo() {
+        return new ActivityInfo(this);
+    }
+
+    public String getParentProjectID(){return this.parentProjectID;}
+
 }

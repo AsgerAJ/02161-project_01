@@ -54,14 +54,16 @@ public class StartDate_DeadlineSteps {
 
     @Then("the project has the deadline {int},{int},{int}")
     public void theProjectHasTheDeadline(Integer day, Integer month, Integer year) {
-        assertEquals((int) this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
-        assertEquals((int) this.projectHelper.getProject().getDeadline().get(MONTH), (int) month-1); //check same month
-        assertEquals((int) this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
+        this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
+        assertEquals((int) this.projectHelper.getProjectInfo().getDeadlineCopy().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProjectInfo().getDeadlineCopy().get(MONTH), (int) month-1); //check same month
+        assertEquals((int) this.projectHelper.getProjectInfo().getDeadlineCopy().get(YEAR), (int) year); //check same year
     }
 
     @Given("the project has been given the deadline {int},{int},{int}")
     public void theProjectHasBeenGivenTheDeadline(Integer day, Integer month, Integer year) throws InvalidDateException {
-        this.projectHelper.getProject().setDeadline(new GregorianCalendar(year, month-1, day));
+        app.setProjectDeadline(new GregorianCalendar(year, month-1, day),this.projectHelper.getProjectInfo());
+        this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
         assertEquals((int) this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
         assertEquals((int) this.projectHelper.getProject().getDeadline().get(MONTH), (int) month -1 ); //check same month
         assertEquals((int) this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
@@ -70,11 +72,11 @@ public class StartDate_DeadlineSteps {
 
     @Then("the project is overdue")
     public void theProjectIsOverdue() {
-        assertTrue(this.projectHelper.getProject().isOverdue(this.dateHolder.getDate()));
+        assertTrue(app.isProjectOverdue(this.projectHelper.getProjectInfo()));
     }
     @Then("the project is not overdue")
     public void the_project_is_not_overdue() {
-        assertFalse(this.projectHelper.getProject().isOverdue(this.dateHolder.getDate()));
+        assertFalse(app.isProjectOverdue(this.projectHelper.getProjectInfo()));
     }
 
     @When("sets the startdate of the project to {int},{int},{int}")
@@ -88,9 +90,11 @@ public class StartDate_DeadlineSteps {
 
     @Then("the project has the startdate {int},{int},{int}")
     public void theProjectHasTheStartdate(Integer day, Integer month, Integer year) {
-        assertEquals((int) this.projectHelper.getProject().getStartDate().get(DAY_OF_MONTH), (int) day); //check same day
-        assertEquals((int) this.projectHelper.getProject().getStartDate().get(MONTH), (int) month-1); //check same month
-        assertEquals((int) this.projectHelper.getProject().getStartDate().get(YEAR), (int) year); //check same year
+        this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
+
+        assertEquals((int) this.projectHelper.getProjectInfo().getStartdateCopy().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProjectInfo().getStartdateCopy().get(MONTH), (int) month-1); //check same month
+        assertEquals((int) this.projectHelper.getProjectInfo().getStartdateCopy().get(YEAR), (int) year); //check same year
 
     }
 
@@ -100,11 +104,11 @@ public class StartDate_DeadlineSteps {
     public void allTheActivitiesHaveStartDate(Integer day,Integer month, Integer year) throws InvalidDateException {
         Calendar date = new GregorianCalendar(year,month-1,day);
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
-        for (Activity act : actList) { act.setStartdate(date);}
+        for (Activity act : actList) { app.setActivityStartDateFromInfo(act.asInfo(),date);}
         for (Activity act : actList) {
-            assertEquals((int) day, act.getStartdate().get(DAY_OF_MONTH));
-            assertEquals((int) month - 1, act.getStartdate().get(MONTH)); //-1 to compensate for 0 indexing
-            assertEquals((int) year,act.getStartdate().get(Calendar.YEAR));
+            assertEquals((int) day, app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(Calendar.DAY_OF_MONTH));
+            assertEquals((int) month - 1, app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(MONTH)); //-1 to compensate for 0 indexing
+            assertEquals((int) year,app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(Calendar.YEAR));
         }
     }
 
@@ -112,34 +116,38 @@ public class StartDate_DeadlineSteps {
     public void allTheActivitiesHaveDeadline(Integer day, Integer month, Integer year) throws InvalidDateException {
         Calendar date = new GregorianCalendar(year,month-1,day);
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
-        for (Activity act : actList) { act.setDeadline(date);}
+        for (Activity act : actList) { app.setActivityDeadlineFromInfo(act.asInfo(),date);}
         for (Activity act : actList) {
-            assertEquals((int) day, act.getDeadline().get(DAY_OF_MONTH));
-            assertEquals((int) month - 1, act.getDeadline().get(MONTH)); //-1 to compensate for 0 indexing
-            assertEquals((int) year,act.getDeadline().get(Calendar.YEAR));
+            assertEquals((int) day, app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(DAY_OF_MONTH));
+            assertEquals((int) month - 1, app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(MONTH)); //-1 to compensate for 0 indexing
+            assertEquals((int) year,app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(Calendar.YEAR));
         }
 
     }
 
     @Given("the activity has start date {int},{int},{int}")
     public void theActivityHasStartDate(Integer day, Integer month, Integer year) throws InvalidDateException {
-        this.activityHelper.getActivity().setStartdate(new GregorianCalendar(year,month-1,day));
+        Calendar c = new GregorianCalendar(year,month-1,day);
+        app.setActivityStartDateFromInfo(this.activityHelper.getActivityInfo(),c);
     }
     @Given("the activity has deadline {int},{int},{int}")
     public void theActivityHasDeadline(Integer day, Integer month, Integer year) throws InvalidDateException {
-        this.activityHelper.getActivity().setDeadline(new GregorianCalendar(year,month-1,day));
+        Calendar c = new GregorianCalendar(year,month-1,day);
+        app.setActivityDeadlineFromInfo(this.activityHelper.getActivityInfo(),c);
+
     }
 
     @When("user sets activity startdate to {int},{int},{int}")
     public void userSetsActivityStartdateTo(Integer day,Integer month, Integer year) throws InvalidDateException {
         Calendar c = new GregorianCalendar(year,month-1,day);
-        this.activityHelper.getActivity().setStartdate(c);
+        app.setActivityStartDateFromInfo(this.activityHelper.getActivityInfo(),c);
     }
 
     @When("user sets activity deadline to {int},{int},{int}")
     public void userSetsActivityDeadlineTo(Integer day,Integer month, Integer year) throws InvalidDateException {
         Calendar c = new GregorianCalendar(year,month-1,day);
-        this.activityHelper.getActivity().setDeadline(c);
+        app.setActivityDeadlineFromInfo(this.activityHelper.getActivityInfo(),c);
+
     }
 
 

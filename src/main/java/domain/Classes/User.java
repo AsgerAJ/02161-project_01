@@ -1,9 +1,7 @@
 package domain.Classes;
 
-import domain.Classes.DataPackage;
-import domain.Classes.PeriodEvent;
-import domain.Classes.Project;
-import domain.Interfaces.SuccessAmount;
+import app.UserInfo;
+import domain.Interfaces.SuccessCount;
 
 import java.util.ArrayList;
 
@@ -48,19 +46,14 @@ public class User {
         return assignedProjects;
     }
 
-    public SuccessAmount isAvailable(PeriodEvent event) {
+    public SuccessCount isAvailable(PeriodEvent event) {
         if (this.assignedActivities.contains(event)) {
-            SuccessAmount d= new DataPackage();
+            SuccessCount d= new DataPackage();
             d.setTruthValue(false);
             return d;
         }
-        SuccessAmount result = new DataPackage();
+        SuccessCount result = new DataPackage();
         result.setTruthValue(true);
-        //result.setTruthValue(assignedActivities.stream().filter(p->p.timeOverlap(event)).noneMatch(p-> p.timeLockdown()));
-        //if (result.isTrue()) {
-        //    result.setAmount((int) (assignedActivities.stream().filter(p->p.timeOverlap(event)&&!p.timeLockdown()).count()));
-        //}
-        //return result;
 
         for (PeriodEvent p : this.assignedActivities) {
             if (p.getStartdate() == null || p.getDeadline() == null){
@@ -72,17 +65,19 @@ public class User {
                     result.setTruthValue(false);
                     break;
                 } else {
-                    result.increaseAmount(1);
+                    result.increaseCount(1);
                 }
             }
         }
-        return result;
-
-
+        return result; 
     }
 
 
     public ArrayList<PeriodEvent> getAssignedActivities() {
         return assignedActivities;
     }
+    public UserInfo asInfo() {
+        return new UserInfo(this);
+    }
+
 }

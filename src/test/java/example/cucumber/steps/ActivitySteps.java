@@ -1,6 +1,8 @@
 package example.cucumber.steps;
 
+import app.ActivityInfo;
 import app.App;
+import app.ProjectInfo;
 import domain.Classes.Activity;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.ProjectHelper;
@@ -39,13 +41,15 @@ public class ActivitySteps {
     }
     @When("user creates an activity with name {string} with time budget {double}")
     public void userCreatesAnActivityWithNameWithTimeBudget(String string, Double dob1) {
-        this.activityHelper.setActivity(new Activity(string, dob1));
-        this.projectHelper.getProject().createNewActivity(this.activityHelper.getActivity());
+        app.createNewActivity(string,dob1,app.getProjectInfoFromID(this.projectHelper.getProjectInfo().getProjectID()));
+        this.activityHelper.setActivityInfo(app.getActivityInfoFromName(this.projectHelper.getProjectInfo(),string));
+
     }
 
     @Then("the activity with name {string} is added to the project")
     public void theActivityIsAddedToTheProject(String string) {
-        assertTrue(this.projectHelper.getProject().getActivityList().contains(this.activityHelper.getActivity()));
+        ProjectInfo pi = app.getProjectInfoFromID(this.projectHelper.getProjectInfo().getProjectID());
+        assertTrue(pi.getActivityList().contains(string));
     }
 
     @Given("the user is part of the project")
@@ -56,9 +60,9 @@ public class ActivitySteps {
 
     @Given("the project has an activity with name {string}")
     public void theProjectHasAnActivity(String string) {
-        this.activityHelper.setActivity(new Activity(string, 1));
-        this.projectHelper.getProject().createNewActivity(this.activityHelper.getActivity());
-        assertTrue(this.projectHelper.getProject().getActivityList().contains(this.activityHelper.getActivity()));
+        app.createNewActivity(string,1,this.projectHelper.getProjectInfo());
+        this.activityHelper.setActivityInfo(app.getActivityInfoFromName(this.projectHelper.getProjectInfo(),string));
+        assertTrue(app.getProjectInfoFromID(this.projectHelper.getProjectInfo().getProjectID()).getActivityList().contains(string));
     }
     @When("user marks activity {string} as complete")
     public void userMarksActivityAsComplete(String string) {
@@ -70,28 +74,30 @@ public class ActivitySteps {
     }
     @Then("the activity with name {string} has budget {double}")
     public void theActivityWithNameHasBudget(String string, Double dob1) {
-        assertTrue(dob1==this.activityHelper.getActivity().getBudgetTime());
+
+        assertTrue(dob1==app.getActivityInfoFromName(this.projectHelper.getProjectInfo(),string).getBudgetTime());
     }
     @When("the user is added to the activity")
     public void theUserIsAddedToTheActivity() {
-        this.activityHelper.getActivity().assignUser(this.userHelper.getUser());
+        app.assignUserToActivity(this.userHelper.getUserInfo().getUserId(),this.activityHelper.getActivityInfo());
     }
     @Then("the user is part of the activity")
     public void theUserIsPartOfTheActivity() {
-        assertTrue(this.activityHelper.getActivity().getParticipantList().contains(this.userHelper.getUser()));
+        assertTrue(this.activityHelper.getActivityInfo().getParticipantList().contains(this.userHelper.getUserInfo().getUserId()));
     }
     @Given("the user is assigned the activity")
     public void theUserIsAssignedTheActivity(){
-        this.activityHelper.getActivity().assignUser(this.userHelper.getUser());
+        app.assignUserToActivity(this.userHelper.getUserInfo().getUserId(),this.activityHelper.getActivityInfo());
     }
 
     @When("the user is removed from the activity")
     public void removeUserFromActivity() {
-        this.activityHelper.getActivity().removeUser(this.userHelper.getUser());
+        app.removeUserFromActivity(userHelper.getUserInfo().getUserId(),this.activityHelper.getActivityInfo());
     }
 
     @Then("the user is no longer part of the activity")
     public void userNoLongerPartOfActivity() {
-        assertFalse(this.activityHelper.getActivity().getParticipantList().contains(this.userHelper.getUser()));
+        this.activityHelper.setActivityInfo( app.renewActivityInfo(this.activityHelper.getActivityInfo()));
+        assertFalse(this.activityHelper.getActivityInfo().getParticipantList().contains(this.userHelper.getUser().getUserId()));
     }
 }

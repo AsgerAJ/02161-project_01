@@ -1,6 +1,7 @@
 package domain.Classes;
 
-import domain.Interfaces.SuccessAmount;
+import app.ProjectInfo;
+import domain.Interfaces.SuccessCount;
 import domain.Interfaces.UserCount;
 import domain.exceptions.InvalidDateException;
 
@@ -58,12 +59,7 @@ public class Project {
 
 
     public Activity getActivityFromName(String name) {
-        for (Activity activity : this.activityList) {
-            if ((activity.getName().toLowerCase().equals(name.toLowerCase()))) {
-                return activity;
-            }
-        }
-        return null;
+        return this.activityList.stream().filter(a->a.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public void assignUser(User user) {
@@ -124,36 +120,7 @@ public class Project {
 
     }
 
-    public String completionPercentage(){
-        if(this.getActivityList() != null){
-            double completionPercentage = 0;
 
-            for(int i = 0; i < this.getActivityList().size(); i++){
-                if(this.getActivityList().get(i).getStatus()){
-                    completionPercentage += 100.0/this.activityList.size();
-                }
-            }
-
-            completionPercentage = completionPercentage/100;
-            int totalBlocks = 20;
-            completeProject(completionPercentage == 1);
-            int completedBlocks = (int) (completionPercentage * totalBlocks);
-
-            StringBuilder progressBarBuilder = new StringBuilder();
-            for (int i = 0; i < totalBlocks; i++) {
-                if (i < completedBlocks) {
-                    progressBarBuilder.append("■"); // Filled block
-                } else {
-                    progressBarBuilder.append("□"); // Empty block
-                }
-            }
-
-            return "Project " + progressBarBuilder.toString() + " " +(completionPercentage * 100) + "% complete";
-        }else{
-            return "Project □□□□□□□□□□□□□□□□□□□□ 0% complete";
-        }
-
-    }
 
 
 
@@ -163,13 +130,12 @@ public class Project {
         }else{
             ArrayList<UserCount> returnList = new ArrayList<>();
             for (User user : this.participanList) {
-                SuccessAmount result = user.isAvailable(activity);
+                SuccessCount result = user.isAvailable(activity);
 
                 if (result.isTrue()) {
-                    UserCount data = new DataPackage();
-                    data.setUser(user);
-                    data.setCount(result.amount());
-                    returnList.add(data);
+                    UserCount temp =(UserCount) result;
+                    temp.setUser(user);
+                    returnList.add(temp);
                 }
 
             }
@@ -192,4 +158,9 @@ public class Project {
     public boolean getStatus() {
         return this.complete;
     }
+
+    public ProjectInfo asInfo() {
+        return new ProjectInfo(this);
+    }
+
 }

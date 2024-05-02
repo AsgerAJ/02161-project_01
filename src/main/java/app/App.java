@@ -4,6 +4,7 @@ import domain.Classes.Activity;
 import domain.Classes.DateServer;
 import domain.Classes.Project;
 import domain.Classes.User;
+import domain.Interfaces.FinalUserCount;
 import domain.Interfaces.UserCount;
 import domain.exceptions.AUserIsAlreadyLoggedInException;
 import domain.exceptions.InvalidDateException;
@@ -18,16 +19,19 @@ import java.util.stream.Collectors;
 /* This class works both as an object itself, but also as a facade between the viewer class and the other Business logic*/
 public class App {
 
-    private ArrayList<User> userList = new ArrayList<>();
+    private final ArrayList<User> userList = new ArrayList<>();
     private User currentUser;
 
     private DateServer dateServer = new DateServer();
 
-    private ArrayList<Project> projectRepository = new ArrayList<>();
+    private final ArrayList<Project> projectRepository = new ArrayList<>();
 
     private int projectAmount = 1;
     public App(){
     }
+
+
+
 
     public boolean hasUserWithID(String id) {
         for (User u : userList){
@@ -37,6 +41,7 @@ public class App {
         }
         return false;
     }
+
 
     public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
         while (userId.length()<4) {
@@ -53,7 +58,7 @@ public class App {
         return u;
     }
 
-    public  User getUserFromId(String id) throws UserIdDoesNotExistExeption {
+    public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
         if(id.length()>4){
             id = id.substring(0,4);
         }else{
@@ -105,15 +110,31 @@ public class App {
         this.dateServer=d;
     }
 
-    public Project getProjectFromID(String id){
+    private Project getProjectFromID(String id){
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
-        if (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) {
+        if (!matchingProjects.isEmpty()) {
             return matchingProjects.get(0);
         } else {
             return null;
         }
 
 
+    }
+    public ProjectInfo getProjectInfoFromID(String id) {
+        ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
+        if (!matchingProjects.isEmpty()) {
+            return matchingProjects.get(0).asInfo();
+        } else {
+            return null;
+        }
+    }
+    public ProjectInfo getCurrentUserProjectsInfoFromID(String id) {
+        ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
+        if (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) {
+            return matchingProjects.get(0).asInfo();
+        } else {
+            return null;
+        }
     }
 
     public Project createProject(String projectName) {
@@ -202,6 +223,7 @@ public class App {
         return getUserFromId(userId).getUserId();
     }
 
+
     public String getRegisteredUsers(){
         String outputstring = getUserList().get(0).getUserId();
         for (int i = 1; i < getUserList().size(); i++){
@@ -224,7 +246,7 @@ public class App {
         return("No projects found");
     }
 
-    public Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
+    private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
         Project p = getProjectFromID(currentproject.getProjectID());
         if(index <= p.getActivityList().size()){
             return p.getActivityList().get(index);
@@ -232,9 +254,14 @@ public class App {
         return null;
     }
 
+    public boolean isProjectOverdue(ProjectInfo pi) {
+        return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
+    }
+
+
     public void createNewActivity(String newActivityName, double numberIn, ProjectInfo currentProject) {
         Project p = getProjectFromID(currentProject.getProjectID());
-        Activity a = new Activity(newActivityName, numberIn);
+        Activity a = new Activity(newActivityName, numberIn,p.getProjectID());
         p.createNewActivity(a);
     }
 
@@ -252,39 +279,6 @@ public class App {
         return("No activities found");
     }
 
-    public String timeMapToString(ActivityInfo activityInfo) {
-        Project p = this.getProjectFromID(activityInfo.getParentProjectId());
-        Activity a = p.getActivityFromName(activityInfo.getActivityName());
-        String outputstring = "";
-        if (a.getTimeMap().isEmpty()) {
-            return outputstring;
-        } else {
-            String key;
-            for(Iterator var5 = a.getTimeMap().keySet().iterator(); var5.hasNext(); outputstring = outputstring + key + " : " + a.getTimeMap().get(key) + " Hours\n") {
-                key = (String)var5.next();
-            }
-
-            return outputstring;
-        }
-    }
-
-
-
-    public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
-        getProjectFromID(currentProject.getProjectID()).setStartDate(c);
-
-
-    }
-
-    public void setProjectDeadline(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
-        getProjectFromID(currentProject.getProjectID()).setDeadline(c);
-
-
-    }
-    public String getProjectCompletionString(ProjectInfo currentProject) {
-        Project p = getProjectFromID(currentProject.getProjectID());
-        return p.completionPercentage();
-    }
 
     public void logTimeOnActivity(double workedTime, ActivityInfo currentActivity) {
         Project p = getProjectFromID(currentActivity.getParentProjectId());
@@ -298,6 +292,80 @@ public class App {
         a.setStatus(b);
     }
 
+
+
+    private Project getProjectFromTitle(String title) {
+        for (Project p : projectRepository) {
+            if (p.getName().equalsIgnoreCase(title)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<FinalUserCount> findFreeEmployee(ActivityInfo aci) {
+        Project p = getProjectFromID(aci.getParentProjectId());
+        Activity a = p.getActivityFromName(aci.getActivityName());
+        ArrayList <UserCount> avU = p.findFreeEmployee(a);
+        return avU.stream().map(entry -> (FinalUserCount)entry).collect(Collectors.toCollection(ArrayList::new));
+
+
+    }
+
+
+    //----Set dates-----------------------------------------------------------------------------------------------------
+
+    public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
+        getProjectFromID(currentProject.getProjectID()).setStartDate(c);
+
+
+    }
+
+    public void setProjectDeadline(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
+        getProjectFromID(currentProject.getProjectID()).setDeadline(c);
+    }
+
+    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
+        getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setStartdate(c);
+    }
+    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
+        getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
+
+    }
+
+    //get info's -------------------------------------------------------------------------------------------------------
+
+
+    public ActivityInfo getActivityInfoFromIndex(ProjectInfo currentproject, int index) {
+        try {
+            return getActivityFromIndex(currentproject,index).asInfo();
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+    public ActivityInfo getActivityInfoFromName(ProjectInfo currentProject,String name){
+        return getProjectFromID(currentProject.getProjectID()).getActivityFromName(name).asInfo();
+    }
+    public ActivityInfo renewActivityInfo(ActivityInfo cai) {
+        return getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()).asInfo();
+    }
+
+
+    public ProjectInfo renewProjectInfo(ProjectInfo cpi) {
+        return new ProjectInfo(getProjectFromID(cpi.getProjectID()));
+    }
+
+    public UserInfo renewUserInfo(UserInfo cui)  {
+        try {
+            return new UserInfo(getUserFromId(cui.getUserId()));
+        } catch (UserIdDoesNotExistExeption e) {
+            return new UserInfo(getCurrentUser());
+        }
+    }
+    public UserInfo getCurrentUserInfo() {
+        return this.currentUser.asInfo();
+    }
+    //Demo configuration -----------------------------------------------------------------------------------------------
     public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, InvalidDateException {
 
         registerUser("Huba");
@@ -310,10 +378,10 @@ public class App {
         logInUser("Huba");
         createProject("Soft. eng. project");
         Project p = getProjectFromTitle("Soft. eng. project");
-        p.createNewActivity(new Activity("Design", 10));
-        p.createNewActivity(new Activity("Implementation", 20));
-        p.createNewActivity(new Activity("Testing", 10));
-        p.createNewActivity(new Activity("Documentation", 10));
+        p.createNewActivity(new Activity("Design", 10,p.getProjectID()));
+        p.createNewActivity(new Activity("Implementation", 20,p.getProjectID()));
+        p.createNewActivity(new Activity("Testing", 10,p.getProjectID()));
+        p.createNewActivity(new Activity("Documentation", 10,p.getProjectID()));
         p.assignUser(getUserFromId("LOVR"));
         p.assignUser(getUserFromId("ASGE"));
         p.assignUser(getUserFromId("NIKL"));
@@ -359,8 +427,8 @@ public class App {
 
         createProject("Yoga");
         p = getProjectFromTitle("Yoga");
-        p.createNewActivity(new Activity("Yoga", 10));
-        p.createNewActivity(new Activity("Meditation", 20));
+        p.createNewActivity(new Activity("Yoga", 10,p.getProjectID()));
+        p.createNewActivity(new Activity("Meditation", 20,p.getProjectID()));
         a = p.getActivityFromName("Yoga");
         a.logTime(5, getUserFromId("Huba"));
 
@@ -371,10 +439,10 @@ public class App {
         logInUser("ASGE");
         createProject("Exam Preperation");
         p = getProjectFromTitle("Exam Preperation");
-        p.createNewActivity(new Activity("Math 1b", 40));
-        p.createNewActivity(new Activity("Physics", 20));
-        p.createNewActivity(new Activity("Algorithms and datastructures", 30));
-        p.createNewActivity(new Activity("Software eng.", 70));
+        p.createNewActivity(new Activity("Math 1b", 40,p.getProjectID()));
+        p.createNewActivity(new Activity("Physics", 20,p.getProjectID()));
+        p.createNewActivity(new Activity("Algorithms and datastructures", 30,p.getProjectID()));
+        p.createNewActivity(new Activity("Software eng.", 70,p.getProjectID()));
 
         a = p.getActivityFromName("Math 1b");
         a.setStatus(true);
@@ -386,10 +454,10 @@ public class App {
         logInUser("LOVR");
         createProject("Coding");
         p = getProjectFromTitle("Coding");
-        p.createNewActivity(new Activity("Java (•́︵•̀)", 40));
-        p.createNewActivity(new Activity("Python", 20));
-        p.createNewActivity(new Activity("C++", 30));
-        p.createNewActivity(new Activity("C#", 70));
+        p.createNewActivity(new Activity("Java (•́︵•̀)", 40,p.getProjectID()));
+        p.createNewActivity(new Activity("Python", 20,p.getProjectID()));
+        p.createNewActivity(new Activity("C++", 30,p.getProjectID()));
+        p.createNewActivity(new Activity("C#", 70,p.getProjectID()));
 
         logOut();
 
@@ -398,9 +466,9 @@ public class App {
         logInUser("NIKL");
         createProject("Git gud");
         p = getProjectFromTitle("Git gud");
-        p.createNewActivity(new Activity("Quick Scoping", 40));
-        p.createNewActivity(new Activity("No scoping", 20));
-        p.createNewActivity(new Activity("360 no scoping", 30));
+        p.createNewActivity(new Activity("Quick Scoping", 40,p.getProjectID()));
+        p.createNewActivity(new Activity("No scoping", 20,p.getProjectID()));
+        p.createNewActivity(new Activity("360 no scoping", 30,p.getProjectID()));
 
         a = p.getActivityFromName("No Scoping");
         a.setStatus(true);
@@ -411,53 +479,12 @@ public class App {
         logInUser("NiKO");
         createProject("Rapport 2");
         p = getProjectFromTitle("Rapport 2");
-        p.createNewActivity(new Activity("Rapport", 40));
-        p.createNewActivity(new Activity("Rapport 2", 20));
-        p.createNewActivity(new Activity("Rapport 2 electric boogaloo", 30));
-        p.createNewActivity(new Activity("Rapport 4", 70));
+        p.createNewActivity(new Activity("Rapport", 40,p.getProjectID()));
+        p.createNewActivity(new Activity("Rapport 2", 20,p.getProjectID()));
+        p.createNewActivity(new Activity("Rapport 2 electric boogaloo", 30,p.getProjectID()));
+        p.createNewActivity(new Activity("Rapport 4", 70,p.getProjectID()));
 
         logOut();
     }
 
-    public Project getProjectFromTitle(String title) {
-        for (Project p : projectRepository) {
-            if (p.getName().equalsIgnoreCase(title)) {
-                return p;
-            }
-        }
-        return null;
-    }
-
-    public ArrayList<String> findFreeEmployee(ActivityInfo aci) {
-        Project p = getProjectFromID(aci.getParentProjectId());
-        Activity a = p.getActivityFromName(aci.getActivityName());
-        ArrayList <UserCount> avU = p.findFreeEmployee(a);
-        return avU.stream().map(entry -> entry.UserCountToString()+" activities overlapping").collect(Collectors.toCollection(ArrayList::new));
-
-
-    }
-
-
-    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
-        getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setStartdate(c);
-    }
-    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
-        getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
-    }
-
-    public ActivityInfo renewActivityInfo(ActivityInfo cai) {
-        return new ActivityInfo(getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()));
-    }
-    public ProjectInfo renewProjectInfo(ProjectInfo cpi) {
-        return new ProjectInfo(getProjectFromID(cpi.getProjectID()));
-    }
-
-    public UserInfo renewUserInfo(UserInfo cui)  {
-        try {
-            return new UserInfo(getUserFromId(cui.getUserId()));
-        } catch (UserIdDoesNotExistExeption e) {
-            return new UserInfo(getCurrentUser());
-        }
-
-    }
 }

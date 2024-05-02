@@ -21,4 +21,8 @@ public class ProjectHelper {
     }
 
     public ProjectInfo getProjectInfo(){return this.pI;}
+
+    public void setProjectInfo(ProjectInfo p) {
+        this.pI=p;
+    }
 }

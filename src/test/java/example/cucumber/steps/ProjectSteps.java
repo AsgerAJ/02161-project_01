@@ -84,9 +84,9 @@ public class ProjectSteps {
     }
     @Given("the project has {int} activities with budget time {int}")
     public void theProjectHasActivitiesWithBudgetTime(Integer int1,Integer int2) {
-        ArrayList< Activity > activityList = this.activityHelper.getExampleActivities(int1,int2);
+        ArrayList< Activity > activityList = this.activityHelper.getExampleActivities(int1,int2,this.projectHelper.getProjectInfo().getProjectID());
         for (Activity a : activityList) {
-            this.projectHelper.getProject().createNewActivity(a);
+            app.createNewActivity(a.getName(),a.getBudgetTime(),this.projectHelper.getProjectInfo());
         }
 
     }
