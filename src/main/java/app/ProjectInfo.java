@@ -65,8 +65,9 @@ public class ProjectInfo {
         return result;
     }
 
-    public ArrayList<Activity> getActivityList() {
-        return activityList;
+    public ArrayList<String> getActivityList() {
+        return new ArrayList<>(activityList.stream().map(a->a.getName()).toList());
+
     }
 
     public String getParticipanList() {
@@ -80,5 +81,44 @@ public class ProjectInfo {
     public boolean getComplete() {
         return complete;
     }
+
+    public String completionPercentageString(){
+        if(this.getActivityList() != null){
+            double completionPercentage = 0;
+
+            for(int i = 0; i < this.getActivityList().size(); i++){
+                if(this.activityList.get(i).getStatus()){
+                    completionPercentage += 100.0/this.activityList.size();
+                }
+            }
+
+            completionPercentage = completionPercentage/100;
+            int totalBlocks = 20;
+            int completedBlocks = (int) (completionPercentage * totalBlocks);
+
+            StringBuilder progressBarBuilder = new StringBuilder();
+            for (int i = 0; i < totalBlocks; i++) {
+                if (i < completedBlocks) {
+                    progressBarBuilder.append("■"); // Filled block
+                } else {
+                    progressBarBuilder.append("□"); // Empty block
+                }
+            }
+
+            return "Project " + progressBarBuilder.toString() + " " +(completionPercentage * 100) + "% complete";
+        }else{
+            return "Project □□□□□□□□□□□□□□□□□□□□ 0% complete";
+        }
+
+    }
+
+    public Calendar getDeadlineCopy() {
+        return (Calendar) this.deadline.clone();
+    }
+    public Calendar getStartdateCopy(){
+        return (Calendar) this.startDate.clone();
+    }
+
+
 
 }
