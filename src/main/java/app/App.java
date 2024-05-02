@@ -18,14 +18,10 @@ import java.util.stream.Collectors;
 
 /* This class works both as an object itself, but also as a facade between the viewer class and the other Business logic*/
 public class App {
-
     private final ArrayList<User> userList = new ArrayList<>();
     private User currentUser;
-
     private DateServer dateServer = new DateServer();
-
     private final ArrayList<Project> projectRepository = new ArrayList<>();
-
     private int projectAmount = 1;
     public App(){
     }
@@ -43,21 +39,11 @@ public class App {
     }
 
 
-    public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
-        while (userId.length()<4) {
-            userId += "x";
-        }
-        String edited = (userId.substring(0,1).toUpperCase() + userId.substring(1,4).toUpperCase());
-        User u = new User(edited);
-        if(!hasUserWithID(edited)){
-            this.userList.add(u);
-        } else {
 
-            throw new UserIdAlreadyInUseExeption("UserId already in use");
-        }
-        return u;
+    //------Get methods --------------------------------------------------------------------------------------
+    public String getCurrentUserId(){
+        return this.currentUser.getUserId();
     }
-
     public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
         if(id.length()>4){
             id = id.substring(0,4);
@@ -75,39 +61,13 @@ public class App {
         throw new UserIdDoesNotExistExeption("No user with UserId exists");
     }
 
-    public void removeUserWithId(String id){
-        userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
-    }
-
-    public boolean loggedInStatus(){
-        return this.currentUser != null;
-    }
-
-    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
-
-        if (this.currentUser!=null) {
-            throw new AUserIsAlreadyLoggedInException("A user is already logged in");
+    private Project getProjectFromTitle(String title) {
+        for (Project p : projectRepository) {
+            if (p.getName().equalsIgnoreCase(title)) {
+                return p;
+            }
         }
-        User temp = getUserFromId(id);
-        if(temp != null){
-            currentUser = temp;
-
-        }else{
-            throw new UserIdDoesNotExistExeption("No user with UserId exists");
-        }
-    }
-
-    public String getCurrentUserId(){
-        return this.currentUser.getUserId();
-    }
-
-    public void logOut(){
-        this.currentUser = null;
-    }
-
-
-    public void setDateServer(DateServer d) {
-        this.dateServer=d;
+        return null;
     }
 
     private Project getProjectFromID(String id){
@@ -128,6 +88,110 @@ public class App {
             return null;
         }
     }
+
+    //-------Log in
+    public boolean loggedInStatus(){
+        return this.currentUser != null;
+    }
+    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
+
+        if (this.currentUser!=null) {
+            throw new AUserIsAlreadyLoggedInException("A user is already logged in");
+        }
+        User temp = getUserFromId(id);
+        if(temp != null){
+            currentUser = temp;
+
+        }else{
+            throw new UserIdDoesNotExistExeption("No user with UserId exists");
+        }
+    }
+    public void logOut(){
+        this.currentUser = null;
+    }
+    //------- Manipulate users ------------------------------------------------------------------
+    public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
+        while (userId.length()<4) {
+            userId += "x";
+        }
+        String edited = (userId.substring(0,1).toUpperCase() + userId.substring(1,4).toUpperCase());
+        User u = new User(edited);
+        if(!hasUserWithID(edited)){
+            this.userList.add(u);
+        } else {
+
+            throw new UserIdAlreadyInUseExeption("UserId already in use");
+        }
+        return u;
+    }
+    public void removeUserWithId(String id){
+        userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
+    }
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
+
+
+
+    public boolean hasProjectWithTitle(String t) {
+        for (Project p : projectRepository) {
+            if (p.getName().equals(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public String getActualId(String userId) throws UserIdDoesNotExistExeption {
+        return getUserFromId(userId).getUserId();
+    }
+    public String getRegisteredUsers(){
+        String outputstring = getUserList().get(0).getUserId();
+        for (int i = 1; i < getUserList().size(); i++){
+            outputstring += ", " + getUserList().get(i).getUserId();
+        }
+        return (outputstring);
+    }
+
+    public ArrayList<User> getUserList() {
+        return userList;
+    }
+    public String getProjectListString(){
+        if(!getCurrentUser().getAssignedProjects().isEmpty()){
+            String outputstring = "";
+            int index = 1;
+            for(Project project : getCurrentUser().getAssignedProjects()){
+                outputstring += "\n" + index +" : " + "Project id: " + project.getProjectID() + " Project name: " + project.getName();
+                index++;
+            }
+            return outputstring + "\n";
+        }
+        return("No projects found");
+    }
+
+    public String getActivityListString(ProjectInfo currentProject) {
+        Project p = getProjectFromID(currentProject.getProjectID());
+        if(!p.getActivityList().isEmpty()){
+            String outputstring = "";
+            int index = 1;
+            for(Activity activity : p.getActivityList()){
+                outputstring += "\n" + index +" : " + "Activity name: " + activity.getName() + " Budget time: " + activity.getBudgetTime();
+                index++;
+            }
+            return outputstring + "\n";
+        }
+        return("No activities found");
+    }
+    private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
+        Project p = getProjectFromID(currentproject.getProjectID());
+        if(index <= p.getActivityList().size()){
+            return p.getActivityList().get(index);
+        }
+        return null;
+    }
+
+
+    //----- Manipulate Project --------------------------------------------------------------------------
+
     public ProjectInfo getCurrentUserProjectsInfoFromID(String id) {
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
         if (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) {
@@ -150,25 +214,6 @@ public class App {
         projectAmount++;
         return p;
     }
-    public boolean hasProjectWithTitle(String t) {
-        for (Project p : projectRepository) {
-            if (p.getName().equals(t)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public User getCurrentUser() {
-        return this.currentUser;
-    }
-
-
-
-    public ArrayList<User> getUserList() {
-        return userList;
-    }
-
     public void assignUserToProject(String userId, ProjectInfo pi) {
         try {
             User u = getUserFromId(userId);
@@ -194,7 +239,13 @@ public class App {
         }
 
     }
+    public boolean isProjectOverdue(ProjectInfo pi) {
+        return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
+    }
 
+
+
+    //------- Manipulate Activity ---------------------------------------------------------------------
     public void assignUserToActivity(String userId, ActivityInfo ai) {
         try {
             User u = getUserFromId(userId);
@@ -219,66 +270,11 @@ public class App {
         }
     }
 
-    public String getActualId(String userId) throws UserIdDoesNotExistExeption {
-        return getUserFromId(userId).getUserId();
-    }
-
-
-    public String getRegisteredUsers(){
-        String outputstring = getUserList().get(0).getUserId();
-        for (int i = 1; i < getUserList().size(); i++){
-            outputstring += ", " + getUserList().get(i).getUserId();
-        }
-        return (outputstring);
-    }
-
-
-    public String getProjectListString(){
-        if(!getCurrentUser().getAssignedProjects().isEmpty()){
-            String outputstring = "";
-            int index = 1;
-            for(Project project : getCurrentUser().getAssignedProjects()){
-                outputstring += "\n" + index +" : " + "Project id: " + project.getProjectID() + " Project name: " + project.getName();
-                index++;
-            }
-            return outputstring + "\n";
-        }
-        return("No projects found");
-    }
-
-    private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
-        Project p = getProjectFromID(currentproject.getProjectID());
-        if(index <= p.getActivityList().size()){
-            return p.getActivityList().get(index);
-        }
-        return null;
-    }
-
-    public boolean isProjectOverdue(ProjectInfo pi) {
-        return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
-    }
-
-
     public void createNewActivity(String newActivityName, double numberIn, ProjectInfo currentProject) {
         Project p = getProjectFromID(currentProject.getProjectID());
         Activity a = new Activity(newActivityName, numberIn,p.getProjectID());
         p.createNewActivity(a);
     }
-
-    public String getActivityListString(ProjectInfo currentProject) {
-        Project p = getProjectFromID(currentProject.getProjectID());
-        if(!p.getActivityList().isEmpty()){
-            String outputstring = "";
-            int index = 1;
-            for(Activity activity : p.getActivityList()){
-                outputstring += "\n" + index +" : " + "Activity name: " + activity.getName() + " Budget time: " + activity.getBudgetTime();
-                index++;
-            }
-            return outputstring + "\n";
-        }
-        return("No activities found");
-    }
-
 
     public void logTimeOnActivity(double workedTime, ActivityInfo currentActivity) {
         Project p = getProjectFromID(currentActivity.getParentProjectId());
@@ -294,15 +290,8 @@ public class App {
 
 
 
-    private Project getProjectFromTitle(String title) {
-        for (Project p : projectRepository) {
-            if (p.getName().equalsIgnoreCase(title)) {
-                return p;
-            }
-        }
-        return null;
-    }
 
+    //-----Find free employee------------------------------------------------------------------------------------------
     public ArrayList<FinalUserCount> findFreeEmployee(ActivityInfo aci) {
         Project p = getProjectFromID(aci.getParentProjectId());
         Activity a = p.getActivityFromName(aci.getActivityName());
@@ -314,7 +303,9 @@ public class App {
 
 
     //----Set dates-----------------------------------------------------------------------------------------------------
-
+    public void setDateServer(DateServer d) {
+        this.dateServer=d;
+    }
     public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
         getProjectFromID(currentProject.getProjectID()).setStartDate(c);
 

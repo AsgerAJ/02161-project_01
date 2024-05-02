@@ -19,7 +19,7 @@ public class Activity extends PeriodEvent {
         this.budgetTime = budgetTime;
         this.parentProjectID=parentProjectID;
     }
-
+    //------Get Methods ----------------------------------------------------------------------------
     public void setStatus(boolean status) {
         this.isComplete = status;
     }
@@ -33,7 +33,9 @@ public class Activity extends PeriodEvent {
     public double getBudgetTime() {return this.budgetTime;}
 
     public ArrayList<User> getParticipantList() {return this.participantList;}
+    public String getParentProjectID(){return this.parentProjectID;}
 
+    //-----Checks ------------------------------------------------------------------------------
     public boolean isOverdue(Calendar today) {
         return today.after(this.getDeadline());
     }
@@ -41,6 +43,9 @@ public class Activity extends PeriodEvent {
     public boolean isOverBudget() {
         return this.totalHours > this.budgetTime;
     }
+
+
+    //------ Functional--------------------------------------------------------------------------
 
     public void logTime(double workedTime, User user) {
         String userId = user.getUserId();
@@ -62,11 +67,11 @@ public class Activity extends PeriodEvent {
         this.participantList.remove(u);
         u.removeActivity(this);
     }
-
+    //----As info-----------------------------------------------------------------------------------
     public ActivityInfo asInfo() {
         return new ActivityInfo(this);
     }
 
-    public String getParentProjectID(){return this.parentProjectID;}
+
 
 }

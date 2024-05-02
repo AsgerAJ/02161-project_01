@@ -81,7 +81,7 @@ public class Viewer { // Author Asger
         while((app.loggedInStatus())){
             if (startvalue != 0){
                 try{
-                    currentProjectInfo = app.getProjectInfoFromID(String.valueOf(startvalue));
+                    currentProjectInfo = app.getCurrentUserProjectsInfoFromID(String.valueOf(startvalue));
                     insideProjectMenu(startvalue);
 
                 }catch (IndexOutOfBoundsException | NullPointerException e){
@@ -107,6 +107,7 @@ public class Viewer { // Author Asger
                 startvalue = 0;
             }
         }
+        refreshUserInfo();
     }
 
     private static void insideProjectMenu(int value) {
@@ -253,7 +254,7 @@ public class Viewer { // Author Asger
     }
 
 
-
+    //----Create events------------------------------------------------------------------------------
     private static void newProject() {
         Scanner newProjectScanner = new Scanner(System.in);
         System.out.println("Enter Name of project: ");
@@ -334,7 +335,7 @@ public class Viewer { // Author Asger
         System.out.println(resultsString);
     }
 
-
+    //--------Get from user methods----------------------------------------------------------------
     private static Calendar getWeekOfYearFromUser (Scanner input) {
         System.out.println("What year? (format: yyyy)");
         boolean successfullYear = false;
@@ -378,15 +379,13 @@ public class Viewer { // Author Asger
 
 
 
-
+    //----- Refresh infos--------------------------------------------------------------------------------
     private static void refreshProjectInfoObject(){
         currentProjectInfo = app.renewProjectInfo(currentProjectInfo);
     }
 
     private static void refreshActivityInfos() {
-        String parentProjectId = currentActivityInfo.getParentProjectId();
         currentActivityInfo = app.renewActivityInfo(currentActivityInfo);
-
     }
 
 

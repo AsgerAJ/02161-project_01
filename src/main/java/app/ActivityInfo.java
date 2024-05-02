@@ -35,6 +35,7 @@ public class ActivityInfo {
         this.parentProjectId=activity.getParentProjectID();
     }
 
+    //---- Get methods---------------------------------------------------------
     public String getStartDate() {
         return dateToString(this.startDate);
     }
@@ -52,8 +53,13 @@ public class ActivityInfo {
     public String getActivityName() {return activityName;}
 
     public String getParentProjectId() {return parentProjectId;}
-
-
+    public Calendar getStartdateCopy() {
+        return (Calendar) this.startDate.clone();
+    }
+    public Calendar getDeadlineCopy(){
+        return (Calendar) this.deadline.clone();
+    }
+    //-----Miscellaneous --------------------------------------------------------------------------
     private static String dateToString(Calendar d) {
         if (d==null) {
             return "Date not Set";
@@ -75,12 +81,7 @@ public class ActivityInfo {
             return outputstring;
         }
     }
-    public Calendar getStartdateCopy() {
-        return (Calendar) this.startDate.clone();
-    }
-    public Calendar getDeadlineCopy(){
-        return (Calendar) this.deadline.clone();
-    }
+
 
 
 }

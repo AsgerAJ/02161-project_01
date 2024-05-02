@@ -13,6 +13,20 @@ public abstract class PeriodEvent {
         this.name = name;
     }
 
+    //----- Get Methods -------------------------------------------------
+
+    public String getName() {return this.name;}
+
+    public Calendar getDeadline() {return this.deadline;}
+
+    public Calendar getStartdate() {return this.startdate;}
+    public boolean timeLockdown() {
+        return false;
+    }
+
+    //------ Sets ----------------------------------------------------------------------------
+
+
     public void setDeadline(Calendar date) throws InvalidDateException {
 
         if (this.startdate == null || date.after(this.startdate)) {
@@ -29,18 +43,12 @@ public abstract class PeriodEvent {
         }
     }
 
-    public String getName() {return this.name;}
-
-    public Calendar getDeadline() {return this.deadline;}
-
-    public Calendar getStartdate() {return this.startdate;}
+    //-----------------Checks --------------------------------------------------------
 
     public boolean timeOverlap(PeriodEvent event) {
         return ((event.getDeadline().after(startdate) && event.getStartdate().before(deadline))
             || (deadline.after(event.getStartdate()) && startdate.before(event.getDeadline())));
     }
 
-    public boolean timeLockdown() {
-        return false;
-    }
+
 }

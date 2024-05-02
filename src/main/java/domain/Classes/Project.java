@@ -43,7 +43,7 @@ public class Project {
 
         this.projectID = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2, 4) + idExtension;
     }
-
+    //------- Get methods --------------------------------------------------------------
     public String getName() {return this.name;}
 
     public String getProjectID() {return this.projectID;}
@@ -61,33 +61,19 @@ public class Project {
     public Activity getActivityFromName(String name) {
         return this.activityList.stream().filter(a->a.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
-
-    public void assignUser(User user) {
-        if (!this.participanList.contains(user)) {
-            this.participanList.add(user);
-            user.assignProject(this);
-        }
-    }
-    public void removeUser(User user) {
-        if (this.participanList.contains(user)) {
-            this.participanList.remove(user);
-            user.removeProject(this);
-        }
+    public String getID() {
+        return this.projectID;
     }
 
-    public boolean hasProjectLeader() {
-        return this.projectLeader != null;
+    public User getProjectLeader() {
+        return this.projectLeader;
     }
 
-    public boolean isProjectLeader(User user) {
-        return this.projectLeader == user;
+    public boolean getStatus() {
+        return this.complete;
     }
 
-    public void completeProject(boolean status){this.complete = status;}
-
-    public void createNewActivity(Activity activity) {
-        this.activityList.add(activity);
-    }
+    //-----Set methods ----------------------------------------------------------------------------
 
 
     public void setProjectLeader(User user) {
@@ -110,20 +96,25 @@ public class Project {
         }
     }
 
-    public boolean isOverdue(Calendar date) {
+    //------Functional----------------------------------------------------------------------------------
 
-        if (this.deadline == null) {
-            return false;
+    public void assignUser(User user) {
+        if (!this.participanList.contains(user)) {
+            this.participanList.add(user);
+            user.assignProject(this);
         }
-
-        return date.after(this.deadline);
-
     }
+    public void removeUser(User user) {
+        if (this.participanList.contains(user)) {
+            this.participanList.remove(user);
+            user.removeProject(this);
+        }
+    }
+    public void completeProject(boolean status){this.complete = status;}
 
-
-
-
-
+    public void createNewActivity(Activity activity) {
+        this.activityList.add(activity);
+    }
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
         if (activity.getStartdate() == null || activity.getDeadline() == null) {
             return new ArrayList<UserCount>();
@@ -147,18 +138,32 @@ public class Project {
 
     }
 
-    public String getID() {
-        return this.projectID;
+    //----------Checks -------------------------------------------------------------------------------
+
+    public boolean hasProjectLeader() {
+        return this.projectLeader != null;
     }
 
-    public User getProjectLeader() {
-        return this.projectLeader;
+    public boolean isProjectLeader(User user) {
+        return this.projectLeader == user;
     }
 
-    public boolean getStatus() {
-        return this.complete;
+
+
+
+
+
+    public boolean isOverdue(Calendar date) {
+
+        if (this.deadline == null) {
+            return false;
+        }
+
+        return date.after(this.deadline);
+
     }
 
+    //-----As info---------------------------------------------------------------------------
     public ProjectInfo asInfo() {
         return new ProjectInfo(this);
     }

@@ -31,7 +31,7 @@ public class ProjectInfo {
         this.participanList = project.getParticipantList();
         this.activityList = project.getActivityList();
     }
-
+    //-----Get Methods--------------------------------------------------------------------
     public String getProjectID() {
         return projectID;
     }
@@ -81,7 +81,14 @@ public class ProjectInfo {
     public boolean getComplete() {
         return complete;
     }
+    public Calendar getDeadlineCopy() {
+        return (Calendar) this.deadline.clone();
+    }
+    public Calendar getStartdateCopy(){
+        return (Calendar) this.startDate.clone();
+    }
 
+    //-----Miscellaneous-------------------------------------------------------------------------
     public String completionPercentageString(){
         if(this.getActivityList() != null){
             double completionPercentage = 0;
@@ -112,12 +119,7 @@ public class ProjectInfo {
 
     }
 
-    public Calendar getDeadlineCopy() {
-        return (Calendar) this.deadline.clone();
-    }
-    public Calendar getStartdateCopy(){
-        return (Calendar) this.startDate.clone();
-    }
+
 
 
 

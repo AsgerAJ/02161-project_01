@@ -18,7 +18,7 @@ public class UserInfo {
         this.assignedActivities = user.getAssignedActivities();
 
     }
-
+    //------ Get methods----------------------------------------------------
     public UserInfo(){}
 
     public String getUserId(){

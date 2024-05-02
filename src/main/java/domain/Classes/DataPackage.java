@@ -12,7 +12,24 @@ public class DataPackage implements SuccessCount, UserCount, FinalUserCount {
 
     public DataPackage() {
     }
+    //---- Get Methods ----------------------------------------------
 
+    @Override
+    public User getUser() {return this.user;}
+
+    @Override
+    public int getCount() {return this.count;}
+
+    @Override
+    public String getUserID() {
+        return this.user.getUserId();
+    }
+    @Override
+    public boolean isTrue() {
+        return this.truthValue;
+    }
+
+    //------ Set methods -------------------------------------------------------------------
     @Override
     public void setCount(int i) {
         this.count = i;
@@ -28,22 +45,10 @@ public class DataPackage implements SuccessCount, UserCount, FinalUserCount {
         this.user = u;
     }
 
-    @Override
-    public User getUser() {return this.user;}
-
-    @Override
-    public int getCount() {return this.count;}
-
-    @Override
-    public String getUserID() {
-        return this.user.getUserId();
-    }
 
 
-    @Override
-    public boolean isTrue() {
-        return this.truthValue;
-    }
+
+    //----- Functional ----------------------------------------------------------------------
 
 
     @Override

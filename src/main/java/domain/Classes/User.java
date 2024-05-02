@@ -13,10 +13,12 @@ public class User {
     public User(String userId){
         this.userId = userId;
     }
-
+    //---- Get methods ------------------------------------------------------------------------
     public String getUserId(){
         return this.userId;
     }
+
+    //---- Functional
 
     public void assignProject(Project project){
         this.assignedProjects.add(project);
@@ -32,7 +34,10 @@ public class User {
     public void removeActivity(PeriodEvent activity){
         this.assignedActivities.remove(activity);
     }
-
+    public ArrayList<PeriodEvent> getAssignedActivities() {
+        return assignedActivities;
+    }
+    //--------Checks----------------------------------------------------------------------------
     public boolean hasProjectWithID(String projectID) {
         for (Project p : assignedProjects) {
             if (p.getProjectID().equals(projectID)) {
@@ -69,13 +74,11 @@ public class User {
                 }
             }
         }
-        return result; 
+        return result;
     }
 
 
-    public ArrayList<PeriodEvent> getAssignedActivities() {
-        return assignedActivities;
-    }
+    //------ As Info----------------------------------------------------------------------------
     public UserInfo asInfo() {
         return new UserInfo(this);
     }
