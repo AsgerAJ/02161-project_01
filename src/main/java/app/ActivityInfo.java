@@ -49,7 +49,7 @@ public class ActivityInfo {
     public double getBudgetTime() {return budgetTime;}
     public boolean getIsComplete() {return isComplete;}
     public HashMap<String, Double> getTimeMap() {return timeMap;}
-    public double getTotalHours() {return totalHours;}
+
     public String getParticipantList() {
         String result = "";
         for (User u : participantList) {
