@@ -297,7 +297,7 @@ public class Viewer { // Author Asger
         System.out.println("Project Members: "+ currentProjectInfo.getParticipanList());
         System.out.println(currentProjectInfo.completionPercentageString());
         System.out.println("List of Activities:");
-        System.out.println("Startdate: " +app.getActivityListString(currentProjectInfo));
+        System.out.println("Activities: " +app.getActivityListString(currentProjectInfo));
         System.out.println("Startdate: " + currentProjectInfo.getStartDate());
         System.out.println("Deadline: " + currentProjectInfo.getDeadline());
         System.out.println("Enter the number for the activity,\n\"ADD\" to add member to project,\n\"Remove\" to remove a member from the project, \n\"NEW\" to make a new activity, \n\"Exit\" to go to main menu");
