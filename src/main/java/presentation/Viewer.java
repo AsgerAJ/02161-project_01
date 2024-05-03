@@ -136,11 +136,21 @@ public class Viewer { // Author Asger
                 }else if(input.equalsIgnoreCase("Add")){
                     System.out.println("Enter user id of user to be added to project");
                     String addName = projectScanner.nextLine();
-                    app.assignUserToProject(addName, currentProjectInfo);
+                    try{
+                        app.assignUserToProject(addName, currentProjectInfo);
+                    } catch (UserIdDoesNotExistExeption e) {
+                        System.out.println(e.getMessage());
+                    }
+
                 }else if(input.equalsIgnoreCase("Remove")){
                     System.out.println("Enter user id of user to be removed from the project");
                     String removeName = projectScanner.nextLine();
-                    app.removeUserFromProject(removeName, currentProjectInfo);
+
+                    try {
+                        app.removeUserFromProject(removeName, currentProjectInfo);
+                    }catch(UserIdDoesNotExistExeption e) {
+                        System.out.println(e.getMessage());
+                    }
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success = false;
                     while (!success) {
@@ -211,13 +221,21 @@ public class Viewer { // Author Asger
                 }else if(input.equalsIgnoreCase("Assign")){
                     System.out.println("Enter user id of user to be added to activity");
                     String addName = activityScanner.nextLine();
-                    app.assignUserToActivity(addName, currentActivityInfo);
+                    try {
+                        app.assignUserToActivity(addName, currentActivityInfo);
+                    } catch (UserIdDoesNotExistExeption e) {
+                        System.out.println(e.getMessage());
+                    }
                 }else if(input.equalsIgnoreCase("See Time Worked")){
                     System.out.println(currentActivityInfo.timeMapToString());
                 }else if(input.equalsIgnoreCase("Remove")) {
                     System.out.println("Enter user id of user to be removed from activity");
                     String removeName = activityScanner.nextLine();
+                    try{
                     app.removeUserFromActivity(removeName, currentActivityInfo);
+                    }catch(UserIdDoesNotExistExeption e) {
+                        System.out.println(e.getMessage());
+                    }
                 } else if (input.equalsIgnoreCase("find free employee")) {
                     printFreeEmployees(app.findFreeEmployee(currentActivityInfo));
                 } else if (input.equalsIgnoreCase("set start date")) {

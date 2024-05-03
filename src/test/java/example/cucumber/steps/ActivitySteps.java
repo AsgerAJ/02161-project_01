@@ -4,6 +4,7 @@ import app.ActivityInfo;
 import app.App;
 import app.ProjectInfo;
 import domain.Classes.Activity;
+import domain.exceptions.UserIdDoesNotExistExeption;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.ProjectHelper;
 import example.cucumber.helpers.UserHelper;
@@ -78,7 +79,7 @@ public class ActivitySteps {
         assertTrue(dob1==app.getActivityInfoFromName(this.projectHelper.getProjectInfo(),string).getBudgetTime());
     }
     @When("the user is added to the activity")
-    public void theUserIsAddedToTheActivity() {
+    public void theUserIsAddedToTheActivity() throws UserIdDoesNotExistExeption {
         app.assignUserToActivity(this.userHelper.getUserInfo().getUserId(),this.activityHelper.getActivityInfo());
     }
     @Then("the user is part of the activity")
@@ -86,12 +87,12 @@ public class ActivitySteps {
         assertTrue(this.activityHelper.getActivityInfo().getParticipantList().contains(this.userHelper.getUserInfo().getUserId()));
     }
     @Given("the user is assigned the activity")
-    public void theUserIsAssignedTheActivity(){
+    public void theUserIsAssignedTheActivity() throws UserIdDoesNotExistExeption {
         app.assignUserToActivity(this.userHelper.getUserInfo().getUserId(),this.activityHelper.getActivityInfo());
     }
 
     @When("the user is removed from the activity")
-    public void removeUserFromActivity() {
+    public void removeUserFromActivity() throws UserIdDoesNotExistExeption {
         app.removeUserFromActivity(userHelper.getUserInfo().getUserId(),this.activityHelper.getActivityInfo());
     }
 

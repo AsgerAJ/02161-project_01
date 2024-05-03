@@ -214,30 +214,16 @@ public class App {
         projectAmount++;
         return p;
     }
-    public void assignUserToProject(String userId, ProjectInfo pi) {
-        try {
+    public void assignUserToProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(pi.getProjectID());
             p.assignUser(u);
-
-        } catch (UserIdDoesNotExistExeption e) {
-            System.out.println(e.getMessage());
-
-        }
-
     }
 
-    public void removeUserFromProject(String userId, ProjectInfo pi) {
-        try {
+    public void removeUserFromProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(pi.getProjectID());
             p.removeUser(u);
-
-        } catch (UserIdDoesNotExistExeption e) {
-            System.out.println(e.getMessage());
-
-        }
-
     }
     public boolean isProjectOverdue(ProjectInfo pi) {
         return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
@@ -246,28 +232,21 @@ public class App {
 
 
     //------- Manipulate Activity ---------------------------------------------------------------------
-    public void assignUserToActivity(String userId, ActivityInfo ai) {
-        try {
+    public void assignUserToActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
+
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
             Activity a = p.getActivityFromName(ai.getActivityName());
             a.assignUser(u);
 
-        } catch (UserIdDoesNotExistExeption e) {
-            System.out.println(e.getMessage());
-        }
+
     }
 
-    public void removeUserFromActivity(String userId, ActivityInfo ai) {
-        try {
+    public void removeUserFromActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
             Activity a = p.getActivityFromName(ai.getActivityName());
             a.removeUser(u);
-
-        } catch (UserIdDoesNotExistExeption e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public void createNewActivity(String newActivityName, double numberIn, ProjectInfo currentProject) {
