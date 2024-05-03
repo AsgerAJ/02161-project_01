@@ -73,7 +73,6 @@ public class User {
                 }
             }
         }
-        System.out.println(this.userId+":"+result.getCount());
         return result;
     }
 

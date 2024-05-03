@@ -126,7 +126,6 @@ public class Project {
                 if (result.isTrue()) {
                     UserCount temp =(UserCount) result;
                     temp.setUser(user);
-                    temp.setCount(result.getCount());
                     returnList.add(temp);
                 }
 
