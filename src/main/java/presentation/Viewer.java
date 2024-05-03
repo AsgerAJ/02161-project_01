@@ -147,7 +147,9 @@ public class Viewer { // Author Asger
                         try {
                             Calendar c = getWeekOfYearFromUser(projectScanner);
                             app.setProjectStartDate(c, currentProjectInfo);
+                            refreshProjectInfoObject();
                             success=true;
+
                         } catch (InvalidDateException e) {
                             System.out.print(e.getMessage());
                             System.out.println("please try again;");
@@ -161,6 +163,7 @@ public class Viewer { // Author Asger
                             Calendar c = getWeekOfYearFromUser(projectScanner);
                             c.set(Calendar.DAY_OF_WEEK, 8); //sunday. Java.Calendar has weird day of week format.
                             app.setProjectDeadline(c, currentProjectInfo);
+                            refreshProjectInfoObject();
                             success = true;
                         } catch (InvalidDateException e) {
                             System.out.println(e.getMessage());

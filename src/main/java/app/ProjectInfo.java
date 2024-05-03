@@ -57,13 +57,7 @@ public class ProjectInfo {
 
     }
 
-    public String getParticipantList() {
-        String result = "";
-        for (User u : participanList) {
-            result += u.getUserId() + " ";
-        }
-        return result;
-    }
+
 
     public ArrayList<String> getActivityList() {
         return new ArrayList<>(activityList.stream().map(a->a.getName()).toList());
