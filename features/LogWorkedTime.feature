@@ -31,3 +31,14 @@ Feature: Log worked time
         When the user logs 3.5 hours of work to the activity
         Then the user has logged 7.0 hours of work to the activity
         #typo in "loggged" to avoid identical step notations
+
+
+    Scenario: overbudget project
+        Given a user with id "HUBA" exists
+        And a user with id "HUBA" is logged in
+        And a project exists with title "testProject"
+        And user creates an activity with name "TestActivity" with time budget 2
+        And the user is assigned the activity
+        When the user logs 3.5 hours of work to the activity
+        Then the activity is overbudget
+        #typo in "loggged" to avoid identical step notations

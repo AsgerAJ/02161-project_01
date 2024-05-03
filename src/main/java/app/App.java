@@ -229,7 +229,10 @@ public class App {
         return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
     }
 
+    public void changeCompletenessOfProject(boolean newStatus,ProjectInfo info) {
+        getProjectFromID(info.getProjectID()).changeCompleteness(newStatus);
 
+    }
 
     //------- Manipulate Activity ---------------------------------------------------------------------
     public void assignUserToActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
@@ -266,8 +269,12 @@ public class App {
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
         a.setStatus(b);
     }
-
-
+    public boolean isActivityOverdue(ActivityInfo info) {
+        return getProjectFromID(info.getParentProjectId()).getActivityFromName(info.getActivityName()).isOverdue(dateServer.getDate());
+    }
+    public boolean isActivityOverBudget(ActivityInfo cai) {
+        return getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()).isOverBudget();
+    }
 
 
     //-----Find free employee------------------------------------------------------------------------------------------
@@ -456,5 +463,6 @@ public class App {
 
         logOut();
     }
+
 
 }

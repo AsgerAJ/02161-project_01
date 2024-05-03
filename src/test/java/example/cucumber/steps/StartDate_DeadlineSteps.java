@@ -151,4 +151,27 @@ public class StartDate_DeadlineSteps {
     }
 
 
+    @Given("the project has not been given a deadline")
+    public void theProjectHasNotBeenGivenADeadline() throws InvalidDateException {
+        app.setProjectDeadline(null,this.projectHelper.getProjectInfo());
+        this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
+    }
+
+    @Given("the activity is not set to complete")
+    public void theActivityIsNotSetToComplete() {
+        this.activityHelper.setActivityInfo(app.renewActivityInfo(this.activityHelper.getActivityInfo()));
+        app.ChangeCompletenessOfActivity(false,this.activityHelper.getActivityInfo());
+        this.activityHelper.setActivityInfo(app.renewActivityInfo(this.activityHelper.getActivityInfo()));
+    }
+    @Then("the activity is overdue")
+    public void theActivityIsOverdue() {
+        assertTrue(app.isActivityOverdue(this.activityHelper.getActivityInfo()));
+    }
+
+    @Then("the activity is not overdue")
+    public void theActivityIsNotOverdue() {
+        assertFalse(app.isActivityOverdue(this.activityHelper.getActivityInfo()));
+    }
+
+
 }

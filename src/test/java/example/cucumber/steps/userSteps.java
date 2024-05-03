@@ -3,6 +3,7 @@ package example.cucumber.steps;
 import domain.Classes.User;
 import domain.exceptions.UserIdAlreadyInUseExeption;
 import app.App;
+import domain.exceptions.UserIdDoesNotExistExeption;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.ProjectHelper;
 import example.cucumber.helpers.UserHelper;
@@ -58,12 +59,12 @@ public class userSteps {
 
 
     @Given("{int} users are part of the project")
-    public void users_are_part_of_the_project(Integer int1) throws UserIdAlreadyInUseExeption {
+    public void users_are_part_of_the_project(Integer int1) throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption {
         ArrayList<User> exampleUsers =this.userHelper.getExampleUsers(int1);
 
         for (User u : exampleUsers) {
             this.app.registerUser(u.getUserId());
-            this.projecthelper.getProject().assignUser(u);
+            app.assignUserToProject(u.getUserId(),projecthelper.getProjectInfo());
         }
 
     }

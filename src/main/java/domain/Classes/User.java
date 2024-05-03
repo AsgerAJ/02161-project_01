@@ -68,12 +68,12 @@ public class User {
             if (p.timeOverlap(event)) {
                 if (p.timeLockdown()) {
                     result.setTruthValue(false);
-                    break;
                 } else {
                     result.increaseCount(1);
                 }
             }
         }
+        System.out.println(this.userId+":"+result.getCount());
         return result;
     }
 

@@ -1,9 +1,7 @@
 package example.cucumber.steps;
 
-import app.ActivityInfo;
 import app.App;
 import app.ProjectInfo;
-import domain.Classes.Activity;
 import domain.exceptions.UserIdDoesNotExistExeption;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.ProjectHelper;
@@ -101,4 +99,22 @@ public class ActivitySteps {
         this.activityHelper.setActivityInfo( app.renewActivityInfo(this.activityHelper.getActivityInfo()));
         assertFalse(this.activityHelper.getActivityInfo().getParticipantList().contains(this.userHelper.getUser().getUserId()));
     }
+
+    @Given("the user marks the activity as complete")
+    public void theUserMarksTheActivityAsComplete() {
+        this.activityHelper.setActivityInfo(app.renewActivityInfo(this.activityHelper.getActivityInfo()));
+        app.ChangeCompletenessOfActivity(true,this.activityHelper.getActivityInfo());
+    }
+    @When("the user uncompletes the activity")
+    public void theUserUncompletesTheActivity() {
+        app.ChangeCompletenessOfActivity(false,this.activityHelper.getActivityInfo());
+    }
+    @Then("the activity is not complete")
+    public void theActivityIsNotComplete() {
+        this.activityHelper.setActivityInfo(app.renewActivityInfo(this.activityHelper.getActivityInfo()));
+        assertFalse(this.activityHelper.getActivityInfo().isComplete());
+    }
+
+
+
 }

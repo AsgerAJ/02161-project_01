@@ -1,11 +1,9 @@
 package app;
 
 import domain.Classes.Activity;
-import domain.Classes.Project;
 import domain.Classes.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ActivityInfo {
     private String activityName;
@@ -15,6 +13,7 @@ public class ActivityInfo {
     private Calendar deadline = null;
     private double budgetTime;
     private boolean isComplete;
+    private boolean isOverdue;
     private HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private double totalHours = 0;
     private ArrayList<User> participantList = new ArrayList<User>();
@@ -24,8 +23,6 @@ public class ActivityInfo {
     public ActivityInfo(Activity activity){
         this.activityName = activity.getName();
         this.startDate = activity.getStartdate();
-
-
         this.deadline = activity.getDeadline();
         this.budgetTime = activity.getBudgetTime();
         this.timeMap = activity.getTimeMap();
@@ -43,7 +40,7 @@ public class ActivityInfo {
         return dateToString(this.deadline);
         }
     public double getBudgetTime() {return budgetTime;}
-    public boolean getIsComplete() {return isComplete;}
+    public boolean isComplete() {return isComplete;}
     public HashMap<String, Double> getTimeMap() {
         return timeMap;}
 
@@ -82,6 +79,9 @@ public class ActivityInfo {
         }
     }
 
+    public boolean isOverbudget() {
+        return this.totalHours>this.budgetTime;
+    }
 
 
 }

@@ -37,7 +37,7 @@ public class Activity extends PeriodEvent {
 
     //-----Checks ------------------------------------------------------------------------------
     public boolean isOverdue(Calendar today) {
-        return today.after(this.getDeadline());
+        return !isComplete && today.after(this.getDeadline()); //not overdue if complete
     }
 
     public boolean isOverBudget() {

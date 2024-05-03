@@ -110,13 +110,33 @@ public class ProjectSteps {
     }
 
     @When("the user is removed from the project")
-    public void removeUserFromProject() {
-        this.projectHelper.getProject().removeUser(this.userHelper.getUser());
+    public void removeUserFromProject() throws UserIdDoesNotExistExeption {
+        app.removeUserFromProject(this.userHelper.getUserInfo().getUserId(),this.projectHelper.getProjectInfo());
     }
 
     @Then("the user is no longer part of the project")
     public void userNoLongerPartOfProject() {
         assertFalse(this.projectHelper.getProject().getParticipantList().contains(this.userHelper.getUser()));
     }
+
+    @Given("the user marks the project as complete")
+    public void theUserMarksTheProjectAsComplete() {
+        app.changeCompletenessOfProject(true,this.projectHelper.getProjectInfo());
+    }
+    @When("the user marks the project as incomplete")
+    public void theUserMarksTheProjectAsIncomplete() {
+        app.changeCompletenessOfProject(false,this.projectHelper.getProjectInfo());
+    }
+    @Then("the project is not complete")
+    public void theProjectIsNotComplete() {
+        this.projectHelper.setProjectInfo(app.renewProjectInfo(projectHelper.getProjectInfo()));
+        assertFalse(this.projectHelper.getProjectInfo().getComplete());
+    }
+    @Then("the project is marked as complete")
+    public void theProjectIsMarkedAsComplete() {
+        this.projectHelper.setProjectInfo(app.renewProjectInfo(projectHelper.getProjectInfo()));
+        assertTrue(this.projectHelper.getProjectInfo().getComplete());
+    }
+
 
 }

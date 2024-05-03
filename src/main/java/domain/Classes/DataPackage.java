@@ -8,7 +8,7 @@ public class DataPackage implements SuccessCount, UserCount, FinalUserCount {
     private boolean truthValue = false;
 
     private User user;
-    private int count;
+    private int count=0;
 
     public DataPackage() {
     }

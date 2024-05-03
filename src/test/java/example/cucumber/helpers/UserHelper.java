@@ -31,8 +31,11 @@ public class UserHelper {
 
 
         for (int i = 1; i<=amount;i++) {
-
-            this.exampleUserList.add(new User("U"+i));
+            String id ="U"+i;
+            while(id.length()<4) {
+                id+="X";
+            }
+            this.exampleUserList.add(new User(id));
 
         }
         return this.exampleUserList;

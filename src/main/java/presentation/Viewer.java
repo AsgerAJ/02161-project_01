@@ -142,15 +142,18 @@ public class Viewer { // Author Asger
                         System.out.println(e.getMessage());
                     }
 
-                }else if(input.equalsIgnoreCase("Remove")){
+                }else if(input.equalsIgnoreCase("Remove")) {
                     System.out.println("Enter user id of user to be removed from the project");
                     String removeName = projectScanner.nextLine();
 
                     try {
                         app.removeUserFromProject(removeName, currentProjectInfo);
-                    }catch(UserIdDoesNotExistExeption e) {
+                    } catch (UserIdDoesNotExistExeption e) {
                         System.out.println(e.getMessage());
                     }
+                } else if (input.equalsIgnoreCase("Completion")) {
+                    changeProjectCompletion(projectScanner);
+
                 } else if (input.equalsIgnoreCase("set start date")) {
                     boolean success = false;
                     while (!success) {
@@ -211,10 +214,11 @@ public class Viewer { // Author Asger
                         System.out.println("Invalid time input");
                     }
                 }
-                else if (input.equalsIgnoreCase("Complete")){
-                    app.ChangeCompletenessOfActivity(true, currentActivityInfo);
+                else if (input.equalsIgnoreCase("Completion")){
+                    changeActivityCompletion(activityScanner);
                     inProjectMenu();
                     break;
+
                 }else if(input.equalsIgnoreCase("Exit")){
                     inProjectMenu();
                     break;
@@ -330,9 +334,11 @@ public class Viewer { // Author Asger
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
-        System.out.println("Activity status: " + (currentActivityInfo.getIsComplete()? "Complete" :"Incomplete"));
+        System.out.println("Activity status: " + (currentActivityInfo.isComplete()? "Complete" :"Incomplete"));
+        System.out.println("Overdue:" + ((currentActivityInfo.isComplete() ? "No" :(app.isActivityOverdue(currentActivityInfo)?"Yes":"No"))));
         System.out.println("Activity Members: " + currentActivityInfo.getParticipantList());
         System.out.println("Budgeted time: " + currentActivityInfo.getBudgetTime());
+        System.out.println("Overbudget:"+app.isActivityOverBudget(currentActivityInfo));
         System.out.println("Activity start date: " + (currentActivityInfo.getStartDate()));
         System.out.println("Activity deadline: " + (currentActivityInfo.getDeadline()));
         System.out.println();
@@ -396,8 +402,37 @@ public class Viewer { // Author Asger
 
     }
 
+    //----Function methods --------------------------------------------
+    private static void changeProjectCompletion(Scanner sc) {
+        System.out.println("is project complete?(Y/N)");
+        boolean success =false;
+        String input ="";
+        while(!success) {
+            input = sc.nextLine();
+            if(input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("N")) {
+                success=true;
+            }
+        }
 
+        boolean newValue= input.equalsIgnoreCase("Y");
+        app.changeCompletenessOfProject(newValue,currentProjectInfo);
+        currentProjectInfo=app.renewProjectInfo(currentProjectInfo);
+    }
 
+    private static void changeActivityCompletion(Scanner sc) {
+        System.out.println("is activity complete?(Y/N)");
+        boolean success =false;
+        String input ="";
+        while(!success) {
+            input = sc.nextLine();
+            if(input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("N")) {
+                success=true;
+            }
+        }
+        boolean newValue= input.equalsIgnoreCase("Y");
+        app.ChangeCompletenessOfActivity(newValue,currentActivityInfo);
+        currentActivityInfo=app.renewActivityInfo(currentActivityInfo);
+    }
 
 
     //----- Refresh infos--------------------------------------------------------------------------------

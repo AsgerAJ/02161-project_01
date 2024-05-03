@@ -47,7 +47,11 @@ public class LogWorkedTimeSteps {
         assertEquals(ai.getTimeMap().get(this.userHelper.getUserInfo().getUserId()),dob1);
 
     }
-
+    @Then("the activity is overbudget")
+    public void theActivityIsOverbudget() {
+        this.activityHelper.setActivityInfo(app.renewActivityInfo(this.activityHelper.getActivityInfo()));
+        assertTrue(app.isActivityOverBudget(this.activityHelper.getActivityInfo()));
+    }
 
 
 }

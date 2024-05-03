@@ -46,8 +46,9 @@ public abstract class PeriodEvent {
     //-----------------Checks --------------------------------------------------------
 
     public boolean timeOverlap(PeriodEvent event) {
-        return ((event.getDeadline().after(startdate) && event.getStartdate().before(deadline))
-            || (deadline.after(event.getStartdate()) && startdate.before(event.getDeadline())));
+        boolean first=((event.getDeadline().after(startdate) && event.getStartdate().before(deadline)));
+        boolean second = (deadline.after(event.getStartdate()) && startdate.before(event.getDeadline()));
+        return first||second;
     }
 
 

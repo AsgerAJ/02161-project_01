@@ -5,6 +5,7 @@ import domain.Classes.Activity;
 import domain.Classes.User;
 import domain.Interfaces.FinalUserCount;
 import domain.Interfaces.UserCount;
+import domain.exceptions.UserIdDoesNotExistExeption;
 import example.cucumber.helpers.ErrorMessageHolder;
 import example.cucumber.helpers.MockDateHolder;
 import example.cucumber.helpers.ProjectHelper;
@@ -15,6 +16,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertTrue;
 
@@ -38,14 +40,16 @@ public class FindFreeEmployeeSteps {
     }
 
     @Given("the users have different amounts of activities")
-    public void theUsersHaveDifferentAmountsOfActivities() {
+    public void theUsersHaveDifferentAmountsOfActivities() throws UserIdDoesNotExistExeption {
         ArrayList<Activity> actList = this.activityHelper.getExampleActivityList();
         ArrayList<User> userList=this.userHelper.getExampleUsersList();
 
         for (int actIndex = 0; actIndex<actList.size(); actIndex++) { //activity 1 to 1 users, activity 2 to 2 users...
             for (int userIndex=0; userIndex<=actIndex+1; userIndex++) {
                 if (userIndex<userList.size()) {
-                    actList.get(actIndex).assignUser(userList.get(userIndex));
+
+                    app.assignUserToActivity(userList.get(userIndex).asInfo().getUserId(),actList.get(actIndex).asInfo());
+
                 }
             }
         }
@@ -71,7 +75,7 @@ public class FindFreeEmployeeSteps {
     @Then("the returned users are sorted by amount of activities overlapping")
     public void theReturnedUsersAreSortedByAmountOfActivitiesOverlapping() {
         ArrayList<FinalUserCount> results = this.userHelper.getAvailableUserFinalList();
-
+        System.out.println(results.stream().map(uc->uc.UserCountToString()).toList().toString());
         int[] counts =  new int[results.size()];
         for (int i = 0; i<results.size(); i++) {
             counts[i] = results.get(i).getCount();
