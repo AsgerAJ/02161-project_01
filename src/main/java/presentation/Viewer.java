@@ -34,12 +34,12 @@ public class Viewer { // Author Asger
                 case 1:
                     System.out.println("Enter User id");
                     try {
-                        String loginString = loginScanner.next().substring(0, 4).toUpperCase();
+                        String loginString = loginScanner.next();
                         app.logInUser(loginString);
                         currentUserInfo = app.getCurrentUserInfo();
                         showMainMenu();
-                    }catch (StringIndexOutOfBoundsException | NullPointerException e){
-                        System.out.println("User Id has 4 characters");
+                    }catch (NullPointerException e){
+                        System.out.println("Please enter a valid user id");
                     } catch (UserIdDoesNotExistExeption e){
                         System.out.println(e.getMessage());
                     }
@@ -47,9 +47,11 @@ public class Viewer { // Author Asger
                 case 2:
                     System.out.println("Enter name to create user id");
                     try {
-                        String userId = (loginScanner.next());
+                        String userId = (loginScanner.nextLine());
                         app.registerUser(userId);
-                        System.out.println("Your user id is: "+ app.getActualId(userId));
+                        String newId = app.createUserId(userId);
+                        System.out.println("Your user id is: "+ app.getActualId(newId));
+                        System.out.println("Please remember this id, press the 'Enter' button to continue");
                     } catch (UserIdAlreadyInUseExeption e){
                         System.out.println(e.getMessage());
                     }

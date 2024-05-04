@@ -12,6 +12,7 @@ import domain.exceptions.UserIdAlreadyInUseExeption;
 import domain.exceptions.UserIdDoesNotExistExeption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -43,14 +44,6 @@ public class App {
     }
     public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
         assert id != null;
-
-        if(id.length()>4){
-            id = id.substring(0,4);
-        }else{
-            while(id.length() < 4){
-                id += 'x';
-            }
-        }
         for (User u : userList){
             if(u.getUserId().equals(id.toUpperCase())){
                 assert userList.contains(u);
@@ -111,18 +104,16 @@ public class App {
     }
     //------- Manipulate users ------------------------------------------------------------------
     public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
-        while (userId.length()<4) {
-            userId += "x";
+        String edited = createUserId(userId);                                       //1
+        User u = new User(edited);                                                  //2
+        if(!hasUserWithID(edited)){                                                 //3
+            this.userList.add(u);                                                   //4
+        } else {                                                                    //5
+            throw new UserIdAlreadyInUseExeption("UserId already in use");    //6
         }
-        String edited = (userId.substring(0,1).toUpperCase() + userId.substring(1,4).toUpperCase());
-        User u = new User(edited);
-        if(!hasUserWithID(edited)){
-            this.userList.add(u);
-        } else {
-            throw new UserIdAlreadyInUseExeption("UserId already in use");
-        }
-        return u;
+        return u;                                                                   //7
     }
+    
     public void removeUserWithId(String id){
         userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
     }
@@ -169,6 +160,7 @@ public class App {
 
     public String getActivityListString(ProjectInfo currentProject) {
         Project p = getProjectFromID(currentProject.getProjectID());
+        assert p != null;
         if(!p.getActivityList().isEmpty()){
             String outputstring = "";
             int index = 1;
@@ -182,10 +174,38 @@ public class App {
     }
     private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
         Project p = getProjectFromID(currentproject.getProjectID());
+        assert p != null;
         if(index <= p.getActivityList().size()){
             return p.getActivityList().get(index);
         }
         return null;
+    }
+
+    public String createUserId(String userId) {
+        StringBuilder userIdOutputString = new StringBuilder();
+        userId = userId.replaceAll("\\d","");
+        String[] splitString = userId.split(" ");
+        if(splitString.length == 1){
+            for (int i = 0; i <= (splitString[0].length() > 4 ? 3 : splitString[0].length()-1); i++) {
+                String appendstring = "" + splitString[0].charAt(i);
+                userIdOutputString.append(appendstring);
+            }
+        }else if(splitString.length == 2) {
+            for (int i = 0; i <= (splitString[0].length() < 2 ? 0 : 1); i++) {
+                String appendstring = "" + splitString[0].charAt(i);
+                userIdOutputString.append(appendstring);
+            }
+            for (int i = 0; i <= (splitString[1].length() < 2 ? 0 : 1); i++) {
+                String appendstring = "" + splitString[1].charAt(i);
+                userIdOutputString.append(appendstring);
+            }
+        }else{
+            for (int i = 0; i <= splitString.length-1; i++) {
+                String appendstring = "" + splitString[i].charAt(0);
+                userIdOutputString.append(appendstring);
+            }
+        }
+        return  (userIdOutputString.toString().toUpperCase());
     }
 
 
@@ -344,77 +364,80 @@ public class App {
     //Demo configuration -----------------------------------------------------------------------------------------------
     public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, InvalidDateException {
 
-        registerUser("Huba");
-        registerUser("LOVR");
-        registerUser("ASGE");
-        registerUser("NIKL");
-        registerUser("NIKO");
+        String HUBA = registerUser("Hubert Baumeister").getUserId();
+        String LOAN = registerUser("Lovro Antic").getUserId();
+        String AAJ = registerUser("Asger Allin Jensen").getUserId();
+        String NEL = registerUser("Niklas Emil Lysdal").getUserId();
+        String NVT = registerUser("Nikolaj Vorndran Thygesen").getUserId();
 
         //Log in as Huba
-        logInUser("Huba");
+        logInUser(HUBA);
         createProject("Soft. eng. project");
         Project p = getProjectFromTitle("Soft. eng. project");
+        assert p != null;
         p.createNewActivity(new Activity("Design", 10,p.getProjectID()));
         p.createNewActivity(new Activity("Implementation", 20,p.getProjectID()));
         p.createNewActivity(new Activity("Testing", 10,p.getProjectID()));
         p.createNewActivity(new Activity("Documentation", 10,p.getProjectID()));
-        p.assignUser(getUserFromId("LOVR"));
-        p.assignUser(getUserFromId("ASGE"));
-        p.assignUser(getUserFromId("NIKL"));
-        p.assignUser(getUserFromId("NIKO"));
+        p.assignUser(getUserFromId(LOAN));
+        p.assignUser(getUserFromId(AAJ));
+        p.assignUser(getUserFromId(NEL));
+        p.assignUser(getUserFromId(NVT));
         p.setStartDate(new Calendar.Builder().setDate(2024, 3, 1).build());
         p.setDeadline(new Calendar.Builder().setDate(2024, 4, 6).build());
 
         Activity a = p.getActivityFromName("Design");
-        a.assignUser(getUserFromId("NIKL"));
-        a.assignUser(getUserFromId("NIKO"));
-        a.logTime(5, getUserFromId("NIKL"));
-        a.logTime(5, getUserFromId("NIKO"));
+        a.assignUser(getUserFromId(NEL));
+        a.assignUser(getUserFromId(NVT));
+        a.logTime(5, getUserFromId(NEL));
+        a.logTime(5, getUserFromId(NVT));
         a.setStatus(true);
         a.setStartdate(new Calendar.Builder().setDate(2024, 3, 1).build());
         a.setDeadline(new Calendar.Builder().setDate(2024, 4, 6).build());
 
         a = p.getActivityFromName("Implementation");
-        a.assignUser(getUserFromId("LOVR"));
-        a.assignUser(getUserFromId("ASGE"));
-        a.logTime(10, getUserFromId("LOVR"));
-        a.logTime(2, getUserFromId("ASGE"));
+        a.assignUser(getUserFromId(LOAN));
+        a.assignUser(getUserFromId(AAJ));
+        a.logTime(10, getUserFromId(LOAN));
+        a.logTime(2, getUserFromId(AAJ));
         a.setStatus(true);
 
         a = p.getActivityFromName("Testing");
-        a.assignUser(getUserFromId("NIKL"));
-        a.assignUser(getUserFromId("NIKO"));
-        a.assignUser(getUserFromId("LOVR"));
-        a.assignUser(getUserFromId("ASGE"));
-        a.assignUser(getUserFromId("HUBA"));
-        a.logTime(5, getUserFromId("NIKL"));
-        a.logTime(7, getUserFromId("NIKO"));
-        a.logTime(10, getUserFromId("LOVR"));
-        a.logTime(9, getUserFromId("ASGE"));
-        a.logTime(5, getUserFromId("HUBA"));
+        a.assignUser(getUserFromId(NEL));
+        a.assignUser(getUserFromId(NVT));
+        a.assignUser(getUserFromId(AAJ));
+        a.assignUser(getUserFromId(LOAN));
+        a.assignUser(getUserFromId(HUBA));
+        a.logTime(5, getUserFromId(NEL));
+        a.logTime(7, getUserFromId(NVT));
+        a.logTime(10, getUserFromId(AAJ));
+        a.logTime(9, getUserFromId(LOAN));
+        a.logTime(5, getUserFromId(HUBA));
         a.setStartdate(new Calendar.Builder().setDate(2024, 4, 2).build());
         a.setDeadline(new Calendar.Builder().setDate(2024, 4, 6).build());
 
         a = p.getActivityFromName("Documentation");
-        a.assignUser(getUserFromId("NIKL"));
-        a.assignUser(getUserFromId("HUBA"));
-        a.logTime(5, getUserFromId("NIKL"));
-        a.logTime(7, getUserFromId("HUBA"));
+        a.assignUser(getUserFromId(NEL));
+        a.assignUser(getUserFromId(HUBA));
+        a.logTime(5, getUserFromId(NEL));
+        a.logTime(7, getUserFromId(HUBA));
 
         createProject("Yoga");
         p = getProjectFromTitle("Yoga");
+        assert p != null;
         p.createNewActivity(new Activity("Yoga", 10,p.getProjectID()));
         p.createNewActivity(new Activity("Meditation", 20,p.getProjectID()));
         a = p.getActivityFromName("Yoga");
-        a.logTime(5, getUserFromId("Huba"));
+        a.logTime(5, getUserFromId(HUBA));
 
 
         logOut();
 
         //Log in as Asger
-        logInUser("ASGE");
+        logInUser(AAJ);
         createProject("Exam Preperation");
         p = getProjectFromTitle("Exam Preperation");
+        assert p != null;
         p.createNewActivity(new Activity("Math 1b", 40,p.getProjectID()));
         p.createNewActivity(new Activity("Physics", 20,p.getProjectID()));
         p.createNewActivity(new Activity("Algorithms and datastructures", 30,p.getProjectID()));
@@ -427,9 +450,10 @@ public class App {
 
         //Log in as Lovro
 
-        logInUser("LOVR");
+        logInUser(LOAN);
         createProject("Coding");
         p = getProjectFromTitle("Coding");
+        assert p != null;
         p.createNewActivity(new Activity("Java (•́︵•̀)", 40,p.getProjectID()));
         p.createNewActivity(new Activity("Python", 20,p.getProjectID()));
         p.createNewActivity(new Activity("C++", 30,p.getProjectID()));
@@ -439,9 +463,10 @@ public class App {
 
         //Log in as Niklas
 
-        logInUser("NIKL");
+        logInUser(NEL);
         createProject("Git gud");
         p = getProjectFromTitle("Git gud");
+        assert p != null;
         p.createNewActivity(new Activity("Quick Scoping", 40,p.getProjectID()));
         p.createNewActivity(new Activity("No scoping", 20,p.getProjectID()));
         p.createNewActivity(new Activity("360 no scoping", 30,p.getProjectID()));
@@ -452,9 +477,10 @@ public class App {
         logOut();
 
         //Log in as Nikolaj
-        logInUser("NiKO");
+        logInUser(NVT);
         createProject("Rapport 2");
         p = getProjectFromTitle("Rapport 2");
+        assert p != null;
         p.createNewActivity(new Activity("Rapport", 40,p.getProjectID()));
         p.createNewActivity(new Activity("Rapport 2", 20,p.getProjectID()));
         p.createNewActivity(new Activity("Rapport 2 electric boogaloo", 30,p.getProjectID()));
