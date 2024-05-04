@@ -12,9 +12,7 @@ import domain.exceptions.UserIdAlreadyInUseExeption;
 import domain.exceptions.UserIdDoesNotExistExeption;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.stream.Collectors;
 
 /* This class works both as an object itself, but also as a facade between the viewer class and the other Business logic*/
@@ -104,16 +102,27 @@ public class App {
     }
     //------- Manipulate users ------------------------------------------------------------------
     public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
-        String edited = createUserId(userId);                                       //1
-        User u = new User(edited);                                                  //2
-        if(!hasUserWithID(edited)){                                                 //3
-            this.userList.add(u);                                                   //4
-        } else {                                                                    //5
-            throw new UserIdAlreadyInUseExeption("UserId already in use");    //6
+        assert userId != null;
+        String edited = createUserId(userId);
+        User u = new User(edited);
+        if(!hasUserWithID(edited)){
+            assert u.getUserId().equals(edited);
+            this.userList.add(u);
+            assert userList.contains(u);
+        } else {
+            throw new UserIdAlreadyInUseExeption("UserId already in use");
         }
-        return u;                                                                   //7
+        return u;
     }
-    
+    public User quickRegisterUser(String userId) throws UserIdAlreadyInUseExeption {
+        User u = new User(userId);
+        if(!hasUserWithID(userId)){
+            this.userList.add(u);
+        } else {
+            throw new UserIdAlreadyInUseExeption("UserId already in use");
+        }
+        return u;
+    }
     public void removeUserWithId(String id){
         userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
     }
@@ -135,11 +144,11 @@ public class App {
         return getUserFromId(userId).getUserId();
     }
     public String getRegisteredUsers(){
-        String outputstring = getUserList().get(0).getUserId();
+        StringBuilder outputstring = new StringBuilder(getUserList().get(0).getUserId());
         for (int i = 1; i < getUserList().size(); i++){
-            outputstring += ", " + getUserList().get(i).getUserId();
+            outputstring.append(", ").append(getUserList().get(i).getUserId());
         }
-        return (outputstring);
+        return (outputstring.toString());
     }
 
     public ArrayList<User> getUserList() {
@@ -147,10 +156,10 @@ public class App {
     }
     public String getProjectListString(){
         if(!getCurrentUser().getAssignedProjects().isEmpty()){
-            String outputstring = "";
+            StringBuilder outputstring = new StringBuilder();
             int index = 1;
             for(Project project : getCurrentUser().getAssignedProjects()){
-                outputstring += "\n" + index +" : " + "Project id: " + project.getProjectID() + " Project name: " + project.getName();
+                outputstring.append("\n").append(index).append(" : ").append("Project id: ").append(project.getProjectID()).append(" Project name: ").append(project.getName());
                 index++;
             }
             return outputstring + "\n";
@@ -162,10 +171,10 @@ public class App {
         Project p = getProjectFromID(currentProject.getProjectID());
         assert p != null;
         if(!p.getActivityList().isEmpty()){
-            String outputstring = "";
+            StringBuilder outputstring = new StringBuilder();
             int index = 1;
             for(Activity activity : p.getActivityList()){
-                outputstring += "\n" + index +" : " + "Activity name: " + activity.getName() + " Budget time: " + activity.getBudgetTime();
+                outputstring.append("\n").append(index).append(" : ").append("Activity name: ").append(activity.getName()).append(" Budget time: ").append(activity.getBudgetTime());
                 index++;
             }
             return outputstring + "\n";
@@ -232,13 +241,15 @@ public class App {
     public void assignUserToProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(pi.getProjectID());
-            p.assignUser(u);
+        assert p != null;
+        p.assignUser(u);
     }
 
     public void removeUserFromProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(pi.getProjectID());
-            p.removeUser(u);
+        assert p != null;
+        p.removeUser(u);
     }
     public boolean isProjectOverdue(ProjectInfo pi) {
         return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
@@ -251,10 +262,10 @@ public class App {
 
     //------- Manipulate Activity ---------------------------------------------------------------------
     public void assignUserToActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
-
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
-            Activity a = p.getActivityFromName(ai.getActivityName());
+        assert p != null;
+        Activity a = p.getActivityFromName(ai.getActivityName());
             a.assignUser(u);
 
 
@@ -263,7 +274,8 @@ public class App {
     public void removeUserFromActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
-            Activity a = p.getActivityFromName(ai.getActivityName());
+        assert p != null;
+        Activity a = p.getActivityFromName(ai.getActivityName());
             a.removeUser(u);
     }
 
@@ -275,12 +287,14 @@ public class App {
 
     public void logTimeOnActivity(double workedTime, ActivityInfo currentActivity) {
         Project p = getProjectFromID(currentActivity.getParentProjectId());
+        assert p != null;
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
         a.logTime(workedTime, this.currentUser);
     }
 
     public void ChangeCompletenessOfActivity(boolean b, ActivityInfo currentActivity) {
         Project p = getProjectFromID(currentActivity.getParentProjectId());
+        assert p != null;
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
         a.setStatus(b);
     }
@@ -295,6 +309,7 @@ public class App {
     //-----Find free employee------------------------------------------------------------------------------------------
     public ArrayList<FinalUserCount> findFreeEmployee(ActivityInfo aci) {
         Project p = getProjectFromID(aci.getParentProjectId());
+        assert p != null;
         Activity a = p.getActivityFromName(aci.getActivityName());
         ArrayList <UserCount> avU = p.findFreeEmployee(a);
         return avU.stream().map(entry -> (FinalUserCount)entry).collect(Collectors.toCollection(ArrayList::new));
