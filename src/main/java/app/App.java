@@ -42,6 +42,8 @@ public class App {
         return this.currentUser.getUserId();
     }
     public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
+        assert id != null;
+
         if(id.length()>4){
             id = id.substring(0,4);
         }else{
@@ -49,9 +51,10 @@ public class App {
                 id += 'x';
             }
         }
-
         for (User u : userList){
             if(u.getUserId().equals(id.toUpperCase())){
+                assert userList.contains(u);
+                assert u.getUserId().equals(id.toUpperCase());
                 return u;
             }
         }
