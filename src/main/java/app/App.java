@@ -104,14 +104,17 @@ public class App {
     }
     //------- Manipulate users ------------------------------------------------------------------
     public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
-        String edited = createUserId(userId);                                       //1
-        User u = new User(edited);                                                  //2
-        if(!hasUserWithID(edited)){                                                 //3
-            this.userList.add(u);                                                   //4
-        } else {                                                                    //5
-            throw new UserIdAlreadyInUseExeption("UserId already in use");    //6
+        assert userId != null;
+        String edited = createUserId(userId);
+        User u = new User(edited);
+        if(!hasUserWithID(edited)){
+            assert u.getUserId().equals(edited);
+            this.userList.add(u);
+            assert userList.contains(u);
+        } else {
+            throw new UserIdAlreadyInUseExeption("UserId already in use");
         }
-        return u;                                                                   //7
+        return u;
     }
     public User quickRegisterUser(String userId) throws UserIdAlreadyInUseExeption {
         User u = new User(userId);
