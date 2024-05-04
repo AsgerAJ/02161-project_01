@@ -25,7 +25,6 @@ public class Viewer { // Author Asger
     private static ProjectInfo currentProjectInfo = new ProjectInfo();
     public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption, InvalidDateException {
         // App setup
-        app.enableDemoConfig();
         Scanner loginScanner = new Scanner(System.in);
 
         // Login & Register user Slice
@@ -57,7 +56,7 @@ public class Viewer { // Author Asger
                     break;
 
                 default:
-                    System.out.println("Enter '1' to log in, or '2' to register a new user, 'ids' to see all user ids\nor 'Exit' to exit the program");
+                    System.out.println("Enter:\n'1' to log in \n'2' to register a new user, \n'ids' to see all user ids,\n'Enable demo mode' to enable a default config\n'Exit' to exit the program");
             }
 
             String input = loginScanner.nextLine();
@@ -66,6 +65,9 @@ public class Viewer { // Author Asger
                     System.out.println(app.getRegisteredUsers());
                 }else if(input.equalsIgnoreCase("Exit")) {
                     break;
+                }else if(input.equalsIgnoreCase("Enable demo mode")) {
+                    app.enableDemoConfig();
+                    System.out.println("Demo mode enabled");
                 }
                 loginValue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
