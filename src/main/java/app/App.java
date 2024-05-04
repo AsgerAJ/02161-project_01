@@ -43,12 +43,15 @@ public class App {
         return this.currentUser.getUserId();
     }
     public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
-        for (User u : userList){                                                    //1
-            if(u.getUserId().equals(id.toUpperCase())){                             //2
-                return u;                                                           //3
+        assert id != null;                                                              //1
+        for (User u : userList){                                                        //2
+            if(u.getUserId().equals(id.toUpperCase())){                                 //3
+                assert userList.contains(u);                                            //4
+                assert u.getUserId().equals(id.toUpperCase());                          //5
+                return u;                                                               //6
             }
         }
-        throw new UserIdDoesNotExistExeption("No user with UserId exists");  //4
+        throw new UserIdDoesNotExistExeption("No user with UserId exists");       //7
     }
 
     private Project getProjectFromTitle(String title) {
