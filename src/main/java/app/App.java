@@ -214,7 +214,7 @@ public class App {
                     userIdOutputString.append(appendstring);
                 }
         }
-        return  (userIdOutputString.toString().toUpperCase());
+        return  (userIdOutputString.toString().toUpperCase().substring(0,4));
     }
 
 
