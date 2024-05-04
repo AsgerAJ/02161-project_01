@@ -28,13 +28,10 @@ public class UserHelper {
 
 
     public ArrayList<User> getExampleUsers(int amount) {
+        String[] letterList = {"A","B","C","D","E","F","G","H","I","J"};
 
-
-        for (int i = 1; i<=amount;i++) {
-            String id ="U"+i;
-            while(id.length()<4) {
-                id+="X";
-            }
+        for (int i = 0; i<amount;i++) {
+            String id ="U"+letterList[i];
             this.exampleUserList.add(new User(id));
 
         }
