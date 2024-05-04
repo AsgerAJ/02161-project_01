@@ -1,0 +1,1 @@
+Feature: White box test for getUserFromID method
