@@ -48,3 +48,5 @@ Feature: Find free employee
       And user creates an activity with name "Yoga" with time budget 1
       When the user searches for free employee
       Then no users are found
+
+

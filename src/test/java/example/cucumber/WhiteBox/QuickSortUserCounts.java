@@ -31,6 +31,7 @@ public class QuickSortUserCounts {
         assert begin>=0;
         assert end<ucArr.size();
         assert begin<=end;
+
         ArrayList<UserCount> preList = new ArrayList<>(ucArr); //for purpose of assert postcondition
 
         int leqIndex = begin-1; //1 //correctPlace of pivot in list.
@@ -44,7 +45,7 @@ public class QuickSortUserCounts {
         }
         Collections.swap(ucArr,leqIndex+1,end); //7 //swap pivot into
         assert preList.containsAll(ucArr) && ucArr.containsAll(preList); //equal in this case
-        //assert all lesser than items are before, and bigger than are after
+            //assert all lesser than items are before, and bigger than are after
         for (int index = begin; index<end;index++) {
             if (index<leqIndex+1) {
                 assert ucArr.get(index).getCount()<=ucArr.get(leqIndex+1).getCount();
@@ -58,3 +59,10 @@ public class QuickSortUserCounts {
         return (leqIndex+1); //8 //return position of pivot
     }
 }
+
+
+
+
+
+
+
