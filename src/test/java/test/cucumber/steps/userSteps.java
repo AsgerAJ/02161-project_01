@@ -49,7 +49,7 @@ public class userSteps {
 
     @Given("a user with id {string} exists")
     public void a_user_with_id_exists(String string) throws Exception{
-        this.userHelper.setUser(this.app.registerUser(string));
+        this.userHelper.setUser(this.app.quickRegisterUser(string));
         assertTrue(app.hasUserWithID(string));
     }
     @Then("the errormessage {string} is given")

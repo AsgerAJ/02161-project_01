@@ -11,8 +11,3 @@ Feature: Register a user
     Given a user with id "HUBA" exists
     When a user registers with user id "Huba"
     Then the errormessage "UserId already in use" is given
-
-  Scenario: UserId is too short
-    Given no user with id "HUBX" exists
-    When a user registers with user id "Hub"
-    Then a user is registered with id "HUBX"

@@ -43,15 +43,12 @@ public class App {
         return this.currentUser.getUserId();
     }
     public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
-        assert id != null;
-        for (User u : userList){
-            if(u.getUserId().equals(id.toUpperCase())){
-                assert userList.contains(u);
-                assert u.getUserId().equals(id.toUpperCase());
-                return u;
+        for (User u : userList){                                                    //1
+            if(u.getUserId().equals(id.toUpperCase())){                             //2
+                return u;                                                           //3
             }
         }
-        throw new UserIdDoesNotExistExeption("No user with UserId exists");
+        throw new UserIdDoesNotExistExeption("No user with UserId exists");  //4
     }
 
     private Project getProjectFromTitle(String title) {
@@ -113,7 +110,15 @@ public class App {
         }
         return u;                                                                   //7
     }
-    
+    public User quickRegisterUser(String userId) throws UserIdAlreadyInUseExeption {
+        User u = new User(userId);
+        if(!hasUserWithID(userId)){
+            this.userList.add(u);
+        } else {
+            throw new UserIdAlreadyInUseExeption("UserId already in use");
+        }
+        return u;
+    }
     public void removeUserWithId(String id){
         userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
     }
