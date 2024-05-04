@@ -3,7 +3,7 @@ package domain.Classes;
 import domain.exceptions.InvalidDateException;
 
 import java.util.Calendar;
-
+/*@author Niklas */
 public abstract class PeriodEvent {
     private Calendar deadline;
     private Calendar startdate;
@@ -46,9 +46,8 @@ public abstract class PeriodEvent {
     //-----------------Checks --------------------------------------------------------
 
     public boolean timeOverlap(PeriodEvent event) {
-        boolean first=((event.getDeadline().after(startdate) && event.getStartdate().before(deadline)));
-        boolean second = (deadline.after(event.getStartdate()) && startdate.before(event.getDeadline()));
-        return first||second;
+        return ((event.getDeadline().after(startdate) && event.getStartdate().before(deadline)))
+                ||(deadline.after(event.getStartdate()) && startdate.before(event.getDeadline()));
     }
 
 

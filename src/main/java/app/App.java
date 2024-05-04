@@ -49,7 +49,7 @@ public class App {
             id = id.substring(0,4);
         }else{
             while(id.length() < 4){
-                id += 'x';
+                id += 'x'; //5
             }
         }
 
