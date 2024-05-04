@@ -71,6 +71,7 @@ public class App {
 
 
     }
+    
     public ProjectInfo getProjectInfoFromID(String id) {
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
         if (!matchingProjects.isEmpty()) {
@@ -84,15 +85,14 @@ public class App {
     public boolean loggedInStatus(){
         return this.currentUser != null;
     }
-    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
 
+    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
         if (this.currentUser!=null) {
             throw new AUserIsAlreadyLoggedInException("A user is already logged in");
         }
         User temp = getUserFromId(id);
         if(temp != null){
             currentUser = temp;
-
         }else{
             throw new UserIdDoesNotExistExeption("No user with UserId exists");
         }
@@ -184,35 +184,35 @@ public class App {
     private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
         Project p = getProjectFromID(currentproject.getProjectID());
         assert p != null;
-        if(index <= p.getActivityList().size()){
-            return p.getActivityList().get(index);
-        }
-        return null;
+        return (index <= p.getActivityList().size()) ? p.getActivityList().get(index) : null;
     }
 
     public String createUserId(String userId) {
         StringBuilder userIdOutputString = new StringBuilder();
         userId = userId.replaceAll("\\d","");
         String[] splitString = userId.split(" ");
-        if(splitString.length == 1){
-            for (int i = 0; i <= (splitString[0].length() > 4 ? 3 : splitString[0].length()-1); i++) {
-                String appendstring = "" + splitString[0].charAt(i);
-                userIdOutputString.append(appendstring);
-            }
-        }else if(splitString.length == 2) {
-            for (int i = 0; i <= (splitString[0].length() < 2 ? 0 : 1); i++) {
-                String appendstring = "" + splitString[0].charAt(i);
-                userIdOutputString.append(appendstring);
-            }
-            for (int i = 0; i <= (splitString[1].length() < 2 ? 0 : 1); i++) {
-                String appendstring = "" + splitString[1].charAt(i);
-                userIdOutputString.append(appendstring);
-            }
-        }else{
-            for (int i = 0; i <= splitString.length-1; i++) {
-                String appendstring = "" + splitString[i].charAt(0);
-                userIdOutputString.append(appendstring);
-            }
+        switch(splitString.length) {
+            case 1:
+                for (int i = 0; i <= (splitString[0].length() > 4 ? 3 : splitString[0].length()-1); i++) {
+                    String appendstring = "" + splitString[0].charAt(i);
+                    userIdOutputString.append(appendstring);
+                }
+                break;
+            case 2:
+                for (int i = 0; i <= (splitString[0].length() < 2 ? 0 : 1); i++) {
+                    String appendstring = "" + splitString[0].charAt(i);
+                    userIdOutputString.append(appendstring);
+                }
+                for (int i = 0; i <= (splitString[1].length() < 2 ? 0 : 1); i++) {
+                    String appendstring = "" + splitString[1].charAt(i);
+                    userIdOutputString.append(appendstring);
+                }
+                break;
+            default:
+                for (int i = 0; i <= splitString.length-1; i++) {
+                    String appendstring = "" + splitString[i].charAt(0);
+                    userIdOutputString.append(appendstring);
+                }
         }
         return  (userIdOutputString.toString().toUpperCase());
     }
