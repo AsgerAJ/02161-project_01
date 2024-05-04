@@ -86,7 +86,7 @@ public class Viewer { // Author Asger
             if (startvalue != 0){
                 try{
                     currentProjectInfo = app.getCurrentUserProjectsInfoFromID(String.valueOf(startvalue));
-                    insideProjectMenu(startvalue);
+                    insideProjectMenu();
 
                 }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
@@ -114,7 +114,7 @@ public class Viewer { // Author Asger
         refreshUserInfo();
     }
 
-    private static void insideProjectMenu(int value) {
+    private static void insideProjectMenu() {
         Scanner projectScanner = new Scanner(System.in);
         int insideProjectValue = 0;
         while(true){
