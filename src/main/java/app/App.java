@@ -119,7 +119,6 @@ public class App {
         if(!hasUserWithID(edited)){
             this.userList.add(u);
         } else {
-
             throw new UserIdAlreadyInUseExeption("UserId already in use");
         }
         return u;
