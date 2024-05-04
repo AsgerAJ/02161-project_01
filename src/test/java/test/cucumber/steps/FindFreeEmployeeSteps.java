@@ -73,7 +73,6 @@ public class FindFreeEmployeeSteps {
     @Then("the returned users are sorted by amount of activities overlapping")
     public void theReturnedUsersAreSortedByAmountOfActivitiesOverlapping() {
         ArrayList<FinalUserCount> results = this.userHelper.getAvailableUserFinalList();
-        System.out.println(results.stream().map(uc->uc.UserCountToString()).toList().toString());
         int[] counts =  new int[results.size()];
         for (int i = 0; i<results.size(); i++) {
             counts[i] = results.get(i).getCount();

@@ -45,7 +45,7 @@ public class ActivityInfo {
         return timeMap;}
 
     public ArrayList<String> getParticipantList() {
-        return new ArrayList<>(this.participantList.stream().map(u->u.getUserId()).toList());
+        return new ArrayList<>(this.participantList.stream().map(User::getUserId).toList());
     }
     public String getActivityName() {return activityName;}
 
@@ -71,16 +71,12 @@ public class ActivityInfo {
             return outputstring;
         } else {
             String key;
-            for(Iterator var5 = this.getTimeMap().keySet().iterator(); var5.hasNext(); outputstring = outputstring + key + " : " + this.getTimeMap().get(key) + " Hours\n") {
+            for(Iterator<String> var5 = this.getTimeMap().keySet().iterator(); var5.hasNext(); outputstring = outputstring + key + " : " + this.getTimeMap().get(key) + " Hours\n") {
                 key = (String)var5.next();
             }
 
             return outputstring;
         }
-    }
-
-    public boolean isOverbudget() {
-        return this.totalHours>this.budgetTime;
     }
 
 
