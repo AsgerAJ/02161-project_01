@@ -1,6 +1,7 @@
 package test.cucumber.WhiteBox;
 
 import app.App;
+import domain.Classes.User;
 import domain.exceptions.UserIdAlreadyInUseExeption;
 import domain.exceptions.UserIdDoesNotExistExeption;
 import test.cucumber.helpers.UserHelper;
@@ -26,7 +27,9 @@ public class RegisterUserSteps {
 
     @When("the registerUser method is called with id {string}")
     public void the_register_user_method_is_called_with_id(String string) throws UserIdAlreadyInUseExeption {
-        this.userHelper.setUser(app.registerUser(string));
+        User u =app.registerUser(string);
+        this.userHelper.setUser(u);
+        System.out.println("calling method");
     }
     @Then("user with id {string} is added to the userList")
     public void user_with_id_is_added_to_the_user_list(String string) {

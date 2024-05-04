@@ -18,7 +18,7 @@ public class UserHelper {
 
     public void setUser(User u) {
         this.user=u;
-        this.userInfo=new UserInfo(user);
+        this.userInfo=u.asInfo();
     }
     public User getUser() {
         return this.user;

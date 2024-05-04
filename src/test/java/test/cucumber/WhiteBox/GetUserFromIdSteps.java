@@ -20,7 +20,7 @@ public class GetUserFromIdSteps {
 
     private final ErrorMessageHolder errorMessage;
     public GetUserFromIdSteps(UserHelper userHelper, App app, ErrorMessageHolder errorMessage) {
-        this.userHelper = new UserHelper();
+        this.userHelper = userHelper;
         this.app = app;
         this.errorMessage = errorMessage;
     }
