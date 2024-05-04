@@ -213,11 +213,7 @@ public class App {
 
     public ProjectInfo getCurrentUserProjectsInfoFromID(String id) {
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
-        if (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) {
-            return matchingProjects.get(0).asInfo();
-        } else {
-            return null;
-        }
+        return (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) ? matchingProjects.get(0).asInfo() : null;
     }
 
     public Project createProject(String projectName) {
