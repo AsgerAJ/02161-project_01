@@ -50,6 +50,8 @@ public class User {
     public ArrayList<Project> getAssignedProjects() {
         return assignedProjects;
     }
+
+    
     //Open-closed principle here, of the SOLID principles
     public SuccessCount isAvailable(PeriodEvent event) {
         if (this.assignedActivities.contains(event)) {
