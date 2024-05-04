@@ -26,9 +26,6 @@ public class App {
     public App(){
     }
 
-
-
-
     public boolean hasUserWithID(String id) {
         for (User u : userList){
             if(u.getUserId().equals(id)){
