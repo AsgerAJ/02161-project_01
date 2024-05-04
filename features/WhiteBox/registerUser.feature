@@ -21,11 +21,11 @@ Feature: White box test for registerUser method
     And a user with id "JONA" exists
     And a user with id "NIKH" exists
     When the registerUser method is called with id "JONATAN"
-    Then the exeption UserIdAlreadyInUseExeption is thrown
+    Then the errormessage "UserId already in use" is given
 
   Scenario: Input set D
     Given a user with id "ANDE" exists
     And a user with id "JONX" exists
     And a user with id "NIKH" exists
     When the registerUser method is called with id "JON"
-    Then the exeption UserIdAlreadyInUseExeption is thrown
+    Then the errormessage "UserId already in use" is given

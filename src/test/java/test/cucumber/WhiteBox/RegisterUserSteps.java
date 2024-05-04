@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 public class RegisterUserSteps {
     private final UserHelper userHelper;
     private final App app;
-
+    private UserIdAlreadyInUseExeption e;
     private final ErrorMessageHolder errorMessage;
     public RegisterUserSteps(UserHelper userHelper, App app, ErrorMessageHolder errorMessage) {
         this.userHelper = userHelper;
@@ -27,12 +27,15 @@ public class RegisterUserSteps {
 
     @When("the registerUser method is called with id {string}")
     public void the_register_user_method_is_called_with_id(String string) throws UserIdAlreadyInUseExeption {
-        User u =app.registerUser(string);
-        this.userHelper.setUser(u);
-        System.out.println("calling method");
+        try {
+            this.userHelper.setUser(app.registerUser(string));
+        } catch(UserIdAlreadyInUseExeption e) {
+            this.errorMessage.setErrorMessage(e.getMessage());
+        }
     }
     @Then("user with id {string} is added to the userList")
     public void user_with_id_is_added_to_the_user_list(String string) {
         assertTrue(app.getUserList().contains(this.userHelper.getUser()));
     }
+
 }
