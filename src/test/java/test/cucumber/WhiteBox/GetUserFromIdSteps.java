@@ -1,7 +1,6 @@
 package test.cucumber.WhiteBox;
 
 import app.App;
-import domain.exceptions.UserIdAlreadyInUseExeption;
 import domain.exceptions.UserIdDoesNotExistExeption;
 import test.cucumber.helpers.UserHelper;
 import test.cucumber.helpers.ErrorMessageHolder;

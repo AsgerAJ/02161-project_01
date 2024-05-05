@@ -1,10 +1,6 @@
 package app;
 
-import domain.Classes.PeriodEvent;
-import domain.Classes.Project;
 import domain.Classes.User;
-
-import java.util.ArrayList;
 
 public class UserInfo {
     private String userId;
