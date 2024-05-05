@@ -48,15 +48,9 @@ public class DataPackage implements SuccessCount, UserCount {
     }
 
 
-
-
     //----- Functional ----------------------------------------------------------------------
-
-
     @Override
     public void increaseCount(int i) {
         this.count += i;
     }
-
-
 }

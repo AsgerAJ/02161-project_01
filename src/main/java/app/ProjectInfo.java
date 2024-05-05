@@ -54,14 +54,10 @@ public class ProjectInfo {
         } else {
             return this.startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.YEAR)+"(Week: "+startDate.get(Calendar.WEEK_OF_YEAR)+")";
         }
-
     }
-
-
 
     public ArrayList<String> getActivityList() {
         return new ArrayList<>(activityList.stream().map(a->a.getName()).toList());
-
     }
 
     public String getParticipanList() {
@@ -75,9 +71,11 @@ public class ProjectInfo {
     public boolean getComplete() {
         return complete;
     }
+
     public Calendar getDeadlineCopy() {
         return (Calendar) this.deadline.clone();
     }
+    
     public Calendar getStartdateCopy(){
         return (Calendar) this.startDate.clone();
     }
@@ -106,15 +104,9 @@ public class ProjectInfo {
                 }
             }
 
-            return "Project " + progressBarBuilder + " " +(completionPercentage * 100) + "% complete";
+            return "Project activities " + progressBarBuilder + " " +(completionPercentage * 100) + "% complete";
         }else{
             return "Project □□□□□□□□□□□□□□□□□□□□ 0% complete";
         }
-
     }
-
-
-
-
-
 }

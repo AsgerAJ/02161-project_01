@@ -78,8 +78,6 @@ public class Viewer { // Author Asger
     }
 
 
-
-
     private static void showMainMenu() {
         // Project overview and create project slice
         if(programScanner.hasNextLine()){
@@ -542,6 +540,7 @@ public class Viewer { // Author Asger
         set[1]=end;
         return set;
     }
+
     private static Calendar getDateFromUser() {
 
         Calendar c = new GregorianCalendar();
@@ -595,6 +594,7 @@ public class Viewer { // Author Asger
     }
 
     //----Function methods --------------------------------------------
+
     private static void changeProjectCompletion() {
         System.out.println("is project complete?(Y/N)");
         boolean success =false;
@@ -628,6 +628,7 @@ public class Viewer { // Author Asger
 
 
     //----- Refresh infos--------------------------------------------------------------------------------
+
     private static void refreshProjectInfoObject(){
         currentProjectInfo = app.renewProjectInfo(currentProjectInfo);
     }

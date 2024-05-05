@@ -33,22 +33,20 @@ public class App {
         return false;
     }
 
-
-
     //------Get methods --------------------------------------------------------------------------------------
     public String getCurrentUserId(){
         return this.currentUser.getUserId();
     }
     public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
-        assert id != null;                                                              //1
-        for (User u : userList){                                                        //2
-            if(u.getUserId().equals(id.toUpperCase())){                                 //3
-                assert userList.contains(u);                                            //4
-                assert u.getUserId().equals(id.toUpperCase());                          //5
-                return u;                                                               //6
+        assert id != null;                                                              
+        for (User u : userList){                                                        
+            if(u.getUserId().equals(id.toUpperCase())){                                 
+                assert userList.contains(u);                                            
+                assert u.getUserId().equals(id.toUpperCase());                          
+                return u;                                                               
             }
         }
-        throw new UserIdDoesNotExistExeption("No user with UserId exists");       //7
+        throw new UserIdDoesNotExistExeption("No user with UserId exists");       
     }
 
     private Project getProjectFromTitle(String title) {
