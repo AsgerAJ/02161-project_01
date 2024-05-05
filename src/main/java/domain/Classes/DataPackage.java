@@ -7,7 +7,7 @@ import domain.Interfaces.FinalUserCount;
 *This class is used in both dependency inversion, and interface segregation of the SOLID principles.
 * also Single responsibilty, as it only purpose is to package the variables
  */
-public class DataPackage implements SuccessCount, UserCount, FinalUserCount {
+public class DataPackage implements SuccessCount, UserCount {
     private boolean truthValue = false;
 
     private User user;
@@ -59,9 +59,5 @@ public class DataPackage implements SuccessCount, UserCount, FinalUserCount {
         this.count += i;
     }
 
-    @Override
-    public void decreaseCount(int i) {
-        this.count -= i;
-    }
 
 }

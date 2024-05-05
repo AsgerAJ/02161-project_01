@@ -18,7 +18,7 @@ public class FormatUserId {
     private final App app;
 
     private final ErrorMessageHolder errorMessage;
-    public GetUserFromIdSteps(UserHelper userHelper, App app, ErrorMessageHolder errorMessage) {
+    public FormatUserId(UserHelper userHelper, App app, ErrorMessageHolder errorMessage) {
         this.userHelper = userHelper;
         this.app = app;
         this.errorMessage = errorMessage;

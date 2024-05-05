@@ -6,18 +6,11 @@ import domain.Classes.Activity;
 import java.util.ArrayList;
 
 public class ActivityHelper {
-    private Activity activity;
     private ArrayList<Activity> exampleActivityList = new ArrayList<>();
     private ActivityInfo aI;
     public ActivityHelper (){
 
     }
-    public void setActivity(Activity a){
-        this.activity=a;
-        this.aI=new ActivityInfo(a);}
-
-
-    public Activity getActivity() {return activity;}
 
     public ArrayList<Activity> getExampleActivityList() {
         return exampleActivityList;

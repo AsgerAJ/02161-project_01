@@ -7,7 +7,6 @@ import domain.exceptions.AUserIsAlreadyLoggedInException;
 import domain.exceptions.InvalidDateException;
 import domain.exceptions.UserIdAlreadyInUseExeption;
 import domain.exceptions.UserIdDoesNotExistExeption;
-import io.cucumber.java.ca.Cal;
 
 import java.util.ArrayList;
 import java.util.Calendar;

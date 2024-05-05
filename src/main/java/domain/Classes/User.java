@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class User {
-    private String userId;
-    private ArrayList<Project> assignedProjects = new ArrayList<Project>();
-    private ArrayList<PeriodEvent> assignedActivities = new ArrayList<PeriodEvent>();
+    private final String userId;
+    private final ArrayList<Project> assignedProjects = new ArrayList<Project>();
+    private final ArrayList<PeriodEvent> assignedActivities = new ArrayList<PeriodEvent>();
 
     public User(String userId){
         this.userId = userId;

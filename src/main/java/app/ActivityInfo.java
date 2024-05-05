@@ -13,9 +13,9 @@ public class ActivityInfo {
     private Calendar deadline = null;
     private double budgetTime;
     private boolean isComplete;
-    private boolean isOverdue;
+
     private HashMap<String, Double> timeMap = new HashMap<String, Double>();
-    private double totalHours = 0;
+
     private ArrayList<User> participantList = new ArrayList<User>();
 
     public ActivityInfo(){}
@@ -26,7 +26,6 @@ public class ActivityInfo {
         this.deadline = activity.getDeadline();
         this.budgetTime = activity.getBudgetTime();
         this.timeMap = activity.getTimeMap();
-        this.totalHours = activity.getTotalHours();
         this.participantList = activity.getParticipantList();
         this.isComplete = activity.getStatus();
         this.parentProjectId=activity.getParentProjectID();

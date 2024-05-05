@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Project {
-    private String name;
-    private String projectID;
+    private final String name;
+    private final String projectID;
     private User projectLeader;
     private Calendar deadline;
     private Calendar startDate;
 
     private boolean complete = false;
-    private ArrayList<User> participanList = new ArrayList<User>();
-    private ArrayList<Activity> activityList = new ArrayList<Activity>();
+    private final ArrayList<User> participanList = new ArrayList<User>();
+    private final ArrayList<Activity> activityList = new ArrayList<Activity>();
 
     public Project(String name, Calendar creationDate, int projectAmount) {
         this.name = name;
@@ -147,9 +147,7 @@ public class Project {
 
     //----------Checks -------------------------------------------------------------------------------
 
-    public boolean hasProjectLeader() {
-        return this.projectLeader != null;
-    }
+
 
     public boolean isProjectLeader(User user) {
         return this.projectLeader == user;
