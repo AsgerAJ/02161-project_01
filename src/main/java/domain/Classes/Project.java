@@ -43,7 +43,7 @@ public class Project {
 
 
     public Activity getActivityFromName(String name) {
-        return this.activityList.stream().filter(a->a.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+        return this.activityList.stream().filter(activity->activity.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
     public String getID() {
         return this.projectID;
