@@ -28,6 +28,7 @@ public class Project {
         this.projectID = formatProjectId(year, projectAmount);
     }
     //------- Get methods --------------------------------------------------------------
+
     public String getName() {return this.name;}
 
     public String getProjectID() {return this.projectID;}
@@ -39,7 +40,6 @@ public class Project {
     public Calendar getStartDate() {return this.startDate;}
 
     public Calendar getDeadline() {return this.deadline;}
-
 
 
     public Activity getActivityFromName(String name) {
@@ -58,7 +58,6 @@ public class Project {
     }
 
     //-----Set methods ----------------------------------------------------------------------------
-
 
     public void setProjectLeader(User user) {
         this.projectLeader = user;
@@ -141,22 +140,13 @@ public class Project {
 
             return returnList;
         }
-
-
     }
 
     //----------Checks -------------------------------------------------------------------------------
 
-
-
     public boolean isProjectLeader(User user) {
         return this.projectLeader == user;
     }
-
-
-
-
-
 
     public boolean isOverdue(Calendar date) {
 
@@ -169,6 +159,7 @@ public class Project {
     }
 
     //-----As info---------------------------------------------------------------------------
+    
     public ProjectInfo asInfo() {
         return new ProjectInfo(this);
     }
