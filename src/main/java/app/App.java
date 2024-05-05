@@ -155,8 +155,8 @@ public class App {
         return userList;
     }
 
-    public void registerLeave(Calendar start, Calendar end) {
-        currentUser.registerLeave(start,end);
+    public void registerLeave(String name, Calendar start, Calendar end) {
+        currentUser.registerLeave(name, start,end);
     }
 
 

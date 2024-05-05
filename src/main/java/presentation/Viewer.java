@@ -12,6 +12,7 @@ import domain.exceptions.UserIdDoesNotExistExeption;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 
@@ -105,6 +106,11 @@ public class Viewer { // Author Asger
                 }else if(input.equalsIgnoreCase("Exit")){
                     app.logOut();
                     break;
+                } else if (input.equalsIgnoreCase("leave")) {
+                    System.out.println("Please enter name of leave");
+                    String name = programScanner.nextLine();
+                    Calendar[] set = getDateSetFromUser(programScanner);
+                    app.registerLeave(name,set[0],set[1]);
                 }
                 startvalue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -314,7 +320,8 @@ public class Viewer { // Author Asger
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
         System.out.println("List of projects:");
         System.out.println(app.getProjectListString());
-        System.out.println("Enter the project id to enter a project, \"NEW\" to make a new project, or \"Exit\" to exit app");
+        System.out.println("Enter the project id to enter a project, \"NEW\" to make a new project, \"LEAVE\" to register leave, or \"Exit\" to exit app");
+
     }
 
     private static void inProjectMenu(){
@@ -345,7 +352,6 @@ public class Viewer { // Author Asger
         System.out.println("Overbudget:"+app.isActivityOverBudget(currentActivityInfo));
         System.out.println("Activity start date: " + (currentActivityInfo.getStartDate()));
         System.out.println("Activity deadline: " + (currentActivityInfo.getDeadline()));
-        System.out.println();
         System.out.println("Enter \"Log\" to log worked time, \n\"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\n\"Assign\" to assign user to activity, \n\"Remove\" to remove a user from the activity \n\"Exit\" to go to main menu");
         if (!currentActivityInfo.getDeadline().equals("Date not set.") && !currentActivityInfo.getStartDate().equals("Date not set.")) {
             System.out.println("or \" Find free employee\" to find free employee in project.");
@@ -354,16 +360,17 @@ public class Viewer { // Author Asger
 
     private static void printFreeEmployees(ArrayList<FinalUserCount> results) {
         StringBuilder resultsString = new StringBuilder();
+        String output="";
         if (results.isEmpty()) {
             resultsString.append("No employees available.");
+            output=resultsString.toString();
         } else {
-             resultsString = new StringBuilder(results.get(0).getUserID() + ": " + results.get(0).getCount() + " activities overlapping");
             for (FinalUserCount u : results) {
-                resultsString.append(",").append(u.getUserID()).append(": ").append(u.getCount()).append(" activities overlapping");
+                resultsString.append(u.getUserID()).append(": ").append(u.getCount()).append(" activities overlapping").append(",");
             }
-            resultsString.append(".");
+            output=resultsString.substring(0,resultsString.length()-1)+".";
         }
-        System.out.println(resultsString);
+        System.out.println(output);
     }
 
     //--------Get from user methods----------------------------------------------------------------
@@ -403,6 +410,85 @@ public class Viewer { // Author Asger
         c.set(Calendar.WEEK_OF_YEAR,week);
 
         return c;
+
+    }
+
+
+    private static Calendar[] getDateSetFromUser (Scanner input) {
+        Calendar[] set  = new Calendar[2];
+        boolean validSet = false;
+        Calendar start=null;
+        Calendar end=null;
+
+        while(!validSet) {
+            System.out.print("First start date:");
+            start = getDateFromUser(input);
+            System.out.println("Now end date:");
+            end = getDateFromUser(input);
+            if (end.after(start)) {
+                validSet=true;
+            } else {
+                System.out.println("End before start, please try again");
+            }
+        }
+        set[0]=start;
+        set[1]=end;
+        return set;
+    }
+    private static Calendar getDateFromUser(Scanner input) {
+
+        Calendar c = new GregorianCalendar();
+        boolean success = false;
+        int year=0;
+        while (!success) {
+            System.out.println("Enter year (yyyy):");
+            try {
+                year = input.nextInt();
+                success=true;
+            } catch(Exception e) {
+                System.out.println("Invalid year, please try again.");
+            }
+        }
+        c.set(Calendar.YEAR,year);
+        success=false;
+        int month=0;
+        while (!success) {
+            System.out.println("Enter month (mm):");
+            try {
+                month = input.nextInt();
+                if (month>0 && month<=12) {
+                    success=true;
+                } else {
+                    System.out.println("Please enter valid month.");
+                }
+            } catch(Exception e) {
+                System.out.println("Invalid month, please try again.");
+            }
+        }
+        month--; //month-1 0-indeksering
+        c.set(Calendar.MONTH,month);
+        int day = 0;
+        success=false;
+        while (!success) {
+            System.out.println("Enter day (dd):");
+            try {
+                day = input.nextInt();
+                if (day>0 && day<=c.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+                    success=true;
+                } else {
+                    System.out.println("Please enter valid day.");
+                }
+            } catch(Exception e) {
+                System.out.println("Invalid day, please try again.");
+            }
+        }
+        c.set(Calendar.DAY_OF_MONTH,day);
+        return c;
+
+
+
+
+
 
     }
 

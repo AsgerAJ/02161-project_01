@@ -20,7 +20,11 @@ public class User {
         return this.userId;
     }
 
-    //---- Functional
+    public ArrayList<Project> getAssignedProjects() {
+        return assignedProjects;
+    }
+
+    //---- Functional -----------------------------------------------------------------------------
 
     public void assignProject(Project project){
         this.assignedProjects.add(project);
@@ -62,9 +66,7 @@ public class User {
         return false;
     }
 
-    public ArrayList<Project> getAssignedProjects() {
-        return assignedProjects;
-    }
+
 
 
     //Open-closed principle here, of the SOLID principles
