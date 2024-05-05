@@ -214,7 +214,12 @@ public class App {
                     userIdOutputString.append(appendstring);
                 }
         }
-        return  (userIdOutputString.toString().toUpperCase().substring(0,4));
+        if (userIdOutputString.length()<4) {
+            return userIdOutputString.toString().toUpperCase();
+        } else {
+            return  (userIdOutputString.toString().toUpperCase().substring(0,4));
+        }
+
     }
 
 
