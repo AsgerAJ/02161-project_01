@@ -81,7 +81,7 @@ public class App {
         }
     }
 
-    //-------Log in
+    //-------Log in --------------------------------------------------------------------------------
     public boolean loggedInStatus(){
         return this.currentUser != null;
     }
@@ -154,6 +154,12 @@ public class App {
     public ArrayList<User> getUserList() {
         return userList;
     }
+
+    public void registerLeave(Calendar start, Calendar end) {
+        currentUser.registerLeave(start,end);
+    }
+
+
     public String getProjectListString(){
         if(!getCurrentUser().getAssignedProjects().isEmpty()){
             StringBuilder outputstring = new StringBuilder();
@@ -214,7 +220,12 @@ public class App {
                     userIdOutputString.append(appendstring);
                 }
         }
-        return  (userIdOutputString.toString().toUpperCase().substring(0,4));
+        if (userIdOutputString.length()<4) {
+            return userIdOutputString.toString().toUpperCase();
+        } else {
+            return  (userIdOutputString.toString().toUpperCase().substring(0,4));
+        }
+
     }
 
 
