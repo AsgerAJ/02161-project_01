@@ -46,7 +46,8 @@ public class User {
         }
     }
 
-    public void removeLeave(Leave leave){
+    public void removeLeave(String name, Calendar start, Calendar end){
+        PeriodEvent leave = this.assignedActivities.stream().filter(p->p instanceof Leave && p.getName().equalsIgnoreCase(name) && p.getStartdate().equals(start) && p.getDeadline().equals(end)).findFirst().orElse(null);
         this.assignedActivities.remove(leave);
     }
 

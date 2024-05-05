@@ -159,6 +159,10 @@ public class App {
         currentUser.registerLeave(name, start, end);
     }
 
+    public void removeLeave(String name, Calendar start, Calendar end) {
+        currentUser.removeLeave(name, start, end);
+    }
+
 
     public String getProjectListString(){
         if(!getCurrentUser().getAssignedProjects().isEmpty()){
