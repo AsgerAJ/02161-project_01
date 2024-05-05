@@ -229,7 +229,7 @@ public class Viewer { // Author Asger
                         System.out.println("Invalid time input");
                     }
                 }
-                else if (input.equalsIgnoreCase("Complete")){
+                else if (input.equalsIgnoreCase("Completion")){
                     changeActivityCompletion(activityScanner);
                     inProjectMenu();
                     break;
@@ -342,7 +342,7 @@ public class Viewer { // Author Asger
         System.out.println("Activities: " +app.getActivityListString(currentProjectInfo));
         System.out.println("Startdate: " + currentProjectInfo.getStartDate());
         System.out.println("Deadline: " + currentProjectInfo.getDeadline());
-        System.out.println("Enter the number for the activity,\n\"ADD\" to add member to project,\n\"Remove\" to remove a member from the project, \n\"NEW\" to make a new activity, \n\"Exit\" to go to main menu");
+        System.out.println("Enter the number for the activity,\n\"ADD\" to add member to project,\n\"Remove\" to remove a member from the project, \n\"NEW\" to make a new activity, \n\"Completion\" to change completion status, \n\"Exit\" to go to main menu,");
         System.out.println("\"Set start date\" to set start date of project:");
         System.out.println("or \"Set deadline\" to set deadline of project:");
     }
@@ -360,7 +360,7 @@ public class Viewer { // Author Asger
         System.out.println("Activity deadline: " + (currentActivityInfo.getDeadline()));
         System.out.println("Enter \"Set start date\" to set start date.");
         System.out.println("Enter \"Set deadline\" to set deadline.");
-        System.out.println("Enter \"Log\" to log worked time, \n\"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\n\"Assign\" to assign user to activity, \n\"Remove\" to remove a user from the activity \n\"Exit\" to go to main menu");
+        System.out.println("Enter \"Log\" to log worked time, \n\"See time worked\" to see time worked on project,\n\"Completion\" to complete activity,\n\"Assign\" to assign user to activity, \n\"Remove\" to remove a user from the activity \n\"Exit\" to go to main menu");
         if (!currentActivityInfo.getDeadline().equals("Date not set.") && !currentActivityInfo.getStartDate().equals("Date not set.")) {
             System.out.println("or \" Find free employee\" to find free employee in project.");
         }
