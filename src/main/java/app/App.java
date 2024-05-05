@@ -1,15 +1,13 @@
 package app;
 
-import domain.Classes.Activity;
-import domain.Classes.DateServer;
-import domain.Classes.Project;
-import domain.Classes.User;
+import domain.Classes.*;
 import domain.Interfaces.FinalUserCount;
 import domain.Interfaces.UserCount;
 import domain.exceptions.AUserIsAlreadyLoggedInException;
 import domain.exceptions.InvalidDateException;
 import domain.exceptions.UserIdAlreadyInUseExeption;
 import domain.exceptions.UserIdDoesNotExistExeption;
+import io.cucumber.java.ca.Cal;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -164,6 +162,7 @@ public class App {
     }
 
 
+    //FOLLOWING METHODS SHOULD HAVE BEEN MOVED INFO CLASSES OF VIEWER CLASS TO ADHERE TO MVC PATTERN.
     public String getProjectListString(){
         if(!getCurrentUser().getAssignedProjects().isEmpty()){
             StringBuilder outputstring = new StringBuilder();
@@ -190,6 +189,32 @@ public class App {
             return outputstring + "\n";
         }
         return("No activities found");
+    }
+    public String getCurrentUserActivityListString(){
+
+        ArrayList<PeriodEvent> totalList = currentUser.getAssignedActivities();
+        ArrayList<PeriodEvent> workList = new ArrayList<>(totalList.stream().filter(p->p instanceof Activity).toList());
+        ArrayList<PeriodEvent> leaveList = new ArrayList<>(totalList.stream().filter(p->p instanceof Leave).toList());
+        StringBuilder output = new StringBuilder();
+        output.append("Work activities: \n");
+        for (PeriodEvent p : workList) {
+            output.append(p.getName());
+            output.append(". ");
+            output.append("week: ").append(p.getStartdate().get(Calendar.WEEK_OF_YEAR)).append(" to ").append(p.getDeadline().get(Calendar.WEEK_OF_YEAR)).append(". \n");
+        }
+        output.append("Leaves: \n");
+        for (PeriodEvent p : leaveList) {
+            output.append(p.getName());
+            output.append(". ");
+            //start date
+            output.append("Period: ").append(p.getStartdate().get(Calendar.DAY_OF_MONTH)).append("/");
+            output.append(p.getStartdate().get(Calendar.MONTH)+1).append("/").append(p.getStartdate().get(Calendar.YEAR)).append(" to ");
+            //deadline
+            output.append(p.getDeadline().get(Calendar.DAY_OF_MONTH)).append("/").append(p.getDeadline().get(Calendar.MONTH)+1).append("/").append(p.getDeadline().get(Calendar.YEAR));
+            output.append(". \n");
+        }
+        return output.toString();
+
     }
     private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
         Project p = getProjectFromID(currentproject.getProjectID());

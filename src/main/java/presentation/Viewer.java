@@ -325,7 +325,8 @@ public class Viewer { // Author Asger
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
         System.out.println("List of projects:");
         System.out.println(app.getProjectListString());
-        System.out.println("Enter the project id to enter a project, \"NEW\" to make a new project, \"LEAVE\" to register leave, or \"Exit\" to exit app");
+        System.out.println(app.getCurrentUserActivityListString());
+        System.out.println("Enter the project id to enter a project, \"NEW\" to make a new project, \"LEAVE\" to register leave, \"REMOVE LEAVE\" to remove leave or \"Exit\" to exit app");
 
     }
 
