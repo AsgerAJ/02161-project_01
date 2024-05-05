@@ -4,6 +4,7 @@ import app.UserInfo;
 import domain.Interfaces.SuccessCount;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class User {
     private String userId;
@@ -29,6 +30,11 @@ public class User {
 
     public void assignActivity(PeriodEvent activity){
         this.assignedActivities.add(activity);
+    }
+
+    public void registerLeave(String name, Calendar start, Calendar end){
+        Leave leave = new Leave(name, start, end);
+        this.assignedActivities.add(leave);
     }
 
     public void removeActivity(PeriodEvent activity){
