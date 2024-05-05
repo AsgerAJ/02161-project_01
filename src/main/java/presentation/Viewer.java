@@ -229,7 +229,7 @@ public class Viewer { // Author Asger
                         System.out.println("Invalid time input");
                     }
                 }
-                else if (input.equalsIgnoreCase("Completion")){
+                else if (input.equalsIgnoreCase("Complete")){
                     changeActivityCompletion(activityScanner);
                     inProjectMenu();
                     break;
