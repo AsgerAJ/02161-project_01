@@ -491,12 +491,12 @@ public class App {
         a.logTime(5, getUserFromId(NEL));
         a.logTime(7, getUserFromId(HUBA));
 
-        createProject("Yoga");
-        p = getProjectFromTitle("Yoga");
+        createProject("Lecture preparation");
+        p = getProjectFromTitle("Lecture preparation");
         assert p != null;
-        p.createNewActivity(new Activity("Yoga", 10,p.getProjectID()));
-        p.createNewActivity(new Activity("Meditation", 20,p.getProjectID()));
-        a = p.getActivityFromName("Yoga");
+        p.createNewActivity(new Activity("Prepare muddy points", 10,p.getProjectID()));
+        p.createNewActivity(new Activity("Record new videos", 20,p.getProjectID()));
+        a = p.getActivityFromName("Prepare muddy points");
         a.logTime(5, getUserFromId(HUBA));
 
 
