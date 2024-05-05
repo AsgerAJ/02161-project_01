@@ -3,10 +3,8 @@ package test.cucumber.steps;
 import domain.Classes.Activity;
 import domain.exceptions.InvalidDateException;
 import app.App;
-import test.cucumber.helpers.UserHelper;
 import test.cucumber.helpers.ActivityHelper;
 import test.cucumber.helpers.ErrorMessageHolder;
-import test.cucumber.helpers.MockDateHolder;
 import test.cucumber.helpers.ProjectHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,19 +21,15 @@ import static org.junit.Assert.*;
 public class StartDate_DeadlineSteps {
     private App app;
     private ErrorMessageHolder errorMessage;
-    private MockDateHolder dateHolder;
 
 
-    private UserHelper userHelper;
     private ProjectHelper projectHelper;
     private ActivityHelper activityHelper;
 
-    public StartDate_DeadlineSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,
-                                   UserHelper userHelper, ProjectHelper p,ActivityHelper a) {
+    public StartDate_DeadlineSteps(App app, ErrorMessageHolder errorMessage,
+                                   ProjectHelper p,ActivityHelper a) {
         this.app = app;
         this.errorMessage = errorMessage;
-        this.dateHolder = dateHolder;
-        this.userHelper = userHelper;
         this.projectHelper = p;
         this.activityHelper = a;
 

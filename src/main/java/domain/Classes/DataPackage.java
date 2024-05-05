@@ -2,7 +2,6 @@ package domain.Classes;
 
 import domain.Interfaces.SuccessCount;
 import domain.Interfaces.UserCount;
-import domain.Interfaces.FinalUserCount;
 /*@author Niklas
 *This class is used in both dependency inversion, and interface segregation of the SOLID principles.
 * also Single responsibilty, as it only purpose is to package the variables

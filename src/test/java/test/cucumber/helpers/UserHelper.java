@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class UserHelper {
     private User user;
-    private ArrayList<User> exampleUserList = new ArrayList<>();
+    private final ArrayList<User> exampleUserList = new ArrayList<>();
     private ArrayList<UserCount> availableUserList;
     private ArrayList<FinalUserCount> availableUserStringList;
     private UserInfo userInfo;

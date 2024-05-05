@@ -18,16 +18,11 @@ import static org.junit.Assert.*;
 
 public class ActivitySteps {
     private App app;
-    private ErrorMessageHolder errorMessage;
-    private MockDateHolder dateHolder;
-
     private UserHelper userHelper;
     private ProjectHelper projectHelper;
     private ActivityHelper activityHelper;
     public ActivitySteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
         this.app = app;
-        this.errorMessage = errorMessage;
-        this.dateHolder=dateHolder;
         this.userHelper=userHelper;
         this.projectHelper=p;
         this.activityHelper = activityHelper;

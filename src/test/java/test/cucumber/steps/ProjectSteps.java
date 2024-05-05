@@ -20,7 +20,6 @@ import static org.junit.Assert.*;
 public class ProjectSteps {
     private App app;
     private ErrorMessageHolder errorMessage;
-    private MockDateHolder dateHolder;
 
     private UserHelper userHelper;
     private ProjectHelper projectHelper;
@@ -28,7 +27,6 @@ public class ProjectSteps {
     public ProjectSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,UserHelper userHelper,ProjectHelper p,ActivityHelper a){
         this.app = app;
         this.errorMessage = errorMessage;
-        this.dateHolder=dateHolder;
         this.userHelper=userHelper;
         this.projectHelper=p;
         this.activityHelper=a;
