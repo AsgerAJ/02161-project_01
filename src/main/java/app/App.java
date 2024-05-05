@@ -84,15 +84,17 @@ public class App {
     }
 
     public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException { 
-        if (this.currentUser!=null) {                                                                 // 1
-            throw new AUserIsAlreadyLoggedInException("A user is already logged in");          // 2
+        assert id != null;
+        if (this.currentUser!=null) {                                                     
+            throw new AUserIsAlreadyLoggedInException("A user is already logged in");          
         }
-        User temp = getUserFromId(id);                                                                // 3
-        if(temp != null){                                                                             // 4
-            currentUser = temp;                                                                       // 5
-        }else{                                                                                        // 6
-            throw new UserIdDoesNotExistExeption("No user with UserId exists");                // 7    
+        User temp = getUserFromId(id);                                                                
+        if(temp != null){                                                                         
+            this.currentUser = temp;                                                                       
+        }else{                                                                                        
+            throw new UserIdDoesNotExistExeption("No user with UserId exists");                
         }
+        assert this.getUserList().contains(currentUser) || this.currentUser == null;
     }
     
     public void logOut(){
