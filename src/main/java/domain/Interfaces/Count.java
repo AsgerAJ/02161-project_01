@@ -14,6 +14,5 @@ public interface Count extends Comparator <Count>{
         return c1.getCount()-c2.getCount();
 
     }
-    public void decreaseCount(int i);
 
 }

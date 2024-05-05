@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class Activity extends PeriodEvent {
     private double budgetTime;
     private boolean isComplete = false;
-    private HashMap<String, Double> timeMap = new HashMap<String, Double>();
+    private final HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private double totalHours = 0;
-    private ArrayList<User> participantList = new ArrayList<User>();
-    private String parentProjectID;
+    private final ArrayList<User> participantList = new ArrayList<User>();
+    private final String parentProjectID;
 
     public Activity(String name, double budgetTime, String parentProjectID) {
         super(name);
@@ -28,7 +28,7 @@ public class Activity extends PeriodEvent {
 
     public HashMap<String, Double> getTimeMap() {return this.timeMap;}
 
-    public double getTotalHours() {return this.totalHours;}
+
 
     public double getBudgetTime() {return this.budgetTime;}
 
