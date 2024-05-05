@@ -38,6 +38,7 @@ public class Viewer { // Author Asger
                     System.out.println("Enter User id");
                     try {
                         loginUser();
+                        coreMenu();
                     }catch (NullPointerException e){
                         System.out.println("Please enter a valid user id");
                     } catch (UserIdDoesNotExistExeption e){
@@ -48,13 +49,14 @@ public class Viewer { // Author Asger
                     System.out.println("Enter name to create user id");
                     try {
                         createUser();
+                        coreMenu();
                     } catch (UserIdAlreadyInUseExeption e){
                         System.out.println(e.getMessage());
                     }
                     break;
 
                 default:
-                    System.out.println("Enter:\n'1' to log in \n'2' to register a new user, \n'ids' to see all user ids,\n'Enable demo mode' to enable a default config\n'Exit' to exit the program");
+                    coreMenu();
             }
 
             String input = programScanner.nextLine();
@@ -76,9 +78,13 @@ public class Viewer { // Author Asger
     }
 
 
+
+
     private static void showMainMenu() {
         // Project overview and create project slice
-        
+        if(programScanner.hasNextLine()){
+            programScanner.nextLine();
+        }
         int startvalue = 0;
         while((app.loggedInStatus())){
 
@@ -86,14 +92,14 @@ public class Viewer { // Author Asger
                 try{
                     currentProjectInfo = app.getCurrentUserProjectsInfoFromID(String.valueOf(startvalue));
                     insideProjectMenu();
-
+                    showUserMenu();
                 }catch (IndexOutOfBoundsException | NullPointerException e){
                     System.out.println("Project not found");
                     startvalue = 0;
                     continue;
                 }
             } else {
-                mainMenuOverview();
+                showUserMenu();
             }
 
             String input = programScanner.nextLine();
@@ -106,7 +112,7 @@ public class Viewer { // Author Asger
                     break;
                 } else if (input.equalsIgnoreCase("leave")) {
                     registerNewLeave();
-                } else if (input.equalsIgnoreCase("remove leave")) { 
+                } else if (input.equalsIgnoreCase("remove leave")) {
                     removeLeave();
                 }
                 startvalue = Integer.parseInt(input);
@@ -116,6 +122,8 @@ public class Viewer { // Author Asger
         }
         refreshUserInfo();
     }
+
+
 
 
 
@@ -132,7 +140,7 @@ public class Viewer { // Author Asger
                     continue;
                 }
             } else {
-                inProjectMenu();
+                showProjectMenu();
             }
             String input = programScanner.nextLine();
             try {
@@ -170,27 +178,21 @@ public class Viewer { // Author Asger
         int enterProjectValue = 0;
         while(true){
             if(enterProjectValue == 0){
-                inActivityMenu();
+                showActivityMenu();
             }
             String input = programScanner.nextLine();
             try {
                 if (input.equalsIgnoreCase("Log")) {
-                    System.out.println("Enter hours worked today:");
-                    String workedTimeString = programScanner.nextLine();
-                    try {
-                        double workedTime = Double.parseDouble(workedTimeString);
-                        app.logTimeOnActivity(workedTime, currentActivityInfo);
-                    }catch (Exception e){
-                        System.out.println("Invalid time input");
-                    }
+                    logTimeOnActivity();
+
                 }
                 else if (input.equalsIgnoreCase("Completion")){
                     changeActivityCompletion();
-                    inProjectMenu();
+                    showProjectMenu();
                     break;
 
                 }else if(input.equalsIgnoreCase("Exit")){
-                    inProjectMenu();
+                    showProjectMenu();
                     break;
                 }else if(input.equalsIgnoreCase("Assign")){
                     assignUserActivity();
@@ -221,6 +223,7 @@ public class Viewer { // Author Asger
 
 
 
+
     //----Login and register methods------------------------------------------------------------------
     private static void createUser() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption {
         String userId = (programScanner.nextLine());
@@ -231,7 +234,6 @@ public class Viewer { // Author Asger
                 app.registerUser(userId);
                 String newId = app.createUserId(userId);
                 System.out.println("Your user id is: "+ app.getActualId(newId));
-                System.out.println("Please remember this id, press the 'Enter' button to continue");
             }
         } catch (UserIdAlreadyInUseExeption | IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -246,6 +248,17 @@ public class Viewer { // Author Asger
         app.logInUser(loginString);
         currentUserInfo = app.getCurrentUserInfo();
         showMainMenu();
+    }
+
+    private static void logTimeOnActivity(){
+        System.out.println("Enter hours worked today:");
+        String workedTimeString = programScanner.nextLine();
+        try {
+            double workedTime = Double.parseDouble(workedTimeString);
+            app.logTimeOnActivity(workedTime, currentActivityInfo);
+        }catch (Exception e){
+            System.out.println("Invalid time input");
+        }
     }
 
     //----Leave methods------------------------------------------------------------------------------
@@ -396,7 +409,13 @@ public class Viewer { // Author Asger
     }
 
     //Print methods---------------------------------------------------------------------------------
-    private static void mainMenuOverview(){
+
+    private static void coreMenu() {
+        System.out.println("\n____________________________________________________________________________________________________________________");
+        System.out.println("Enter:\n'1' to log in \n'2' to register a new user, \n'ids' to see all user ids,\n'Enable demo mode' to enable a default config\n'Exit' to exit the program");
+    }
+
+    private static void showUserMenu(){
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
@@ -407,7 +426,7 @@ public class Viewer { // Author Asger
 
     }
 
-    private static void inProjectMenu(){
+    private static void showProjectMenu(){
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Project: "+ currentProjectInfo.getName());
@@ -425,7 +444,7 @@ public class Viewer { // Author Asger
         System.out.println("or \"Set deadline\" to set deadline of project");
     }
 
-    private static void inActivityMenu() {
+    private static void showActivityMenu() {
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
@@ -572,11 +591,6 @@ public class Viewer { // Author Asger
         }
         c.set(Calendar.DAY_OF_MONTH,day);
         return c;
-
-
-
-
-
 
     }
 
