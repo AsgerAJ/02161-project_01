@@ -42,6 +42,10 @@ public class User {
         }
     }
 
+    public void removeLeave(Leave leave){
+        this.assignedActivities.remove(leave);
+    }
+
     public void removeActivity(PeriodEvent activity){
         this.assignedActivities.remove(activity);
     }
