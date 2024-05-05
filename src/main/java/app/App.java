@@ -234,6 +234,9 @@ public class App {
     public String createUserId(String userId) {
         StringBuilder userIdOutputString = new StringBuilder();
         userId = userId.replaceAll("\\d","");
+        if(userId.isEmpty()){
+            throw new IllegalArgumentException("Invalid name given");
+        }
         String[] splitString = userId.split(" ");
         switch(splitString.length) {
             case 0:
