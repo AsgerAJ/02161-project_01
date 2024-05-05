@@ -115,6 +115,8 @@ public class Project {
     public void createNewActivity(Activity activity) {
         this.activityList.add(activity);
     }
+    
+    //Open-closed principle
     public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
         if (activity.getStartdate() == null || activity.getDeadline() == null) {
             return new ArrayList<UserCount>();
