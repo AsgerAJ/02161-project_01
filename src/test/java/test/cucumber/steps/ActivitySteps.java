@@ -17,13 +17,13 @@ import io.cucumber.java.en.When;
 import static org.junit.Assert.*;
 
 public class ActivitySteps {
-    private App app;
-    private ErrorMessageHolder errorMessage;
-    private MockDateHolder dateHolder;
+    private final App app;
+    private final ErrorMessageHolder errorMessage;
+    private final MockDateHolder dateHolder;
 
-    private UserHelper userHelper;
-    private ProjectHelper projectHelper;
-    private ActivityHelper activityHelper;
+    private final UserHelper userHelper;
+    private final ProjectHelper projectHelper;
+    private final ActivityHelper activityHelper;
     public ActivitySteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
         this.app = app;
         this.errorMessage = errorMessage;
@@ -74,7 +74,7 @@ public class ActivitySteps {
     @Then("the activity with name {string} has budget {double}")
     public void theActivityWithNameHasBudget(String string, Double dob1) {
 
-        assertTrue(dob1==app.getActivityInfoFromName(this.projectHelper.getProjectInfo(),string).getBudgetTime());
+        assertEquals(dob1, app.getActivityInfoFromName(this.projectHelper.getProjectInfo(), string).getBudgetTime(), 0.0);
     }
     @When("the user is added to the activity")
     public void theUserIsAddedToTheActivity() throws UserIdDoesNotExistExeption {

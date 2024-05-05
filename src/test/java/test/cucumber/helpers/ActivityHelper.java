@@ -6,7 +6,7 @@ import domain.Classes.Activity;
 import java.util.ArrayList;
 
 public class ActivityHelper {
-    private ArrayList<Activity> exampleActivityList = new ArrayList<>();
+    private final ArrayList<Activity> exampleActivityList = new ArrayList<>();
     private ActivityInfo aI;
     public ActivityHelper (){
 

@@ -19,9 +19,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class LeaveSteps {
-    private App app;
-    private ErrorMessageHolder errorMessage;
-    private UserHelper userHelper;
+    private final App app;
+    private final ErrorMessageHolder errorMessage;
+    private final UserHelper userHelper;
     public LeaveSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p){
         this.app = app;
         this.errorMessage = errorMessage;
@@ -44,7 +44,7 @@ public class LeaveSteps {
         Calendar startdate = new GregorianCalendar(start_year, start_month-1, start_day);
         Calendar deadline = new GregorianCalendar(end_year, end_month-1, end_day);
         try {
-            this.app.getUserFromId(user).registerLeave(leave_name, startdate, deadline);;
+            this.app.getUserFromId(user).registerLeave(leave_name, startdate, deadline);
         } catch (UserIdDoesNotExistExeption e) {
             errorMessage.setErrorMessage(e.getMessage());
         }        
@@ -68,6 +68,7 @@ public class LeaveSteps {
         for (PeriodEvent event: eventList) {
             if (event.getName().equals(leave)) {
                 check = true;
+                break;
             }
         }
         assertTrue(check);
@@ -80,6 +81,7 @@ public class LeaveSteps {
         for (PeriodEvent event: eventList) {
             if (event.getName().equals(leave)) {
                 check = true;
+                break;
             }
         }
         assertFalse(check);

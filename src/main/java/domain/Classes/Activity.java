@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 public class Activity extends PeriodEvent {
-    private double budgetTime;
+    private final double budgetTime;
     private boolean isComplete = false;
     private final HashMap<String, Double> timeMap = new HashMap<String, Double>();
     private double totalHours = 0;

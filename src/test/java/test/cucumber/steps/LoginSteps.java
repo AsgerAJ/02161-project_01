@@ -16,10 +16,10 @@ import static org.junit.Assert.*;
 
 public class LoginSteps {
 
-    private App app;
-    private ErrorMessageHolder errorMessage;
-    private UserHelper userHelper;
-    private ProjectHelper projectHelper;
+    private final App app;
+    private final ErrorMessageHolder errorMessage;
+    private final UserHelper userHelper;
+    private final ProjectHelper projectHelper;
     public LoginSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p){
         this.app = app;
         this.errorMessage = errorMessage;

@@ -20,12 +20,12 @@ import static org.junit.Assert.assertTrue;
 
 public class FindFreeEmployeeSteps {
 
-    private App app;
-    private ErrorMessageHolder errorMessage;
-    private MockDateHolder dateHolder;
-    private UserHelper userHelper;
-    private ProjectHelper projectHelper;
-    private ActivityHelper activityHelper;
+    private final App app;
+    private final ErrorMessageHolder errorMessage;
+    private final MockDateHolder dateHolder;
+    private final UserHelper userHelper;
+    private final ProjectHelper projectHelper;
+    private final ActivityHelper activityHelper;
 
 
     public FindFreeEmployeeSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder, UserHelper userHelper, ProjectHelper p, ActivityHelper a){

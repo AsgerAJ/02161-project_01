@@ -12,8 +12,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class QuickSortPartitionSteps {
-    private QuickSortUserCounts sorter;
-    private boolean exceptionThrown=false;
+    private final QuickSortUserCounts sorter;
+    private final boolean exceptionThrown=false;
 
     public QuickSortPartitionSteps(QuickSortUserCounts q) {this.sorter=q;}
 
@@ -21,7 +21,7 @@ public class QuickSortPartitionSteps {
 
     private int beginIndex;
     private int endIndex;
-    private ArrayList<UserCount> list = new ArrayList<>();
+    private final ArrayList<UserCount> list = new ArrayList<>();
     private int result;
 
     @Given("the beginning index is {int}")
@@ -49,7 +49,7 @@ public class QuickSortPartitionSteps {
     }
     @Then("the dataPackage at index {int} has count {int}")
     public void theDataPackageAtIndexHasCount(Integer int1, Integer int2) {
-        assertTrue(this.list.get(int1).getCount()==int2);
+        assertEquals(this.list.get(int1).getCount(), (int) int2);
     }
 
 

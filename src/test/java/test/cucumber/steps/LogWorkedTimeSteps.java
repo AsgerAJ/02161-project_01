@@ -16,11 +16,11 @@ import static org.junit.Assert.*;
 
 public class LogWorkedTimeSteps {
     
-    private App app;
-    private ErrorMessageHolder errorMessage;
-    private UserHelper userHelper;
-    private ProjectHelper projectHelper;
-    private ActivityHelper activityHelper;
+    private final App app;
+    private final ErrorMessageHolder errorMessage;
+    private final UserHelper userHelper;
+    private final ProjectHelper projectHelper;
+    private final ActivityHelper activityHelper;
     private Double doubleInput;
     private Double doublePlus = 0.0;
     public LogWorkedTimeSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){

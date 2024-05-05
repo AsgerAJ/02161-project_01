@@ -7,7 +7,7 @@ import java.util.Calendar;
 public abstract class PeriodEvent {
     private Calendar deadline;
     private Calendar startdate;
-    private String name;
+    private final String name;
 
     public PeriodEvent(String name) {
         this.name = name;
