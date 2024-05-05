@@ -43,6 +43,11 @@ public class GetUserFromIdSteps {
         assertEquals("No user with UserId exists", errorMessage.getErrorMessage());
     }
 
+    @Then("the exeption AUserIsAlreadyLoggedInException is thrown")
+    public void theExeptionAUserIsAlreadyLoggedInExceptionIsThrown() {
+        assertEquals("A user is already logged in", errorMessage.getErrorMessage());
+    }
+
     @Given("no users exist")
     public void noUsersExist() {
         app.getUserList().clear();

@@ -24,24 +24,8 @@ public class Project {
         this.complete = false;
         // generate project ID
 
-        String idExtension = "";
-
-        switch (String.valueOf(projectAmount).length()) {
-            case 1:
-                idExtension += "000" + projectAmount;
-                break;
-            case 2:
-                idExtension += "00" + projectAmount;
-                break;
-            case 3:
-                idExtension += "0" + projectAmount;
-                break;
-            default:
-                idExtension += projectAmount % 10000; // modulo to reset when crossing limit
-                break;
-        }
-
-        this.projectID = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2, 4) + idExtension;
+        String year = String.valueOf(creationDate.get(Calendar.YEAR)).substring(2, 4);
+        this.projectID = formatProjectId(year, projectAmount);
     }
     //------- Get methods --------------------------------------------------------------
     public String getName() {return this.name;}
@@ -97,6 +81,27 @@ public class Project {
     }
 
     //------Functional----------------------------------------------------------------------------------
+
+    public String formatProjectId(String year, int projectAmount) {
+        String idExtension = "";
+
+        switch (String.valueOf(projectAmount).length()) {
+            case 1:
+                idExtension += "000" + projectAmount;
+                break;
+            case 2:
+                idExtension += "00" + projectAmount;
+                break;
+            case 3:
+                idExtension += "0" + projectAmount;
+                break;
+            default:
+                idExtension += projectAmount % 10000; // modulo to reset when crossing limit
+                break;
+        }
+        
+        return year + idExtension;
+    }
 
     public void assignUser(User user) {
         if (!this.participanList.contains(user)) {
