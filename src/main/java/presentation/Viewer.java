@@ -429,7 +429,7 @@ public class Viewer { // Author Asger
         Calendar end=null;
 
         while(!validSet) {
-            System.out.print("First start date:");
+            System.out.println("First start date:");
             start = getDateFromUser(input);
             System.out.println("Now end date:");
             end = getDateFromUser(input);
