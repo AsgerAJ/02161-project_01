@@ -221,10 +221,22 @@ public class Viewer { // Author Asger
     //----Login and register methods------------------------------------------------------------------
     private static void createUser(Scanner sc) throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption {
         String userId = (sc.nextLine());
-        app.registerUser(userId);
-        String newId = app.createUserId(userId);
-        System.out.println("Your user id is: "+ app.getActualId(newId));
-        System.out.println("Please remember this id, press the 'Enter' button to continue");
+        try {
+            if(userId.isEmpty()){
+                System.out.println("Please enter a valid user id");
+            }else{
+                app.registerUser(userId);
+                String newId = app.createUserId(userId);
+                System.out.println("Your user id is: "+ app.getActualId(newId));
+                System.out.println("Please remember this id, press the 'Enter' button to continue");
+            }
+        } catch (UserIdAlreadyInUseExeption | IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Please try again, press the 'Enter' button to continue");
+            return;
+        }
+
+
     }
 
     private static void loginUser(Scanner sc) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {

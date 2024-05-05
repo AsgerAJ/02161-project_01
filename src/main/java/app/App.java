@@ -236,6 +236,8 @@ public class App {
         userId = userId.replaceAll("\\d","");
         String[] splitString = userId.split(" ");
         switch(splitString.length) {
+            case 0:
+                throw new IllegalArgumentException("No name given");
             case 1:
                 for (int i = 0; i <= (splitString[0].length() > 4 ? 3 : splitString[0].length()-1); i++) {
                     String appendstring = "" + splitString[0].charAt(i);
