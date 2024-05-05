@@ -414,6 +414,10 @@ public class App {
     //Demo configuration -----------------------------------------------------------------------------------------------
     public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, InvalidDateException {
 
+        currentUser = null;
+        userList.clear();
+        projectRepository.clear();
+
         String HUBA = registerUser("Hubert Baumeister").getUserId();
         String LOAN = registerUser("Lovro Antic").getUserId();
         String AAJ = registerUser("Asger Allin Jensen").getUserId();
