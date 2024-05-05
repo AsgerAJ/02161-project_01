@@ -111,6 +111,11 @@ public class Viewer { // Author Asger
                     String name = programScanner.nextLine();
                     Calendar[] set = getDateSetFromUser(programScanner);
                     app.registerLeave(name,set[0],set[1]);
+                } else if (input.equalsIgnoreCase("remove leave")) { 
+                    System.out.println("Please enter name of leave");
+                    String name = programScanner.nextLine();
+                    Calendar[] set = getDateSetFromUser(programScanner);
+                    app.removeLeave(name,set[0],set[1]);
                 }
                 startvalue = Integer.parseInt(input);
             } catch (NumberFormatException e) {
