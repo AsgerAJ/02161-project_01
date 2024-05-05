@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.stream.Collectors;
 
+
+
 /* This class works both as an object itself, but also as a facade between the viewer class and the other Business logic*/
 public class App {
     private final ArrayList<User> userList = new ArrayList<>();
@@ -200,10 +202,15 @@ public class App {
         StringBuilder output = new StringBuilder();
         output.append("Work activities: \n");
         for (PeriodEvent p : workList) {
+            String start = ((p.getStartdate() == null) ? "N/A" : String.valueOf(p.getStartdate().get(Calendar.WEEK_OF_YEAR)));
+            String end = ((p.getDeadline() == null) ? "N/A" : String.valueOf(p.getDeadline().get(Calendar.WEEK_OF_YEAR)));
             output.append(p.getName());
             output.append(". ");
-            output.append("week: ").append(p.getStartdate().get(Calendar.WEEK_OF_YEAR)).append(" to ").append(p.getDeadline().get(Calendar.WEEK_OF_YEAR)).append(". \n");
-        }
+
+                output.append("week: ").append(start).append(" to ").append(end).append(". \n");
+            }
+
+
         output.append("Leaves: \n");
         for (PeriodEvent p : leaveList) {
             output.append(p.getName());
