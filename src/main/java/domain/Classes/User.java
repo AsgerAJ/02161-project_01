@@ -2,6 +2,7 @@ package domain.Classes;
 
 import app.UserInfo;
 import domain.Interfaces.SuccessCount;
+import domain.exceptions.InvalidDateException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,8 +34,12 @@ public class User {
     }
 
     public void registerLeave(String name, Calendar start, Calendar end){
-        Leave leave = new Leave(name, start, end);
-        this.assignedActivities.add(leave);
+        try {
+            Leave leave = new Leave(name, start, end);
+            this.assignedActivities.add(leave);
+        } catch (InvalidDateException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void removeActivity(PeriodEvent activity){
