@@ -3,10 +3,8 @@ package test.cucumber.steps;
 import domain.Classes.Activity;
 import domain.exceptions.InvalidDateException;
 import app.App;
-import test.cucumber.helpers.UserHelper;
 import test.cucumber.helpers.ActivityHelper;
 import test.cucumber.helpers.ErrorMessageHolder;
-import test.cucumber.helpers.MockDateHolder;
 import test.cucumber.helpers.ProjectHelper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -21,21 +19,17 @@ import static java.util.Calendar.YEAR;
 import static org.junit.Assert.*;
 
 public class StartDate_DeadlineSteps {
-    private final App app;
-    private final ErrorMessageHolder errorMessage;
-    private final MockDateHolder dateHolder;
+    private App app;
+    private ErrorMessageHolder errorMessage;
 
 
-    private final UserHelper userHelper;
-    private final ProjectHelper projectHelper;
-    private final ActivityHelper activityHelper;
+    private ProjectHelper projectHelper;
+    private ActivityHelper activityHelper;
 
-    public StartDate_DeadlineSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,
-                                   UserHelper userHelper, ProjectHelper p,ActivityHelper a) {
+    public StartDate_DeadlineSteps(App app, ErrorMessageHolder errorMessage,
+                                   ProjectHelper p,ActivityHelper a) {
         this.app = app;
         this.errorMessage = errorMessage;
-        this.dateHolder = dateHolder;
-        this.userHelper = userHelper;
         this.projectHelper = p;
         this.activityHelper = a;
 
@@ -55,18 +49,18 @@ public class StartDate_DeadlineSteps {
     @Then("the project has the deadline {int},{int},{int}")
     public void theProjectHasTheDeadline(Integer day, Integer month, Integer year) {
         this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
-        assertEquals(this.projectHelper.getProjectInfo().getDeadlineCopy().get(DAY_OF_MONTH), (int) day); //check same day
-        assertEquals(this.projectHelper.getProjectInfo().getDeadlineCopy().get(MONTH), month -1); //check same month
-        assertEquals(this.projectHelper.getProjectInfo().getDeadlineCopy().get(YEAR), (int) year); //check same year
+        assertEquals((int) this.projectHelper.getProjectInfo().getDeadlineCopy().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProjectInfo().getDeadlineCopy().get(MONTH), (int) month-1); //check same month
+        assertEquals((int) this.projectHelper.getProjectInfo().getDeadlineCopy().get(YEAR), (int) year); //check same year
     }
 
     @Given("the project has been given the deadline {int},{int},{int}")
     public void theProjectHasBeenGivenTheDeadline(Integer day, Integer month, Integer year) throws InvalidDateException {
         app.setProjectDeadline(new GregorianCalendar(year, month-1, day),this.projectHelper.getProjectInfo());
         this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
-        assertEquals(this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
-        assertEquals(this.projectHelper.getProject().getDeadline().get(MONTH), month -1 ); //check same month
-        assertEquals(this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(MONTH), (int) month -1 ); //check same month
+        assertEquals((int) this.projectHelper.getProject().getDeadline().get(YEAR), (int) year); //check same year
 
     }
 
@@ -92,9 +86,9 @@ public class StartDate_DeadlineSteps {
     public void theProjectHasTheStartdate(Integer day, Integer month, Integer year) {
         this.projectHelper.setProjectInfo(app.renewProjectInfo(this.projectHelper.getProjectInfo()));
 
-        assertEquals(this.projectHelper.getProjectInfo().getStartdateCopy().get(DAY_OF_MONTH), (int) day); //check same day
-        assertEquals(this.projectHelper.getProjectInfo().getStartdateCopy().get(MONTH), month -1); //check same month
-        assertEquals(this.projectHelper.getProjectInfo().getStartdateCopy().get(YEAR), (int) year); //check same year
+        assertEquals((int) this.projectHelper.getProjectInfo().getStartdateCopy().get(DAY_OF_MONTH), (int) day); //check same day
+        assertEquals((int) this.projectHelper.getProjectInfo().getStartdateCopy().get(MONTH), (int) month-1); //check same month
+        assertEquals((int) this.projectHelper.getProjectInfo().getStartdateCopy().get(YEAR), (int) year); //check same year
 
     }
 
@@ -107,7 +101,7 @@ public class StartDate_DeadlineSteps {
         for (Activity act : actList) { app.setActivityStartDateFromInfo(act.asInfo(),date);}
         for (Activity act : actList) {
             assertEquals((int) day, app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(Calendar.DAY_OF_MONTH));
-            assertEquals(month - 1, app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(MONTH)); //-1 to compensate for 0 indexing
+            assertEquals((int) month - 1, app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(MONTH)); //-1 to compensate for 0 indexing
             assertEquals((int) year,app.renewActivityInfo(act.asInfo()).getStartdateCopy().get(Calendar.YEAR));
         }
     }
@@ -119,7 +113,7 @@ public class StartDate_DeadlineSteps {
         for (Activity act : actList) { app.setActivityDeadlineFromInfo(act.asInfo(),date);}
         for (Activity act : actList) {
             assertEquals((int) day, app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(DAY_OF_MONTH));
-            assertEquals(month - 1, app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(MONTH)); //-1 to compensate for 0 indexing
+            assertEquals((int) month - 1, app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(MONTH)); //-1 to compensate for 0 indexing
             assertEquals((int) year,app.renewActivityInfo(act.asInfo()).getDeadlineCopy().get(Calendar.YEAR));
         }
 

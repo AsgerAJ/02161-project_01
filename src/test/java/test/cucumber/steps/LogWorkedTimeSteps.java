@@ -4,7 +4,6 @@ import app.ActivityInfo;
 import domain.exceptions.AUserIsAlreadyLoggedInException;
 import domain.exceptions.UserIdDoesNotExistExeption;
 import app.App;
-import test.cucumber.helpers.ErrorMessageHolder;
 import test.cucumber.helpers.ProjectHelper;
 import test.cucumber.helpers.UserHelper;
 import test.cucumber.helpers.ActivityHelper;
@@ -16,16 +15,13 @@ import static org.junit.Assert.*;
 
 public class LogWorkedTimeSteps {
     
-    private final App app;
-    private final ErrorMessageHolder errorMessage;
-    private final UserHelper userHelper;
-    private final ProjectHelper projectHelper;
-    private final ActivityHelper activityHelper;
-    private Double doubleInput;
+    private App app;
+    private UserHelper userHelper;
+    private ProjectHelper projectHelper;
+    private ActivityHelper activityHelper;
     private Double doublePlus = 0.0;
-    public LogWorkedTimeSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
+    public LogWorkedTimeSteps(App app, UserHelper userHelper,ProjectHelper p, ActivityHelper activityHelper){
         this.app = app;
-        this.errorMessage = errorMessage;
         this.userHelper = userHelper;
         this.projectHelper=p;
         this.activityHelper = activityHelper;

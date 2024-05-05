@@ -16,15 +16,13 @@ import static org.junit.Assert.*;
 
 public class LoginSteps {
 
-    private final App app;
-    private final ErrorMessageHolder errorMessage;
-    private final UserHelper userHelper;
-    private final ProjectHelper projectHelper;
+    private App app;
+    private ErrorMessageHolder errorMessage;
+    private UserHelper userHelper;
     public LoginSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p){
         this.app = app;
         this.errorMessage = errorMessage;
         this.userHelper = userHelper;
-        this.projectHelper=p;
     }
     @Given("no user is logged in")
     public void noUserIsLoggedIn() {

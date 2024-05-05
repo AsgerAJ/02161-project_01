@@ -5,9 +5,6 @@ import domain.Classes.Activity;
 import domain.Classes.User;
 import domain.Interfaces.FinalUserCount;
 import domain.exceptions.UserIdDoesNotExistExeption;
-import test.cucumber.helpers.ErrorMessageHolder;
-import test.cucumber.helpers.MockDateHolder;
-import test.cucumber.helpers.ProjectHelper;
 import test.cucumber.helpers.UserHelper;
 import test.cucumber.helpers.ActivityHelper;
 import io.cucumber.java.en.Given;
@@ -20,20 +17,14 @@ import static org.junit.Assert.assertTrue;
 
 public class FindFreeEmployeeSteps {
 
-    private final App app;
-    private final ErrorMessageHolder errorMessage;
-    private final MockDateHolder dateHolder;
-    private final UserHelper userHelper;
-    private final ProjectHelper projectHelper;
-    private final ActivityHelper activityHelper;
+    private App app;
+    private UserHelper userHelper;
+    private ActivityHelper activityHelper;
 
 
-    public FindFreeEmployeeSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder, UserHelper userHelper, ProjectHelper p, ActivityHelper a){
+    public FindFreeEmployeeSteps(App app, UserHelper userHelper, ActivityHelper a){
         this.app = app;
-        this.errorMessage = errorMessage;
-        this.dateHolder=dateHolder;
         this.userHelper=userHelper;
-        this.projectHelper=p;
         this.activityHelper=a;
     }
 

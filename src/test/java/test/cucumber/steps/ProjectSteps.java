@@ -18,17 +18,15 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class ProjectSteps {
-    private final App app;
-    private final ErrorMessageHolder errorMessage;
-    private final MockDateHolder dateHolder;
+    private App app;
+    private ErrorMessageHolder errorMessage;
 
-    private final UserHelper userHelper;
-    private final ProjectHelper projectHelper;
-    private final ActivityHelper activityHelper;
+    private UserHelper userHelper;
+    private ProjectHelper projectHelper;
+    private ActivityHelper activityHelper;
     public ProjectSteps(App app, ErrorMessageHolder errorMessage, MockDateHolder dateHolder,UserHelper userHelper,ProjectHelper p,ActivityHelper a){
         this.app = app;
         this.errorMessage = errorMessage;
-        this.dateHolder=dateHolder;
         this.userHelper=userHelper;
         this.projectHelper=p;
         this.activityHelper=a;
@@ -105,7 +103,7 @@ public class ProjectSteps {
                 count++;
             }
         }
-        assertEquals((int) int1, count);
+        assertTrue(int1==count);
 
     }
 
