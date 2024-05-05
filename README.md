@@ -1,5 +1,6 @@
 # Importing project
 Use IntelliJ, click the four horizontal bars to the top left, go to file->open, find the project and open the pom.xml file.
+Click again on the four horizontal bars, go to "build" and select build project.
 The used Java Version is JDK 17
 
 # How to run tests
