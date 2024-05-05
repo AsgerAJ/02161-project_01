@@ -44,7 +44,7 @@ public class ProjectInfo {
         if (this.deadline == null) {
             return "Date not set";
         } else {
-            return ""+this.deadline.get(Calendar.DAY_OF_MONTH)+"/"+(deadline.get(Calendar.MONTH)+1)+"/"+deadline.get(Calendar.YEAR)+"(Week: "+deadline.get(Calendar.WEEK_OF_YEAR)+")";
+            return this.deadline.get(Calendar.DAY_OF_MONTH)+"/"+(deadline.get(Calendar.MONTH)+1)+"/"+deadline.get(Calendar.YEAR)+"(Week: "+deadline.get(Calendar.WEEK_OF_YEAR)+")";
         }
     }
 
@@ -52,7 +52,7 @@ public class ProjectInfo {
         if (startDate==null) {
             return "Date not set";
         } else {
-            return ""+this.startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.YEAR)+"(Week: "+startDate.get(Calendar.WEEK_OF_YEAR)+")";
+            return this.startDate.get(Calendar.DAY_OF_MONTH)+"/"+(startDate.get(Calendar.MONTH)+1)+"/"+startDate.get(Calendar.YEAR)+"(Week: "+startDate.get(Calendar.WEEK_OF_YEAR)+")";
         }
 
     }
@@ -106,7 +106,7 @@ public class ProjectInfo {
                 }
             }
 
-            return "Project " + progressBarBuilder.toString() + " " +(completionPercentage * 100) + "% complete";
+            return "Project " + progressBarBuilder + " " +(completionPercentage * 100) + "% complete";
         }else{
             return "Project □□□□□□□□□□□□□□□□□□□□ 0% complete";
         }

@@ -4,9 +4,9 @@ package domain.Interfaces;
 * */
 public interface FinalUserCount {
 
-    public int getCount();
-    public String getUserID();
-    public default String UserCountToString() {
+    int getCount();
+    String getUserID();
+    default String UserCountToString() {
         return getUserID() + ":" + getCount();
     }
 }

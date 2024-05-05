@@ -5,9 +5,9 @@ import domain.Classes.User;
 
 public interface UserCount extends Count, FinalUserCount {
 
-    public User getUser();
+    User getUser();
 
-    public void setUser(User u);
+    void setUser(User u);
 
 
 

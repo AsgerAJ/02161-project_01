@@ -71,7 +71,7 @@ public class ActivityInfo {
         } else {
             String key;
             for(Iterator<String> var5 = this.getTimeMap().keySet().iterator(); var5.hasNext(); outputstring = outputstring + key + " : " + this.getTimeMap().get(key) + " Hours\n") {
-                key = (String)var5.next();
+                key = var5.next();
             }
 
             return outputstring;

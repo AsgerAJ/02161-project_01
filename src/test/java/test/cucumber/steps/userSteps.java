@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class userSteps {
-    private App app;
-    private ErrorMessageHolder errorMessage;
-    private UserHelper userHelper;
-    private ProjectHelper projecthelper;
+    private final App app;
+    private final ErrorMessageHolder errorMessage;
+    private final UserHelper userHelper;
+    private final ProjectHelper projecthelper;
     public userSteps(App app, ErrorMessageHolder errorMessage,UserHelper userHelper,ProjectHelper p){
         this.app = app;
         this.errorMessage = errorMessage;
