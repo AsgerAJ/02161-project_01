@@ -352,10 +352,13 @@ public class Viewer { // Author Asger
         System.out.println("Overbudget:"+app.isActivityOverBudget(currentActivityInfo));
         System.out.println("Activity start date: " + (currentActivityInfo.getStartDate()));
         System.out.println("Activity deadline: " + (currentActivityInfo.getDeadline()));
+        System.out.println("Enter \"Set start date\" to set start date.");
+        System.out.println("Enter \"Set deadline\" to set deadline.");
         System.out.println("Enter \"Log\" to log worked time, \n\"See time worked\" to see time worked on project,\n\"Complete\" to complete activity,\n\"Assign\" to assign user to activity, \n\"Remove\" to remove a user from the activity \n\"Exit\" to go to main menu");
         if (!currentActivityInfo.getDeadline().equals("Date not set.") && !currentActivityInfo.getStartDate().equals("Date not set.")) {
             System.out.println("or \" Find free employee\" to find free employee in project.");
         }
+
     }
 
     private static void printFreeEmployees(ArrayList<FinalUserCount> results) {
