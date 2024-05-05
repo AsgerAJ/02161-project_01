@@ -8,10 +8,17 @@ Feature: Leave
         When user "HUBA" goes on "sick" leave from 21,04,2024 to 22,04,2024
         Then the user has the "sick" event assigned to them
 
-
     Scenario: Remove leave
         Given a user with id "HUBA" exists
         And a user with id "HUBA" is logged in
         And user "HUBA" goes on "sick" leave from 21,04,2024 to 22,04,2024
         When user "HUBA" removes "sick" leave from 21,04,2024 to 22,04,2024
         Then the user does not have the "sick" event assigned to them
+
+    Scenario: Remove duplicate leave
+        Given a user with id "HUBA" exists
+        And a user with id "HUBA" is logged in
+        And user "HUBA" goes on "sick" leave from 21,04,2024 to 22,04,2024
+        And user "HUBA" goes on "sick" leave from 23,04,2024 to 24,04,2024
+        When user "HUBA" removes "sick" leave from 21,04,2024 to 22,04,2024
+        Then the user has the "sick" event assigned to them
