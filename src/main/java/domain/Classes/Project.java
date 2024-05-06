@@ -8,6 +8,9 @@ import domain.exceptions.InvalidDateException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/*
+@author Asger Allin Jensen
+ */
 public class Project {
     private final String name;
     private final String projectID;
@@ -19,7 +22,7 @@ public class Project {
     private final ArrayList<User> participanList = new ArrayList<User>();
     private final ArrayList<Activity> activityList = new ArrayList<Activity>();
 
-    public Project(String name, Calendar creationDate, int projectAmount) {
+    public Project(String name, Calendar creationDate, int projectAmount) { // Author: Asger Allin Jensen
         this.name = name;
         this.complete = false;
         // generate project ID
@@ -42,28 +45,28 @@ public class Project {
     public Calendar getDeadline() {return this.deadline;}
 
 
-    public Activity getActivityFromName(String name) {
+    public Activity getActivityFromName(String name) {// Author: Asger Allin Jensen
         return this.activityList.stream().filter(activity->activity.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
-    public String getID() {
+    public String getID() {// Author: Asger Allin Jensen
         return this.projectID;
     }
 
-    public User getProjectLeader() {
+    public User getProjectLeader() {// Author: Asger Allin Jensen
         return this.projectLeader;
     }
 
-    public boolean getStatus() {
+    public boolean getStatus() {// Author: Asger Allin Jensen
         return this.complete;
     }
 
     //-----Set methods ----------------------------------------------------------------------------
 
-    public void setProjectLeader(User user) {
+    public void setProjectLeader(User user) {// Author: Asger Allin Jensen
         this.projectLeader = user;
     }
 
-    public void setDeadline(Calendar date) throws InvalidDateException {
+    public void setDeadline(Calendar date) throws InvalidDateException { // Author: Niklas Emil Lysdal
 
         if (this.startDate == null || date.after(this.startDate)) {
             this.deadline = date;
@@ -71,7 +74,7 @@ public class Project {
             throw new InvalidDateException("deadline before start date");
         }
     }
-    public void setStartDate(Calendar date) throws InvalidDateException {
+    public void setStartDate(Calendar date) throws InvalidDateException { // Author: Niklas Emil Lysdal
         if (this.deadline == null || date.before(this.deadline)) {
             this.startDate = date;
         } else {
@@ -81,7 +84,7 @@ public class Project {
 
     //------Functional----------------------------------------------------------------------------------
 
-    public String formatProjectId(String year, int projectAmount) {
+    public String formatProjectId(String year, int projectAmount) { // Author: Nikolaj Vorndran Thygesen
         String idExtension = "";
 
         switch (String.valueOf(projectAmount).length()) {
@@ -102,26 +105,26 @@ public class Project {
         return year + idExtension;
     }
 
-    public void assignUser(User user) {
+    public void assignUser(User user) { // Author: Lovro Antic
         if (!this.participanList.contains(user)) {
             this.participanList.add(user);
             user.assignProject(this);
         }
     }
-    public void removeUser(User user) {
+    public void removeUser(User user) { // Author: Lovro Antic
         if (this.participanList.contains(user)) {
             this.participanList.remove(user);
             user.removeProject(this);
         }
     }
-    public void changeCompleteness(boolean status){this.complete = status;}
+    public void changeCompleteness(boolean status){this.complete = status;} // Author: Asger Allin Jensen
 
     public void createNewActivity(Activity activity) {
         this.activityList.add(activity);
     }
     
     //Open-closed principle
-    public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) {
+    public ArrayList<UserCount> findFreeEmployee(PeriodEvent activity) { // Author: Niklas Emil lysdal
         if (activity.getStartdate() == null || activity.getDeadline() == null) {
             return new ArrayList<UserCount>();
         }else{
@@ -144,11 +147,11 @@ public class Project {
 
     //----------Checks -------------------------------------------------------------------------------
 
-    public boolean isProjectLeader(User user) {
+    public boolean isProjectLeader(User user) { // Author: Asger Allin Jensen
         return this.projectLeader == user;
     }
 
-    public boolean isOverdue(Calendar date) {
+    public boolean isOverdue(Calendar date) { // Author: Asger Allin Jensen
 
         if (this.deadline == null) {
             return false;
@@ -160,7 +163,7 @@ public class Project {
 
     //-----As info---------------------------------------------------------------------------
     
-    public ProjectInfo asInfo() {
+    public ProjectInfo asInfo() { // Author: Niklas Emil Lysdal
         return new ProjectInfo(this);
     }
 

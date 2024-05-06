@@ -15,19 +15,19 @@ public abstract class PeriodEvent {
 
     //----- Get Methods -------------------------------------------------
 
-    public String getName() {return this.name;}
+    public String getName() {return this.name;} // Author Niklas Emil Lysdal
 
-    public Calendar getDeadline() {return this.deadline;}
+    public Calendar getDeadline() {return this.deadline;}// Author Niklas Emil Lysdal
 
-    public Calendar getStartdate() {return this.startdate;}
+    public Calendar getStartdate() {return this.startdate;}// Author Niklas Emil Lysdal
     public boolean timeLockdown() {
         return false;
-    }
+    }// Author Niklas Emil Lysdal
 
     //------ Sets ----------------------------------------------------------------------------
 
 
-    public void setDeadline(Calendar date) throws InvalidDateException {
+    public void setDeadline(Calendar date) throws InvalidDateException {// Author Niklas Emil Lysdal
 
         if (this.startdate == null || date.after(this.startdate)) {
             this.deadline = date;
@@ -35,7 +35,7 @@ public abstract class PeriodEvent {
             throw new InvalidDateException("deadline before start date");
         }
     }
-    public void setStartdate(Calendar date) throws InvalidDateException {
+    public void setStartdate(Calendar date) throws InvalidDateException {// Author Niklas Emil Lysdal
         if (this.deadline == null || date.before(this.deadline)) {
             this.startdate = date;
         } else {
@@ -45,7 +45,7 @@ public abstract class PeriodEvent {
 
     //-----------------Checks --------------------------------------------------------
 
-    public boolean timeOverlap(PeriodEvent event) {
+    public boolean timeOverlap(PeriodEvent event) {// Author Niklas Emil Lysdal
         return ((event.getDeadline().after(startdate) && event.getStartdate().before(deadline)))
                 ||(deadline.after(event.getStartdate()) && startdate.before(event.getDeadline()));
     }

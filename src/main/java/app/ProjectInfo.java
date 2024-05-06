@@ -7,6 +7,10 @@ import domain.Classes.User;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+
+/*
+    @author: Asger Allin Jensen
+ */
 public class ProjectInfo {
 
     private String name;
@@ -21,7 +25,7 @@ public class ProjectInfo {
 
     public ProjectInfo(){}
 
-    public ProjectInfo(Project project){
+    public ProjectInfo(Project project){ // Author: Asger Allin Jensen
         this.name = project.getName();
         this.projectID = project.getProjectID();
         this.complete = project.getStatus();
@@ -32,15 +36,15 @@ public class ProjectInfo {
         this.activityList = project.getActivityList();
     }
     //-----Get Methods--------------------------------------------------------------------
-    public String getProjectID() {
+    public String getProjectID() { // Author: Lovro Antic
         return projectID;
     }
 
-    public String getName() {return this.name;}
+    public String getName() {return this.name;} // Author: Lovro Antic
 
-    public String getProjectLeader() {return projectLeader.getUserId();}
+    public String getProjectLeader() {return projectLeader.getUserId();} // Author: Lovro Antic
 
-    public String getDeadline() {
+    public String getDeadline() { // Author: Asger Allin Jensen
         if (this.deadline == null) {
             return "Date not set";
         } else {
@@ -48,7 +52,7 @@ public class ProjectInfo {
         }
     }
 
-    public String getStartDate() {
+    public String getStartDate() { // Author: Asger Allin Jensen
         if (startDate==null) {
             return "Date not set";
         } else {
@@ -56,11 +60,11 @@ public class ProjectInfo {
         }
     }
 
-    public ArrayList<String> getActivityList() {
+    public ArrayList<String> getActivityList() { // Author: Nikolaj Antic
         return new ArrayList<>(activityList.stream().map(a->a.getName()).toList());
     }
 
-    public String getParticipanList() {
+    public String getParticipanList() { //Author: Asger Allin Jensen
         String result = "";
         for (User u : participanList) {
             result += u.getUserId() + " ";
@@ -68,20 +72,20 @@ public class ProjectInfo {
         return result;
     }
 
-    public boolean getComplete() {
+    public boolean getComplete() { // Author Lovro Antic
         return complete;
     }
 
-    public Calendar getDeadlineCopy() {
+    public Calendar getDeadlineCopy() { // Author Lovro Antic
         return (Calendar) this.deadline.clone();
     }
     
-    public Calendar getStartdateCopy(){
+    public Calendar getStartdateCopy(){ // Author Lovro Antic
         return (Calendar) this.startDate.clone();
     }
 
     //-----Miscellaneous-------------------------------------------------------------------------
-    public String completionPercentageString(){
+    public String completionPercentageString(){ // Author: Asger Allin Jensen
         if(this.getActivityList() != null){
             double completionPercentage = 0;
 

@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
+/*
+@ Author: Asger Allin Jensen
+ */
 
-
-public class Viewer { // Author Asger
+public class Viewer {
     public static final App app = new App();
 
     public static final Scanner programScanner = new Scanner(System.in);
@@ -25,6 +27,8 @@ public class Viewer { // Author Asger
     private static ActivityInfo currentActivityInfo = new ActivityInfo();
 
     private static ProjectInfo currentProjectInfo = new ProjectInfo();
+
+    // Author Asger Allin Jensen
     public static void main(String[] args) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, UserIdAlreadyInUseExeption, InvalidDateException {
         // App setup
 
@@ -78,7 +82,7 @@ public class Viewer { // Author Asger
     }
 
 
-    private static void showMainMenu() {
+    private static void showMainMenu() { // Author: Asger Allin Jensen
         // Project overview and create project slice
         if(programScanner.hasNextLine()){
             programScanner.nextLine();
@@ -125,7 +129,7 @@ public class Viewer { // Author Asger
 
 
 
-    private static void insideProjectMenu() {
+    private static void insideProjectMenu() { // Author: Asger Allin Jensen
 
         int insideProjectValue = 0;
         while(true){
@@ -171,7 +175,7 @@ public class Viewer { // Author Asger
     }
 
 
-    private static void enterActivity() {
+    private static void enterActivity() { // Author Asger Allin Jensen
 
         int enterProjectValue = 0;
         while(true){
@@ -223,7 +227,8 @@ public class Viewer { // Author Asger
 
 
     //----Login and register methods------------------------------------------------------------------
-    private static void createUser() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption {
+
+    private static void createUser() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption { // Author: Lovro Antic
         String userId = (programScanner.nextLine());
         try {
             if(userId.isEmpty()){
@@ -241,14 +246,14 @@ public class Viewer { // Author Asger
 
     }
 
-    private static void loginUser() throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException {
+    private static void loginUser() throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException { // Author: Lovro Antic
         String loginString = programScanner.next();
         app.logInUser(loginString);
         currentUserInfo = app.getCurrentUserInfo();
         showMainMenu();
     }
 
-    private static void logTimeOnActivity(){
+    private static void logTimeOnActivity(){ // Author: Nikolaj Vorndran Thygesen
         System.out.println("Enter hours worked today:");
         String workedTimeString = programScanner.nextLine();
         try {
@@ -260,14 +265,14 @@ public class Viewer { // Author Asger
     }
 
     //----Leave methods------------------------------------------------------------------------------
-    private static void registerNewLeave() {
+    private static void registerNewLeave() { // Author: Nikolaj Vorndran Thygesen
         System.out.println("Please enter name of leave");
         String name = programScanner.nextLine();
         Calendar[] set = getDateSetFromUser();
         app.registerLeave(name,set[0],set[1]);
     }
 
-    private static void removeLeave() {
+    private static void removeLeave() { // Author: Nikolaj Vorndran Thygesen
         System.out.println("Please enter name of leave");
         String name = programScanner.nextLine();
         Calendar[] set = getDateSetFromUser();
@@ -276,15 +281,13 @@ public class Viewer { // Author Asger
 
 
     //----Create events------------------------------------------------------------------------------
-    private static void newProject() {
-        //Scanner newProjectScanner = new Scanner(System.in);
+    private static void newProject() { // Author
         System.out.println("Enter Name of project: ");
         String name = programScanner.nextLine();
         app.createProject(name);
     }
 
-    private static void newActivityInProject(){
-        //Scanner newActivityScanner = new Scanner(System.in);
+    private static void newActivityInProject(){ // Author: Asger Allin Jensen
         System.out.print("Enter activity name: " );
         String newActivityName = programScanner.nextLine();
         double numberIn = 0;
@@ -301,7 +304,7 @@ public class Viewer { // Author Asger
     }
 
     //----Set dates-----------------------------------------------------------------------------------
-    private static void setDeadlineProject() throws InvalidDateException {
+    private static void setDeadlineProject() throws InvalidDateException { // Author: Niklas Emil Lysdal
         boolean success = false;
         while (!success) {
             try {
@@ -317,7 +320,7 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void setStartDateProject() throws InvalidDateException {
+    private static void setStartDateProject() throws InvalidDateException { // Author: Niklas Emil Lysdal
         boolean success = false;
         while (!success) {
             try {
@@ -334,7 +337,7 @@ public class Viewer { // Author Asger
 
     }
 
-    private static void setDeadlineActivity() {
+    private static void setDeadlineActivity() { //Author: Niklas Emil Lysdal
         boolean success = false;
         while (!success) {
             try {
@@ -349,7 +352,7 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void setStartDateActivity() {
+    private static void setStartDateActivity() { // Author: Niklas Emil Lysdal
         boolean success =false;
         while(!success) {
             try {
@@ -365,7 +368,7 @@ public class Viewer { // Author Asger
 
     //----Manage Participants-------------------------------------------------------------------------
 
-    private static void removeUserActivity() {
+    private static void removeUserActivity() { // Author: Lovro Antic
         System.out.println("Enter user id of user to be removed from activity");
         String removeName = programScanner.nextLine();
         try{
@@ -375,7 +378,7 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void assignUserActivity() {
+    private static void assignUserActivity() { // Author: Nikolaj Antic
         System.out.println("Enter user id of user to be added to activity");
         String addName = programScanner.nextLine();
         try {
@@ -385,7 +388,7 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void addUserToProject() {
+    private static void addUserToProject() { // Author: Asger Allin Jensen
         System.out.println("Enter user id of user to be added to project");
         String addName = programScanner.nextLine();
         try{
@@ -395,7 +398,7 @@ public class Viewer { // Author Asger
         }
     }
 
-    private static void removeUserFromProject() {
+    private static void removeUserFromProject() { // Author: Nikolaj Antic
         System.out.println("Enter user id of user to be removed from the project");
         String removeName = programScanner.nextLine();
 
@@ -408,12 +411,12 @@ public class Viewer { // Author Asger
 
     //Print methods---------------------------------------------------------------------------------
 
-    private static void coreMenu() {
+    private static void coreMenu() { // Author: Asger Allin Jensen
         System.out.println("\n____________________________________________________________________________________________________________________");
         System.out.println("Enter:\n'1' to log in \n'2' to register a new user, \n'ids' to see all user ids,\n'Enable demo mode' to enable a default config\n'Exit' to exit the program");
     }
 
-    private static void showUserMenu(){
+    private static void showUserMenu(){// Author: Asger Allin Jensen
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Logged in with user Id: "+ app.getCurrentUserId());
@@ -424,7 +427,7 @@ public class Viewer { // Author Asger
 
     }
 
-    private static void showProjectMenu(){
+    private static void showProjectMenu(){ // Author: Asger Allin Jensen
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Project: "+ currentProjectInfo.getName());
@@ -442,7 +445,7 @@ public class Viewer { // Author Asger
         System.out.println("or \"Set deadline\" to set deadline of project");
     }
 
-    private static void showActivityMenu() {
+    private static void showActivityMenu() { // Author: Asger Allin Jensen
         System.out.println();
         System.out.println("____________________________________________________________________________________________________________________");
         System.out.println("Activity name: " + currentActivityInfo.getActivityName());
@@ -463,7 +466,7 @@ public class Viewer { // Author Asger
 
     }
 
-    private static void printFreeEmployees(ArrayList<FinalUserCount> results) {
+    private static void printFreeEmployees(ArrayList<FinalUserCount> results) { // Author: Niklas Emil Lysdal
         StringBuilder resultsString = new StringBuilder();
         String output;
         if (results.isEmpty()) {
@@ -479,7 +482,7 @@ public class Viewer { // Author Asger
     }
 
     //--------Get from user methods----------------------------------------------------------------
-    private static Calendar getWeekOfYearFromUser () {
+    private static Calendar getWeekOfYearFromUser () { // author: Niklas Emil Lysdal
         System.out.println("What year? (format: yyyy)");
         boolean successfullYear = false;
         int year=1;
@@ -519,7 +522,7 @@ public class Viewer { // Author Asger
     }
 
 
-    private static Calendar[] getDateSetFromUser () {
+    private static Calendar[] getDateSetFromUser () { // Author: Niklas Emil Lysdal
         Calendar[] set  = new Calendar[2];
         boolean validSet = false;
         Calendar start=null;
@@ -541,7 +544,7 @@ public class Viewer { // Author Asger
         return set;
     }
 
-    private static Calendar getDateFromUser() {
+    private static Calendar getDateFromUser() { // Author: Nikolaj Vorndran Thygesen
 
         Calendar c = new GregorianCalendar();
         boolean success = false;
@@ -595,7 +598,7 @@ public class Viewer { // Author Asger
 
     //----Function methods --------------------------------------------
 
-    private static void changeProjectCompletion() {
+    private static void changeProjectCompletion() { // Author: Asger Allin Jensen
         System.out.println("is project complete?(Y/N)");
         boolean success =false;
         String input ="";
@@ -611,7 +614,7 @@ public class Viewer { // Author Asger
         currentProjectInfo=app.renewProjectInfo(currentProjectInfo);
     }
 
-    private static void changeActivityCompletion() {
+    private static void changeActivityCompletion() { // Author: Asger Allin Jensen
         System.out.println("is activity complete?(Y/N)");
         boolean success =false;
         String input ="";
@@ -629,16 +632,16 @@ public class Viewer { // Author Asger
 
     //----- Refresh infos--------------------------------------------------------------------------------
 
-    private static void refreshProjectInfoObject(){
+    private static void refreshProjectInfoObject(){ // Author: Lovro Antic
         currentProjectInfo = app.renewProjectInfo(currentProjectInfo);
     }
 
-    private static void refreshActivityInfos() {
+    private static void refreshActivityInfos() { // Author: Lovro Antic
         currentActivityInfo = app.renewActivityInfo(currentActivityInfo);
     }
 
 
-    private static void refreshUserInfo() {
+    private static void refreshUserInfo() { // Author: Nikolaj Vorndran Thygesen
         currentUserInfo = app.renewUserInfo(currentUserInfo);
     }
 

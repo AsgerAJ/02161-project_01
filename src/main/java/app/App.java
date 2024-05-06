@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.stream.Collectors;
 
-
+/*
+    @author: Niklas Emil Lysdal
+ */
 
 /* This class works both as an object itself, but also as a facade between the viewer class and the other Business logic*/
 public class App {
@@ -24,7 +26,7 @@ public class App {
     public App(){
     }
 
-    public boolean hasUserWithID(String id) {
+    public boolean hasUserWithID(String id) { // Author: Asger Allin Jensen
         for (User u : userList){
             if(u.getUserId().equals(id)){
                 return true;
@@ -34,10 +36,10 @@ public class App {
     }
 
     //------Get methods --------------------------------------------------------------------------------------
-    public String getCurrentUserId(){
+    public String getCurrentUserId(){ //Author: Lovro Antic
         return this.currentUser.getUserId();
     }
-    public User getUserFromId(String id) throws UserIdDoesNotExistExeption {
+    public User getUserFromId(String id) throws UserIdDoesNotExistExeption { //Author: Asger Allin Jensen
         assert id != null;                                                              
         for (User u : userList){                                                        
             if(u.getUserId().equals(id.toUpperCase())){                                 
@@ -49,7 +51,7 @@ public class App {
         throw new UserIdDoesNotExistExeption("No user with UserId exists");       
     }
 
-    private Project getProjectFromTitle(String title) {
+    private Project getProjectFromTitle(String title) { // Author: Nikolaj Vorndran Thygesen
         for (Project p : projectRepository) {
             if (p.getName().equalsIgnoreCase(title)) {
                 return p;
@@ -58,7 +60,7 @@ public class App {
         return null;
     }
 
-    private Project getProjectFromID(String id){
+    private Project getProjectFromID(String id){ // Author: Niklas Emil Lysdal
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
         if (!matchingProjects.isEmpty()) {
             return matchingProjects.get(0);
@@ -69,7 +71,7 @@ public class App {
 
     }
     
-    public ProjectInfo getProjectInfoFromID(String id) {
+    public ProjectInfo getProjectInfoFromID(String id) { // Niklas Emil Lysdal
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
         if (!matchingProjects.isEmpty()) {
             return matchingProjects.get(0).asInfo();
@@ -81,9 +83,9 @@ public class App {
     //-------Log in --------------------------------------------------------------------------------
     public boolean loggedInStatus(){
         return this.currentUser != null;
-    }
+    } // Author: Lovro Antic
 
-    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException { 
+    public void logInUser(String id) throws UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException { //Author: Asger Allin Jensen
         assert id != null;
         if (this.currentUser!=null) {                                                     
             throw new AUserIsAlreadyLoggedInException("A user is already logged in");          
@@ -99,9 +101,9 @@ public class App {
     
     public void logOut(){
         this.currentUser = null;
-    }
+    } // Author: Lovro Antic
     //------- Manipulate users ------------------------------------------------------------------
-    public User registerUser(String userId) throws UserIdAlreadyInUseExeption {
+    public User registerUser(String userId) throws UserIdAlreadyInUseExeption { //Author: Asger Allin Jensen
         assert userId != null;
         String edited = createUserId(userId);
         User u = new User(edited);
@@ -114,7 +116,7 @@ public class App {
         }
         return u;
     }
-    public User quickRegisterUser(String userId) throws UserIdAlreadyInUseExeption {
+    public User quickRegisterUser(String userId) throws UserIdAlreadyInUseExeption { //Author Asger Allin Jensen
         User u = new User(userId);
         if(!hasUserWithID(userId)){
             this.userList.add(u);
@@ -123,16 +125,16 @@ public class App {
         }
         return u;
     }
-    public void removeUserWithId(String id){
+    public void removeUserWithId(String id){// Author: Lovro Antic
         userList.removeIf(u -> u.getUserId().equals(id.toUpperCase()));
     }
     public User getCurrentUser() {
         return this.currentUser;
-    }
+    } // Author: Lovro Antic
 
 
 
-    public boolean hasProjectWithTitle(String t) {
+    public boolean hasProjectWithTitle(String t) { //Author: Niklas Emil Lysdal
         for (Project p : projectRepository) {
             if (p.getName().equals(t)) {
                 return true;
@@ -140,10 +142,10 @@ public class App {
         }
         return false;
     }
-    public String getActualId(String userId) throws UserIdDoesNotExistExeption {
+    public String getActualId(String userId) throws UserIdDoesNotExistExeption { // Author: Nikolaj Vorndran Thygesen
         return getUserFromId(userId).getUserId();
     }
-    public String getRegisteredUsers(){
+    public String getRegisteredUsers(){ //Author: Asger Allin Jensen
         StringBuilder outputstring = new StringBuilder(getUserList().get(0).getUserId());
         for (int i = 1; i < getUserList().size(); i++){
             outputstring.append(", ").append(getUserList().get(i).getUserId());
@@ -153,19 +155,19 @@ public class App {
 
     public ArrayList<User> getUserList() {
         return userList;
-    }
+    } // Author: Nikolaj Vorndran Thygesen
 
-    public void registerLeave(String name, Calendar start, Calendar end) {
+    public void registerLeave(String name, Calendar start, Calendar end) { //Author: Nikolaj Vorndran Thygesen
         currentUser.registerLeave(name, start, end);
     }
 
-    public void removeLeave(String name, Calendar start, Calendar end) {
+    public void removeLeave(String name, Calendar start, Calendar end) { // Author: Nikolaj Vorndran Thygesen
         currentUser.removeLeave(name, start, end);
     }
 
 
     //FOLLOWING METHODS SHOULD HAVE BEEN MOVED INFO CLASSES OF VIEWER CLASS TO ADHERE TO MVC PATTERN.
-    public String getProjectListString(){
+    public String getProjectListString(){ // Author: Asger Allin Jensen
         if(!getCurrentUser().getAssignedProjects().isEmpty()){
             StringBuilder outputstring = new StringBuilder();
             int index = 1;
@@ -178,7 +180,7 @@ public class App {
         return("No projects found");
     }
 
-    public String getActivityListString(ProjectInfo currentProject) {
+    public String getActivityListString(ProjectInfo currentProject) { // Author: Asger Allin Jensen
         Project p = getProjectFromID(currentProject.getProjectID());
         assert p != null;
         if(!p.getActivityList().isEmpty()){
@@ -192,7 +194,7 @@ public class App {
         }
         return("No activities found");
     }
-    public String getCurrentUserActivityListString(){
+    public String getCurrentUserActivityListString(){ // Author: Niklas Emil Lysdal
 
         ArrayList<PeriodEvent> totalList = currentUser.getAssignedActivities();
         ArrayList<PeriodEvent> workList = new ArrayList<>(totalList.stream().filter(p->p instanceof Activity).toList());
@@ -223,22 +225,20 @@ public class App {
         return output.toString();
 
     }
-    private Activity getActivityFromIndex(ProjectInfo currentproject, int index) {
+    private Activity getActivityFromIndex(ProjectInfo currentproject, int index) { // Author: Nikolaj Vorndran Thygesen
         Project p = getProjectFromID(currentproject.getProjectID());
         assert p != null;
         return (index <= p.getActivityList().size()) ? p.getActivityList().get(index) : null;
     }
 
-    public String createUserId(String userId) {
+    public String createUserId(String userId) { // Author: Asger Allin Jensen
         StringBuilder userIdOutputString = new StringBuilder();
         userId = userId.replaceAll("\\d","");
         if(userId.isEmpty()){
-            throw new IllegalArgumentException("Invalid name given");
+            throw new IllegalArgumentException("Invalid user name");
         }
         String[] splitString = userId.split(" ");
         switch(splitString.length) {
-            case 0:
-                throw new IllegalArgumentException("No name given");
             case 1:
                 for (int i = 0; i <= (splitString[0].length() > 4 ? 3 : splitString[0].length()-1); i++) {
                     String appendstring = "" + splitString[0].charAt(i);
@@ -272,12 +272,12 @@ public class App {
 
     //----- Manipulate Project --------------------------------------------------------------------------
 
-    public ProjectInfo getCurrentUserProjectsInfoFromID(String id) {
+    public ProjectInfo getCurrentUserProjectsInfoFromID(String id) { // Author: Niklas Emil Lysdal
         ArrayList<Project> matchingProjects = projectRepository.stream().filter(p->p.getProjectID().equals(id)).collect(Collectors.toCollection(ArrayList::new));
         return (!matchingProjects.isEmpty() && currentUser.getAssignedProjects().contains(matchingProjects.get(0))) ? matchingProjects.get(0).asInfo() : null;
     }
 
-    public Project createProject(String projectName) {
+    public Project createProject(String projectName) { // Author Nikolaj Vorndran Thygesen
         Project p = new Project(projectName,this.dateServer.getDate(),this.projectAmount);
 
 
@@ -290,30 +290,30 @@ public class App {
         projectAmount++;
         return p;
     }
-    public void assignUserToProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption {
+    public void assignUserToProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption { // Author: Nikolaj Vorndran Thygesen
             User u = getUserFromId(userId);
             Project p = getProjectFromID(pi.getProjectID());
         assert p != null;
         p.assignUser(u);
     }
 
-    public void removeUserFromProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption {
+    public void removeUserFromProject(String userId, ProjectInfo pi) throws UserIdDoesNotExistExeption { // Author: Lovro Antic
             User u = getUserFromId(userId);
             Project p = getProjectFromID(pi.getProjectID());
         assert p != null;
         p.removeUser(u);
     }
-    public boolean isProjectOverdue(ProjectInfo pi) {
+    public boolean isProjectOverdue(ProjectInfo pi) { // Author: Nikolaj Vorndran Thygesen
         return getProjectFromID(pi.getProjectID()).isOverdue(this.dateServer.getDate());
     }
 
-    public void changeCompletenessOfProject(boolean newStatus,ProjectInfo info) {
+    public void changeCompletenessOfProject(boolean newStatus,ProjectInfo info) { // Author Niklas Emil Lysdal
         getProjectFromID(info.getProjectID()).changeCompleteness(newStatus);
 
     }
 
     //------- Manipulate Activity ---------------------------------------------------------------------
-    public void assignUserToActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
+    public void assignUserToActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption { //Author: Nikolaj Vorndran Thygesen
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
         assert p != null;
@@ -323,7 +323,7 @@ public class App {
 
     }
 
-    public void removeUserFromActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption {
+    public void removeUserFromActivity(String userId, ActivityInfo ai) throws UserIdDoesNotExistExeption { // Author: Lovro Antic
             User u = getUserFromId(userId);
             Project p = getProjectFromID(ai.getParentProjectId());
         assert p != null;
@@ -331,35 +331,35 @@ public class App {
             a.removeUser(u);
     }
 
-    public void createNewActivity(String newActivityName, double numberIn, ProjectInfo currentProject) {
+    public void createNewActivity(String newActivityName, double numberIn, ProjectInfo currentProject) { // Author: Asger Allin Jensen
         Project p = getProjectFromID(currentProject.getProjectID());
         Activity a = new Activity(newActivityName, numberIn,p.getProjectID());
         p.createNewActivity(a);
     }
 
-    public void logTimeOnActivity(double workedTime, ActivityInfo currentActivity) {
+    public void logTimeOnActivity(double workedTime, ActivityInfo currentActivity) { //Author: Niklas Emil Lysdal
         Project p = getProjectFromID(currentActivity.getParentProjectId());
         assert p != null;
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
         a.logTime(workedTime, this.currentUser);
     }
 
-    public void ChangeCompletenessOfActivity(boolean b, ActivityInfo currentActivity) {
+    public void ChangeCompletenessOfActivity(boolean b, ActivityInfo currentActivity) { // Author: Niklas Emil Lysdal
         Project p = getProjectFromID(currentActivity.getParentProjectId());
         assert p != null;
         Activity a = p.getActivityFromName(currentActivity.getActivityName());
         a.setStatus(b);
     }
-    public boolean isActivityOverdue(ActivityInfo info) {
+    public boolean isActivityOverdue(ActivityInfo info) { // Author: Niklas Emil Lysdal
         return getProjectFromID(info.getParentProjectId()).getActivityFromName(info.getActivityName()).isOverdue(dateServer.getDate());
     }
-    public boolean isActivityOverBudget(ActivityInfo cai) {
+    public boolean isActivityOverBudget(ActivityInfo cai) { // Author: Niklas Emil Lysdal
         return getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()).isOverBudget();
     }
 
 
     //-----Find free employee------------------------------------------------------------------------------------------
-    public ArrayList<FinalUserCount> findFreeEmployee(ActivityInfo aci) {
+    public ArrayList<FinalUserCount> findFreeEmployee(ActivityInfo aci) { // Author: Niklas Emil Lysdal
         Project p = getProjectFromID(aci.getParentProjectId());
         assert p != null;
         Activity a = p.getActivityFromName(aci.getActivityName());
@@ -371,23 +371,21 @@ public class App {
 
 
     //----Set dates-----------------------------------------------------------------------------------------------------
-    public void setDateServer(DateServer d) {
+    public void setDateServer(DateServer d) { // Author: Niklas Emil Lysdal
         this.dateServer=d;
     }
-    public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
+    public void setProjectStartDate(Calendar c, ProjectInfo currentProject) throws InvalidDateException { // Author: Nikolaj Vorndran Thygesen
         getProjectFromID(currentProject.getProjectID()).setStartDate(c);
-
-
     }
 
-    public void setProjectDeadline(Calendar c, ProjectInfo currentProject) throws InvalidDateException {
+    public void setProjectDeadline(Calendar c, ProjectInfo currentProject) throws InvalidDateException { // Author: Nikolaj Vorndran Thygesen
         getProjectFromID(currentProject.getProjectID()).setDeadline(c);
     }
 
-    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
+    public void setActivityStartDateFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException { // Author: Lovro Antic
         getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setStartdate(c);
     }
-    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException {
+    public void setActivityDeadlineFromInfo(ActivityInfo acI, Calendar c) throws InvalidDateException { // Author: Lovro Antic
         getProjectFromID(acI.getParentProjectId()).getActivityFromName(acI.getActivityName()).setDeadline(c);
 
     }
@@ -395,36 +393,37 @@ public class App {
     //get info's -------------------------------------------------------------------------------------------------------
 
 
-    public ActivityInfo getActivityInfoFromIndex(ProjectInfo currentproject, int index) {
+    public ActivityInfo getActivityInfoFromIndex(ProjectInfo currentproject, int index) { // Author: Nikolaj Vorndran Thygesen
         try {
             return getActivityFromIndex(currentproject,index).asInfo();
         } catch (NullPointerException e) {
             return null;
         }
     }
-    public ActivityInfo getActivityInfoFromName(ProjectInfo currentProject,String name){
+    public ActivityInfo getActivityInfoFromName(ProjectInfo currentProject,String name){ // Author: Nikolaj Vorndran Thygesen
         return getProjectFromID(currentProject.getProjectID()).getActivityFromName(name).asInfo();
     }
-    public ActivityInfo renewActivityInfo(ActivityInfo cai) {
+    public ActivityInfo renewActivityInfo(ActivityInfo cai) { // Author: Lovro Antic
         return getProjectFromID(cai.getParentProjectId()).getActivityFromName(cai.getActivityName()).asInfo();
     }
 
 
-    public ProjectInfo renewProjectInfo(ProjectInfo cpi) {
+    public ProjectInfo renewProjectInfo(ProjectInfo cpi) { // Author: Lovro Antic
         return new ProjectInfo(getProjectFromID(cpi.getProjectID()));
     }
 
-    public UserInfo renewUserInfo(UserInfo cui)  {
+    public UserInfo renewUserInfo(UserInfo cui)  { // Author: Niklas Emil Lysdal
         try {
             return new UserInfo(getUserFromId(cui.getUserId()));
         } catch (UserIdDoesNotExistExeption e) {
             return new UserInfo(getCurrentUser());
         }
     }
-    public UserInfo getCurrentUserInfo() {
+    public UserInfo getCurrentUserInfo() { // Author: Nikolaj Vorndran Thygesen
         return this.currentUser.asInfo();
     }
     //Demo configuration -----------------------------------------------------------------------------------------------
+    // Author: Asger Allin Jensen
     public void enableDemoConfig() throws UserIdAlreadyInUseExeption, UserIdDoesNotExistExeption, AUserIsAlreadyLoggedInException, InvalidDateException {
 
         currentUser = null;
